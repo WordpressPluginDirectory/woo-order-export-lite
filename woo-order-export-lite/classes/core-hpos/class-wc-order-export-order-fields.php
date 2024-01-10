@@ -373,9 +373,9 @@ class WC_Order_Export_Order_Fields {
 		} elseif ( $field == 'billing_citystatezip' ) {
 			$row[$field] = WC_Order_Export_Data_Extractor::get_city_state_postcode_field_value( $this->order, 'billing' );
 		} elseif ($field == 'fulladdress_shipping') {
-			$row[$field] .= str_replace("<br/>", "\n", $this->order->get_formatted_shipping_address());
+			$row[$field] = str_replace("<br/>", "\n", $this->order->get_formatted_shipping_address());
 		}elseif ($field == 'fulladdress_billing') {
-			$row[$field] .= str_replace("<br/>", "\n", $this->order->get_formatted_billing_address());
+			$row[$field] = str_replace("<br/>", "\n", $this->order->get_formatted_billing_address());
 		} elseif ( $field == 'billing_citystatezip_us' ) {
 			$row[$field] = WC_Order_Export_Data_Extractor::get_city_state_postcode_field_value( $this->order, 'billing', true );
 		} elseif ( $field == 'shipping_citystatezip' ) {

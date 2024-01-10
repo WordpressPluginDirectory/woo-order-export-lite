@@ -62,6 +62,19 @@ class WC_Order_Export_Manage {
 	}
 
 
+	static function use_ready_or_prepare_settings($in) {
+		if ($in['mode'] != 'frontend')
+			return self::make_new_settings($in);
+
+		// get ready settings from frontend page !
+		$settings = json_decode($in['settings'], true);
+		// use empty code if no permissions
+		if (!WC_Order_Export_Admin::user_can_add_custom_php())
+			$settings['custom_php_code'] = '';
+
+		return $settings;
+	}
+
 	static function make_new_settings( $in ) {
 		$new_settings = $in['settings'];
 

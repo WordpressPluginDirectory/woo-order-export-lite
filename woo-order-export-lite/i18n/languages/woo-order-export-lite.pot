@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Order Export For WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-24 11:32+0000\n"
+"POT-Creation-Date: 2024-01-09 11:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.6; wp-6.4.1\n"
+"X-Loco-Version: 2.6.6; wp-6.4.2\n"
 "X-Domain: woo-order-export-lite"
 
 #: classes/class-wc-order-export-admin.php:601
@@ -396,7 +396,7 @@ msgid "Coupon Type"
 msgstr ""
 
 #: view/settings-form.php:1378
-#: classes/admin/class-wc-order-export-manage.php:742
+#: classes/admin/class-wc-order-export-manage.php:755
 #: classes/core/trait-woe-core-extractor-ui.php:1103
 #: classes/core/trait-woe-core-extractor-ui.php:1304
 #: classes/core/trait-woe-core-extractor-ui.php:1329
@@ -1099,10 +1099,10 @@ msgstr ""
 msgid "No page numbers"
 msgstr ""
 
-#: classes/formats/class-woe-formatter-pdf.php:180
+#: classes/formats/class-woe-formatter-pdf.php:182
 #: classes/formats/class-woe-formatter-html.php:156
 #: classes/formats/abstract-class-woe-formatter-sv.php:108
-#: classes/formats/class-woe-formatter-xls.php:232
+#: classes/formats/class-woe-formatter-xls.php:234
 msgid "No results"
 msgstr ""
 
@@ -1310,8 +1310,8 @@ msgstr ""
 msgid "Order Type"
 msgstr ""
 
-#: classes/admin/class-wc-order-export-manage.php:250
-#: classes/formats/class-woe-formatter-xls.php:367
+#: classes/admin/class-wc-order-export-manage.php:263
+#: classes/formats/class-woe-formatter-xls.php:369
 msgid "Orders"
 msgstr ""
 
@@ -1548,7 +1548,7 @@ msgid "Product Variation"
 msgstr ""
 
 #: view/settings-form.php:1105
-#: classes/admin/class-wc-order-export-manage.php:699
+#: classes/admin/class-wc-order-export-manage.php:712
 #: classes/core/trait-woe-core-extractor-ui.php:929
 #: classes/core/trait-woe-core-extractor-ui.php:1302
 #: classes/core/trait-woe-core-extractor-ui.php:1326

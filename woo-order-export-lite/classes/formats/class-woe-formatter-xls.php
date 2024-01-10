@@ -212,7 +212,9 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 		$settings = $this->settings['global_job_settings'];
 		if ( preg_match('/setup_field_/i', $settings['sort']) ) {
 			add_filter('woe_storage_sort_by_field', function () use ($settings) {
-				return [preg_replace('/setup_field_(.+?)_/i', '', $settings['sort']), $settings['sort_direction'], preg_match('/setup_field_(.+?)_/i', $settings['sort'], $matches) ? $matches[1] : 'string'];
+				$field = preg_replace('/setup_field_(.+?)_/i', '', $settings['sort']);
+				$field = str_replace("plain_orders_", "", $field); //remove extra prefix 
+				return [$field, $settings['sort_direction'], preg_match('/setup_field_(.+?)_/i', $settings['sort'], $matches) ? $matches[1] : 'string'];
 			});
 		}
 		
@@ -475,8 +477,12 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 							curl_close( $ch );
 							fclose( $fp );
 						}
-					} else {
+					} elseif( !preg_match('/[^\x20-\x7e]/', $value) ) { //filename in english
 						$path = $value;
+					} else {
+						$path = get_temp_dir() . '/' . md5( $value ); //filename with non-ascii chars
+						if( file_exists($value) ) 
+							copy($value,$path);
 					}
 
 					if ( file_exists( $path ) ) {

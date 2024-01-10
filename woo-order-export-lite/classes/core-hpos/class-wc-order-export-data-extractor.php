@@ -42,7 +42,7 @@ class WC_Order_Export_Data_Extractor {
                     {$wpdb->prefix}wc_orders.id = {$wpdb->prefix}wc_orders_meta.order_id" );
 			} else { // we have a lot of orders, take last good orders, upto 1000
 				$limit = self::HUGE_SHOP_ORDERS;
-				$order_ids   = $wpdb->get_col( "SELECT id FROM {$wpdb->prefix}wc_orders.id ORDER BY date_created_gmt DESC LIMIT {$limit}" );
+				$order_ids   = $wpdb->get_col( "SELECT id FROM {$wpdb->prefix}wc_orders ORDER BY date_created_gmt DESC LIMIT {$limit}" );
 				$order_ids[] = 0; // add fake zero
 				$order_ids   = join( ",", $order_ids );
 				$fields      = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders_meta  WHERE order_id IN ($order_ids)" );

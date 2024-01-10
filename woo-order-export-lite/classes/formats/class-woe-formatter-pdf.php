@@ -161,7 +161,9 @@ class WOE_Formatter_PDF extends WOE_Formatter_Plain_Format {
 		$settings = $this->settings['global_job_settings'];
 		if ( preg_match('/setup_field_/i', $settings['sort']) ) {
 			add_filter('woe_storage_sort_by_field', function () use ($settings) {
-				return [preg_replace('/setup_field_(.+?)_/i', '', $settings['sort']), $settings['sort_direction'], preg_match('/setup_field_(.+?)_/i', $settings['sort'], $matches) ? $matches[1] : 'string'];
+				$field = preg_replace('/setup_field_(.+?)_/i', '', $settings['sort']);
+				$field = str_replace("plain_orders_", "", $field); //remove extra prefix 
+				return [$field, $settings['sort_direction'], preg_match('/setup_field_(.+?)_/i', $settings['sort'], $matches) ? $matches[1] : 'string'];
 			});
 		}
 	
@@ -299,6 +301,7 @@ class WOE_Formatter_PDF extends WOE_Formatter_Plain_Format {
 					'border_style'  => 'DF',
 				),
 				'table_header' => array(
+					'style'            => 'B',
 					'size'             => $this->font_size,
 					'repeat'           => $this->repeat_header,
 					'text_color'       => $this->hex2RGB( $this->settings['table_header_text_color'] ),
@@ -353,7 +356,8 @@ class WOE_Formatter_PDF extends WOE_Formatter_Plain_Format {
 			$orderRows = array();
 			$orderId = null;
             $summary_row = array();
-			
+
+            $currentRowIndex = 0;
 			while ( $rowObj = $this->storage->getNextRow() ) {
 				$row = $rowObj->getData();
 
@@ -415,9 +419,16 @@ class WOE_Formatter_PDF extends WOE_Formatter_Plain_Format {
 						$heights = array_map( function ( $orderRow ) {
 							return $orderRow[2];
 						}, $orderRows );
-						if ( ! $this->pdf->isEnoughSpace( $rows, $heights ) OR apply_filters("woe_pdf_page_break_before_each_order", false,$orderId) ) {
-							$this->pdf->addPageBreak();
-						}
+
+                        if (
+                            $currentRowIndex !== 0
+                            && (
+                                !$this->pdf->isEnoughSpace($rows, $heights)
+                                || apply_filters("woe_pdf_page_break_before_each_order", false, $orderId)
+                            )
+                        ) {
+                            $this->pdf->addPageBreak();
+                        }
 
 						foreach ( $orderRows as $orderRow ) {
 							$this->pdf->addRow( $orderRow[0], null, $orderRow[2], $orderRow[1] );
@@ -429,8 +440,18 @@ class WOE_Formatter_PDF extends WOE_Formatter_Plain_Format {
 
 					$orderRows[] = array( $row, $row_style, $row_height );
 				} else {
-					$this->pdf->addRow( $row, null, $row_height, $row_style );
+                    if ($orderId !== $currentOrderId
+                        && $currentRowIndex !== 0
+                        && apply_filters("woe_pdf_page_break_before_each_order", false, $orderId)) {
+                        $this->pdf->addPageBreak();
+
+                        $orderId   = $currentOrderId;
+                    }
+
+                    $this->pdf->addRow($row, null, $row_height, $row_style);
 				}
+
+                $currentRowIndex++;
 			}
 
                         if (!empty( array_keys($summary_row) ) && array_filter($summary_row, function ($row) { return $row !== ''; })) {

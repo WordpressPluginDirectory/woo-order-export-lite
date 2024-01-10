@@ -304,8 +304,12 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 				$this->MultiCell( $w, $h, $data[ $i ]['label'], 0, $horizontal_align, $vertical_align, false, 0 );
 				$this->Link( $x + 3 * $margin, $y + 3 * $margin, $w - 2 * $margin, $h - 2 * $margin, $link );
 			} elseif ( ! is_array( $data[ $i ] ) ) {
-				//Print the text
+				if( apply_filters("woe_pdf_make_cell_bold", false,$i, $data[ $i ]) )
+					$this->changeBrushToDraw( 'table_header' );
+				//Print the text as it 
 				$this->MultiCell( $w, $h, $data[ $i ], 0, $horizontal_align, $vertical_align );
+				if( apply_filters("woe_pdf_make_cell_bold", false,$i, $data[ $i ]) )
+					$this->changeBrushToDraw( 'table_row' );
 			}
 
 			//Put the position to the right of the cell

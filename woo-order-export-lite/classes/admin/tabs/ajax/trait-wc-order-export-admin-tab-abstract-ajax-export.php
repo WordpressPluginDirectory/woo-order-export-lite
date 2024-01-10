@@ -9,7 +9,7 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 	public function ajax_preview() {
 		global $wp_filter;
 		
-		$settings = ($_POST['mode'] == 'frontend' ) ? json_decode($_POST['settings'],true) : WC_Order_Export_Manage::make_new_settings( $_POST );
+		$settings = WC_Order_Export_Manage::use_ready_or_prepare_settings( $_POST );
 		// use unsaved settings
 
 		do_action( 'woe_start_preview_job', $_POST['id'], $settings );
@@ -32,7 +32,7 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 
 	public function ajax_estimate() {
 
-		$settings = ($_POST['mode'] == 'frontend' ) ? json_decode($_POST['settings'],true) : WC_Order_Export_Manage::make_new_settings( $_POST );
+		$settings = WC_Order_Export_Manage::use_ready_or_prepare_settings( $_POST );
 		// use unsaved settings
 
 		$total = WC_Order_Export_Engine::build_file( $settings, 'estimate', 'file', 0, 0, 'test' );
@@ -42,7 +42,7 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 
 	public function ajax_export_start() {
 		$this->start_prevent_object_cache();
-		$settings = ($_POST['mode'] == 'frontend' ) ? json_decode($_POST['settings'],true) : WC_Order_Export_Manage::make_new_settings( $_POST );
+		$settings = WC_Order_Export_Manage::use_ready_or_prepare_settings( $_POST );
 
 		if ( $settings['format'] === 'XLS' && ! function_exists( "mb_strtolower" ) ) {
 			die( __( 'Please, install/enable PHP mbstring extension!', 'woo-order-export-lite' ) );
@@ -75,7 +75,7 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 
 	public function ajax_export_part() {
 
-		$settings = ($_POST['mode'] == 'frontend' ) ? json_decode($_POST['settings'],true) : WC_Order_Export_Manage::make_new_settings( $_POST );
+		$settings = WC_Order_Export_Manage::use_ready_or_prepare_settings( $_POST );
 		$main_settings = WC_Order_Export_Main_Settings::get_settings();
 
 		$settings['max_line_items'] = $_POST['max_line_items'];
@@ -91,7 +91,7 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 	public function ajax_plain_export() {
 
 		// use unsaved settings
-		$settings = ($_POST['mode'] == 'frontend' ) ? json_decode($_POST['settings']) : WC_Order_Export_Manage::make_new_settings( $_POST );
+		$settings = WC_Order_Export_Manage::use_ready_or_prepare_settings( $_POST );
 		do_action( 'woe_start_export_job', $_POST['id'], $settings );
 
 		// custom export worked for plain
@@ -143,7 +143,7 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 	}
 
 	public function ajax_export_finish() {
-		$settings = ($_POST['mode'] == 'frontend' ) ? json_decode($_POST['settings'],true) : WC_Order_Export_Manage::make_new_settings( $_POST );
+		$settings = WC_Order_Export_Manage::use_ready_or_prepare_settings( $_POST );
 		WC_Order_Export_Engine::build_file( $settings, 'finish', 'file', 0, 0, $this->get_temp_file_name() );
 
 		$filename = WC_Order_Export_Engine::make_filename( $settings['export_filename'] );

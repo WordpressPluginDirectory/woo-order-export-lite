@@ -341,9 +341,9 @@ class WC_Order_Export_Order_Fields {
 			$country_states = WC()->countries->get_states( $this->billing_country );
 			$row[$field] = isset( $country_states[ $this->billing_state ] ) ? html_entity_decode( $country_states[ $this->billing_state ] ) : $this->billing_state;
 		} elseif ($field == 'fulladdress_shipping') {
-			$row[$field] .= str_replace("<br/>", "\n", $this->order->get_formatted_shipping_address());
+			$row[$field] = str_replace("<br/>", "\n", $this->order->get_formatted_shipping_address());
 		} elseif ($field == 'fulladdress_billing') {
-			$row[$field] .= str_replace("<br/>", "\n", $this->order->get_formatted_billing_address());
+			$row[$field] = str_replace("<br/>", "\n", $this->order->get_formatted_billing_address());
 		} elseif ( $field == 'shipping_state_full' ) {
 			$country_states = WC()->countries->get_states( $this->shipping_country );
 			$row[$field] = isset( $country_states[ $this->shipping_state ] ) ? html_entity_decode( $country_states[ $this->shipping_state ] ) : $this->shipping_state;
