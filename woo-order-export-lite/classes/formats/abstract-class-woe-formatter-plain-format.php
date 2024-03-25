@@ -181,6 +181,7 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 			return $direction === 'asc' ? strcmp($a[$field],$b[$field]) : (-1) * strcmp($a[$field],$b[$field]);
 		};
 
+		$sortCallback = apply_filters("woe_storage_sorting_function", $sortCallback, $sort);
 		if($this->settings['display_column_names']) {    // preserve header
 			$columnsTitle = array_slice($this->rows, 0, 1, true);
 			$this->rows = array_slice($this->rows, 1, null, true);

@@ -462,7 +462,7 @@ function remove_time_from_date( $datetime ) {
 					<?php _e( 'Orientation', 'woo-order-export-lite' ) ?><br>
                     <select name="settings[format_pdf_orientation]">
 						<?php foreach ( $pdf_format_available_options['orientation'] as $orientation => $label ): ?>
-                            <option value="<?php echo $orientation; ?>" <?php echo selected( $orientation == $settings['format_pdf_orientation'] ); ?> ><?php echo $label; ?></option>
+                            <option value="<?php echo $orientation; ?>" <?php selected( $orientation , $settings['format_pdf_orientation'] ); ?> ><?php echo $label; ?></option>
 						<?php endforeach; ?>
                     </select>
                 </div>
@@ -471,7 +471,7 @@ function remove_time_from_date( $datetime ) {
 					<?php _e( 'Page size', 'woo-order-export-lite' ) ?><br>
                     <select name="settings[format_pdf_page_size]">
 						<?php foreach ( $pdf_format_available_options['page_size'] as $size => $label ): ?>
-                            <option value="<?php echo esc_attr($size); ?>" <?php echo selected( $size == $settings['format_pdf_page_size'] ); ?> ><?php echo $label; ?></option>
+                            <option value="<?php echo esc_attr($size); ?>" <?php selected( $size, $settings['format_pdf_page_size'] ); ?> ><?php echo $label; ?></option>
 						<?php endforeach; ?>
                     </select>
                 </div>
@@ -494,7 +494,7 @@ function remove_time_from_date( $datetime ) {
 					?><br>
                     <select name="settings[format_pdf_pagination]">
 						<?php foreach ( array_merge( $align_types, array( 'disable' => __( 'No page numbers', 'woo-order-export-lite' ) ) ) as $align => $label ): ?>
-                            <option value="<?php echo esc_attr($align); ?>" <?php echo selected( $align == $settings['format_pdf_pagination'] ); ?> ><?php echo $label; ?></option>
+                            <option value="<?php echo esc_attr($align); ?>" <?php selected( $align , $settings['format_pdf_pagination'] ); ?> ><?php echo $label; ?></option>
 						<?php endforeach; ?>
                     </select>
                 </div>
@@ -588,7 +588,7 @@ function remove_time_from_date( $datetime ) {
 					<?php _e( 'Logo align', 'woo-order-export-lite' ) ?>
                     <select name="settings[format_pdf_logo_align]">
 						<?php foreach ( $align_types as $align => $label ): ?>
-                            <option value="<?php echo esc_attr($align); ?>" <?php echo selected( $align == $settings['format_pdf_logo_align'] ); ?> ><?php echo $label; ?></option>
+                            <option value="<?php echo esc_attr($align); ?>" <?php  selected( $align, $settings['format_pdf_logo_align'] ); ?> ><?php echo $label; ?></option>
 						<?php endforeach; ?>
                     </select>
                 </div>
@@ -760,11 +760,11 @@ function remove_time_from_date( $datetime ) {
 					?>
                     <select>
 						<?php foreach ( $date_format as $format ): ?>
-                            <option value="<?php echo esc_attr($format) ?>" <?php echo selected( @$settings['date_format'],
+                            <option value="<?php echo esc_attr($format) ?>" <?php selected( @$settings['date_format'],
 								$format ) ?> ><?php echo ! empty( $format ) ? current_time( $format ) : __( '-',
 									'woo-order-export-lite' ) ?></option>
 						<?php endforeach; ?>
-                        <option value="custom" <?php echo selected( in_array( @$settings['date_format'], $date_format ),
+                        <option value="custom" <?php selected( in_array( @$settings['date_format'], $date_format ),
 							false ) ?> ><?php echo __( 'custom', 'woo-order-export-lite' ) ?></option>
                     </select>
                     <div id="custom_date_format_block" style="<?php echo in_array( @$settings['date_format'],
@@ -786,11 +786,11 @@ function remove_time_from_date( $datetime ) {
 					?>
                     <select>
 						<?php foreach ( $time_format as $format ): ?>
-                            <option value="<?php echo esc_attr($format) ?>" <?php echo selected( @$settings['time_format'],
+                            <option value="<?php echo esc_attr($format) ?>" <?php selected( @$settings['time_format'],
 								$format ) ?> ><?php echo ! empty( $format ) ? current_time( $format ) : __( '-',
 									'woo-order-export-lite' ) ?></option>
 						<?php endforeach; ?>
-                        <option value="custom" <?php echo selected( in_array( @$settings['time_format'], $time_format ),
+                        <option value="custom" <?php selected( in_array( @$settings['time_format'], $time_format ),
 							false ) ?> ><?php echo __( 'custom', 'woo-order-export-lite' ) ?></option>
                     </select>
                     <div id="custom_time_format_block" style="<?php echo in_array( @$settings['time_format'],
@@ -823,7 +823,7 @@ function remove_time_from_date( $datetime ) {
 			?>
             <select name="settings[sort]">
 				<?php foreach ( $sort as $value => $text ): ?>
-                    <option value='<?php echo esc_attr($value) ?>' <?php echo selected( @$settings['sort'],
+                    <option value='<?php echo esc_attr($value) ?>' <?php  selected( @$settings['sort'],
 						$value ) ?> ><?php echo esc_attr($text); ?></option>
 				<?php endforeach; ?>
             </select>
@@ -833,9 +833,9 @@ function remove_time_from_date( $datetime ) {
 			ob_start();
 			?>
             <select name="settings[sort_direction]">
-                <option value='DESC' <?php echo selected( @$settings['sort_direction'],
+                <option value='DESC' <?php selected( @$settings['sort_direction'],
 					'DESC' ) ?> ><?php _e( 'Descending', 'woo-order-export-lite' ) ?></option>
-                <option value='ASC' <?php echo selected( @$settings['sort_direction'],
+                <option value='ASC' <?php selected( @$settings['sort_direction'],
 					'ASC' ) ?> ><?php _e( 'Ascending', 'woo-order-export-lite' ) ?></option>
             </select>
 			<?php

@@ -1,10 +1,9 @@
 <?php
-
-use Automattic\WooCommerce\Utilities\OrderUtil;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+
+use Automattic\WooCommerce\Utilities\OrderUtil;
 
 class WC_Order_Export_Engine {
 	public static $current_job_settings = '';

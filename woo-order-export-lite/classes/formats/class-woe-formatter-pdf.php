@@ -161,6 +161,7 @@ class WOE_Formatter_PDF extends WOE_Formatter_Plain_Format {
 		$settings = $this->settings['global_job_settings'];
 		if ( preg_match('/setup_field_/i', $settings['sort']) ) {
 			add_filter('woe_storage_sort_by_field', function () use ($settings) {
+				$settings['sort'] = str_replace("setup_field__plain", "setup_field_string_plain", $settings['sort']); //fix fields with undefined format
 				$field = preg_replace('/setup_field_(.+?)_/i', '', $settings['sort']);
 				$field = str_replace("plain_orders_", "", $field); //remove extra prefix 
 				return [$field, $settings['sort_direction'], preg_match('/setup_field_(.+?)_/i', $settings['sort'], $matches) ? $matches[1] : 'string'];

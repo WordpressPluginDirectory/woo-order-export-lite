@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 trait WOE_Core_Extractor {
-	//Common
+	static $order_meta_field_prefix = '';
 
 	// to parse "item_type:meta_key" strings
 	public static function extract_item_type_and_key( $meta_key, &$type, &$key ) {
@@ -648,6 +648,9 @@ trait WOE_Core_Extractor {
 		$table_name = $wpdb->prefix.'wc_order_stats';
 		$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
 		self::$has_order_stats = ($wpdb->get_var( $query ) == $table_name);
+
+		//to support Origin, since WC 8.5
+		self::set_order_meta_field_prefix();
 	}
 
 	//for debug 
@@ -1166,4 +1169,171 @@ trait WOE_Core_Extractor {
 		}
 		return $value;		
 	}
+
+	// Following functions copied from \woocommerce\src\Internal\Traits\OrderAttributionMeta.php
+	/**
+	 * Output the translated origin label for the Origin column in the orders table.
+	 *
+	 * Default to "Unknown" if no origin is set.
+	 *
+	 * @param WC_Order $order The order object.
+	 *
+	 * @return string
+	 */
+	public static function get_origin_for_order( $order ) {
+		$source_type = $order->get_meta( self::get_meta_prefixed_field( 'type' ) );
+		$source      = $order->get_meta( self::get_meta_prefixed_field( 'utm_source' ) );
+		$origin      = self::get_origin_label( $source_type, $source );
+		if ( empty( $origin ) ) {
+			$origin = __( 'Unknown', 'woocommerce' );
+		}
+		return esc_html( $origin );
+	}
+
+	/**
+	 * Get the label for the Order origin with placeholder where appropriate. Can be
+	 * translated (for DB / display) or untranslated (for Tracks).
+	 *
+	 * @param string $source_type The source type.
+	 * @param string $source      The source.
+	 * @param bool   $translated  Whether the label should be translated.
+	 *
+	 * @return string
+	 */
+	public static function get_origin_label( string $source_type, string $source, bool $translated = true ): string {
+		// Set up the label based on the source type.
+		switch ( $source_type ) {
+			case 'utm':
+				$label = $translated ?
+					/* translators: %s is the source value */
+					__( 'Source: %s', 'woocommerce' )
+					: 'Source: %s';
+				break;
+			case 'organic':
+				$label = $translated ?
+					/* translators: %s is the source value */
+					__( 'Organic: %s', 'woocommerce' )
+					: 'Organic: %s';
+				break;
+			case 'referral':
+				$label = $translated ?
+					/* translators: %s is the source value */
+					__( 'Referral: %s', 'woocommerce' )
+					: 'Referral: %s';
+				break;
+			case 'typein':
+				$label  = '';
+				$source = $translated ?
+					__( 'Direct', 'woocommerce' )
+					: 'Direct';
+				break;
+			case 'admin':
+				$label  = '';
+				$source = $translated ?
+					__( 'Web admin', 'woocommerce' )
+					: 'Web admin';
+				break;
+
+			default:
+				$label  = '';
+				$source = __( 'Unknown', 'woocommerce' );
+				break;
+		}
+
+		/**
+		 * Filter the formatted source for the order origin.
+		 *
+		 * @since 8.5.0
+		 *
+		 * @param string $formatted_source The formatted source.
+		 * @param string $source           The source.
+		 */
+		$formatted_source = apply_filters(
+			'wc_order_attribution_origin_formatted_source',
+			ucfirst( trim( $source, '()' ) ),
+			$source
+		);
+
+		/**
+		 * Filter the label for the order origin.
+		 *
+		 * This label should have a %s placeholder for the formatted source to be inserted
+		 * via sprintf().
+		 *
+		 * @since 8.5.0
+		 *
+		 * @param string $label            The label for the order origin.
+		 * @param string $source_type      The source type.
+		 * @param string $source           The source.
+		 * @param string $formatted_source The formatted source.
+		 */
+		$label = (string) apply_filters(
+			'wc_order_attribution_origin_label',
+			$label,
+			$source_type,
+			$source,
+			$formatted_source
+		);
+
+		if ( false === strpos( $label, '%' ) ) {
+			return $formatted_source;
+		}
+
+		return sprintf( $label, $formatted_source );
+	}
+
+	/**
+	 * Get the field name with the meta prefix.
+	 *
+	 * @param string $field The field name.
+	 *
+	 * @return string The prefixed field name.
+	 */
+	public static function get_meta_prefixed_field( string $field ): string {
+		// Map some of the fields to the correct meta name.
+		if ( 'type' === $field ) {
+			$field = 'source_type';
+		} elseif ( 'url' === $field ) {
+			$field = 'referrer';
+		}
+
+		return "_" . self::get_prefixed_field( $field );
+	}
+
+	/**
+	 * Get the field name with the appropriate prefix.
+	 *
+	 * @param string $field Field name.
+	 *
+	 * @return string The prefixed field name.
+	 */
+	public static function get_prefixed_field( $field ): string {
+		return self::$order_meta_field_prefix . $field;
+	}
+
+	/**
+	 * Set the meta prefix for our fields.
+	 *
+	 * @return void
+	 */
+	public static function set_order_meta_field_prefix(): void {
+		/**
+		 * Filter the prefix for the meta fields.
+		 *
+		 * @since 8.5.0
+		 *
+		 * @param string $prefix The prefix for the meta fields.
+		 */
+		$prefix = (string) apply_filters(
+			'wc_order_attribution_tracking_field_prefix',
+			'wc_order_attribution_'
+		);
+
+		// Remove leading and trailing underscores.
+		$prefix = trim( $prefix, '_' );
+
+		// Ensure the prefix ends with _, and set the prefix.
+		self::$order_meta_field_prefix = "{$prefix}_";
+	}
+	// Above functions copied from \woocommerce\src\Internal\Traits\OrderAttributionMeta.php
 }

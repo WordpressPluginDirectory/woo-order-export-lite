@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 class WC_Order_Export_Order_Fields {
     /**
      * @var WC_Order
@@ -239,6 +243,8 @@ class WC_Order_Export_Order_Fields {
 
 		} elseif ( $field == 'order_id' ) {
 			$row[$field] =  $this->order_id;
+		} elseif ( $field == 'origin' ) {
+			$row[$field] =  WC_Order_Export_Data_Extractor::get_origin_for_order($this->order);
 		} elseif ( $field == 'order_date' ) {
 			$row[$field] =  ! method_exists( $this->order,
 				"get_date_created" ) ? $this->order->order_date : ( $this->order->get_date_created() ? gmdate( 'Y-m-d H:i:s',

@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 class WC_Order_Export_Order_Coupon_Fields {
 	var $item;
 	var $coupon_meta;

@@ -212,6 +212,7 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 		$settings = $this->settings['global_job_settings'];
 		if ( preg_match('/setup_field_/i', $settings['sort']) ) {
 			add_filter('woe_storage_sort_by_field', function () use ($settings) {
+				$settings['sort'] = str_replace("setup_field__plain", "setup_field_string_plain", $settings['sort']); //fix fields with undefined format
 				$field = preg_replace('/setup_field_(.+?)_/i', '', $settings['sort']);
 				$field = str_replace("plain_orders_", "", $field); //remove extra prefix 
 				return [$field, $settings['sort_direction'], preg_match('/setup_field_(.+?)_/i', $settings['sort'], $matches) ? $matches[1] : 'string'];
@@ -467,7 +468,6 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 					if ( wc_is_valid_url( $value ) ) {
 						$url  = $value;
 						$path = get_temp_dir() . '/' . md5( $url ); //Path to signature .jpg file
-
 						if ( ! file_exists( $path ) ) {
 							$ch = curl_init( $url );
 							$fp = fopen( $path, 'wb' );
@@ -486,6 +486,15 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 					}
 
 					if ( file_exists( $path ) ) {
+						//support webp
+						if(preg_match('#\.webp$#i',$value)) {
+							$objImage = imagecreatefromwebp($path);
+							$path .= ".png";
+							if (!imagepng($objImage, $path)) {
+								throw new Exception('Error while saving to temporary png file');
+							}
+							imagedestroy($objImage);
+						}
 						$objDrawing->setPath( $path );
 						$objDrawing->setCoordinates( $cell->getCoordinate() );        //set image to cell
 						$row              = $cell->getRow();

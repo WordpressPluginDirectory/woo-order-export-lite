@@ -90,6 +90,8 @@ trait WOE_Core_Extractor_UI {
 
 	public static function get_products_like( $like, $limit = null ) {
 		global $wpdb;
+
+		$show_image = apply_filters("woe_autocomplete_show_product_image", true);
 		$like         = $wpdb->esc_like( $like );
 		$limit_result = (int) $limit > 0 ? "LIMIT " . (int) $limit : "";
 
@@ -106,7 +108,7 @@ trait WOE_Core_Extractor_UI {
 
 		$products = $wpdb->get_results( $wpdb->prepare( $query, '%' . $like . '%' ) );
 		foreach ( $products as $key => $product ) {
-			if ( $product->photo_id ) {
+			if ( $product->photo_id AND $show_image ) {
 				$photo                       = wp_get_attachment_image_src( $product->photo_id, 'thumbnail' );
 				$products[ $key ]->photo_url = $photo[0];
 			} else {
@@ -604,6 +606,11 @@ trait WOE_Core_Extractor_UI {
 				'label'   => __( 'Link to edit order', 'woo-order-export-lite' ),
 				'checked' => 0,
 				'format'  => 'link',
+			),
+			'origin' => array(
+				'label'   => __( 'Origin', 'woo-order-export-lite' ),
+				'checked' => 0,
+				'format'  => 'string',
 			),
 		);
 		// support Subscription plugin in core!

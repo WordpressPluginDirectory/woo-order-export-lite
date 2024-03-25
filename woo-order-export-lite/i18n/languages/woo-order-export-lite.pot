@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Order Export For WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 11:52+0000\n"
+"POT-Creation-Date: 2024-03-22 06:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.6; wp-6.4.2\n"
+"X-Loco-Version: 2.6.7; wp-6.5-RC3\n"
 "X-Domain: woo-order-export-lite"
 
 #: classes/class-wc-order-export-admin.php:601
@@ -47,7 +47,7 @@ msgstr ""
 msgid "1st row only"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor.php:1147
+#: classes/core/trait-woe-core-extractor.php:1150
 msgid "[Rest of the World]"
 msgstr ""
 
@@ -92,27 +92,27 @@ msgstr ""
 msgid "Add tax"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:768
+#: classes/core/trait-woe-core-extractor-ui.php:775
 msgid "Address 1 (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:863
+#: classes/core/trait-woe-core-extractor-ui.php:870
 msgid "Address 1 (Shipping)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:763
+#: classes/core/trait-woe-core-extractor-ui.php:770
 msgid "Address 1&2 (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:858
+#: classes/core/trait-woe-core-extractor-ui.php:865
 msgid "Address 1&2 (Shipping)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:773
+#: classes/core/trait-woe-core-extractor-ui.php:780
 msgid "Address 2 (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:868
+#: classes/core/trait-woe-core-extractor-ui.php:875
 msgid "Address 2 (Shipping)"
 msgstr ""
 
@@ -162,8 +162,8 @@ msgstr ""
 msgid "Auto column width"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1300
-#: classes/core/trait-woe-core-extractor-ui.php:1324
+#: classes/core/trait-woe-core-extractor-ui.php:1307
+#: classes/core/trait-woe-core-extractor-ui.php:1331
 msgid "Billing Address"
 msgstr ""
 
@@ -211,24 +211,24 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1306
-#: classes/core/trait-woe-core-extractor-ui.php:1331
+#: classes/core/trait-woe-core-extractor-ui.php:1313
+#: classes/core/trait-woe-core-extractor-ui.php:1338
 msgid "Cart"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1129
+#: classes/core/trait-woe-core-extractor-ui.php:1136
 msgid "Cart Discount Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1134
+#: classes/core/trait-woe-core-extractor-ui.php:1141
 msgid "Cart Discount Amount Tax"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1164
+#: classes/core/trait-woe-core-extractor-ui.php:1171
 msgid "Cart Tax Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:318
+#: classes/core/trait-woe-core-extractor-ui.php:320
 msgid "Category"
 msgstr ""
 
@@ -248,27 +248,27 @@ msgstr ""
 msgid "City"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:778
+#: classes/core/trait-woe-core-extractor-ui.php:785
 msgid "City (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:873
+#: classes/core/trait-woe-core-extractor-ui.php:880
 msgid "City (Shipping)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:793
+#: classes/core/trait-woe-core-extractor-ui.php:800
 msgid "City, State Zip (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:888
+#: classes/core/trait-woe-core-extractor-ui.php:895
 msgid "City, State Zip (Shipping)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:788
+#: classes/core/trait-woe-core-extractor-ui.php:795
 msgid "City, State, Zip (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:883
+#: classes/core/trait-woe-core-extractor-ui.php:890
 msgid "City, State, Zip (Shipping)"
 msgstr ""
 
@@ -317,20 +317,20 @@ msgstr ""
 msgid "comma separated list"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1298
-#: classes/core/trait-woe-core-extractor-ui.php:1322
+#: classes/core/trait-woe-core-extractor-ui.php:1305
+#: classes/core/trait-woe-core-extractor-ui.php:1329
 msgid "Common"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:758
+#: classes/core/trait-woe-core-extractor-ui.php:765
 msgid "Company (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:853
+#: classes/core/trait-woe-core-extractor-ui.php:860
 msgid "Company (Shipping)"
 msgstr ""
 
-#: view/settings-form.php:167 classes/core/trait-woe-core-extractor-ui.php:579
+#: view/settings-form.php:167 classes/core/trait-woe-core-extractor-ui.php:581
 msgid "Completed Date"
 msgstr ""
 
@@ -359,31 +359,31 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:808
+#: classes/core/trait-woe-core-extractor-ui.php:815
 msgid "Country Code (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:903
+#: classes/core/trait-woe-core-extractor-ui.php:910
 msgid "Country Code (Shipping)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:813
+#: classes/core/trait-woe-core-extractor-ui.php:820
 msgid "Country Name (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:908
+#: classes/core/trait-woe-core-extractor-ui.php:915
 msgid "Country Name (Shipping)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:489
+#: classes/core/trait-woe-core-extractor-ui.php:491
 msgid "Coupon Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:460
+#: classes/core/trait-woe-core-extractor-ui.php:462
 msgid "Coupon Code"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:480
+#: classes/core/trait-woe-core-extractor-ui.php:482
 msgid "Coupon Description"
 msgstr ""
 
@@ -391,15 +391,15 @@ msgstr ""
 msgid "Coupon tag"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:484
+#: classes/core/trait-woe-core-extractor-ui.php:486
 msgid "Coupon Type"
 msgstr ""
 
 #: view/settings-form.php:1378
 #: classes/admin/class-wc-order-export-manage.php:755
-#: classes/core/trait-woe-core-extractor-ui.php:1103
-#: classes/core/trait-woe-core-extractor-ui.php:1304
-#: classes/core/trait-woe-core-extractor-ui.php:1329
+#: classes/core/trait-woe-core-extractor-ui.php:1110
+#: classes/core/trait-woe-core-extractor-ui.php:1311
+#: classes/core/trait-woe-core-extractor-ui.php:1336
 msgid "Coupons"
 msgstr ""
 
@@ -411,11 +411,11 @@ msgstr ""
 msgid "CSV options"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:569
+#: classes/core/trait-woe-core-extractor-ui.php:571
 msgid "Currency"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:574
+#: classes/core/trait-woe-core-extractor-ui.php:576
 msgid "Currency Symbol"
 msgstr ""
 
@@ -435,56 +435,56 @@ msgstr ""
 msgid "Custom PHP code to modify output"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1299
-#: classes/core/trait-woe-core-extractor-ui.php:1323
+#: classes/core/trait-woe-core-extractor-ui.php:1306
+#: classes/core/trait-woe-core-extractor-ui.php:1330
 msgid "Customer"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:668
+#: classes/core/trait-woe-core-extractor-ui.php:675
 msgid "Customer first order date"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:623
+#: classes/core/trait-woe-core-extractor-ui.php:630
 msgid "Customer IP address"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:673
+#: classes/core/trait-woe-core-extractor-ui.php:680
 msgid "Customer last order date"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:594
+#: classes/core/trait-woe-core-extractor-ui.php:596
 msgid "Customer Note"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:658
+#: classes/core/trait-woe-core-extractor-ui.php:665
 msgid "Customer Paid Orders"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:648
+#: classes/core/trait-woe-core-extractor-ui.php:655
 msgid "Customer Role"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:653
+#: classes/core/trait-woe-core-extractor-ui.php:660
 msgid "Customer Total Orders"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:663
+#: classes/core/trait-woe-core-extractor-ui.php:670
 msgid "Customer Total Spent"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:643
+#: classes/core/trait-woe-core-extractor-ui.php:650
 msgid "Customer User Email"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:628
+#: classes/core/trait-woe-core-extractor-ui.php:635
 msgid "Customer User ID"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:633
+#: classes/core/trait-woe-core-extractor-ui.php:640
 msgid "Customer Username"
 msgstr ""
 
-#: view/settings-form.php:750 classes/core/trait-woe-core-extractor-ui.php:1356
+#: view/settings-form.php:750 classes/core/trait-woe-core-extractor-ui.php:1363
 msgid "Date"
 msgstr ""
 
@@ -492,11 +492,11 @@ msgstr ""
 msgid "Date From is greater than Date To"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:589
+#: classes/core/trait-woe-core-extractor-ui.php:591
 msgid "Date of first refund"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:554
+#: classes/core/trait-woe-core-extractor-ui.php:556
 msgid "Date of original order"
 msgstr ""
 
@@ -508,19 +508,19 @@ msgstr ""
 msgid "Descending"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:378
+#: classes/core/trait-woe-core-extractor-ui.php:380
 msgid "Description"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:465
+#: classes/core/trait-woe-core-extractor-ui.php:467
 msgid "Discount Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:475
+#: classes/core/trait-woe-core-extractor-ui.php:477
 msgid "Discount Amount + Tax"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:470
+#: classes/core/trait-woe-core-extractor-ui.php:472
 msgid "Discount Amount Tax"
 msgstr ""
 
@@ -547,7 +547,7 @@ msgid ""
 "reduce reply time :)"
 msgstr ""
 
-#: classes/core/class-wc-order-export-engine.php:394
+#: classes/core/class-wc-order-export-engine.php:393
 msgid "Don't Panic"
 msgstr ""
 
@@ -555,7 +555,7 @@ msgstr ""
 msgid "Don't put page break between order lines"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:363
+#: classes/core/trait-woe-core-extractor-ui.php:365
 msgid "Download URL"
 msgstr ""
 
@@ -567,16 +567,16 @@ msgstr ""
 msgid "Drag rows to reorder exported fields"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-order-fields.php:475
-#: classes/core/class-wc-order-export-order-fields.php:448
+#: classes/core-hpos/class-wc-order-export-order-fields.php:481
+#: classes/core/class-wc-order-export-order-fields.php:454
 msgid "Edit order"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:818
+#: classes/core/trait-woe-core-extractor-ui.php:825
 msgid "Email (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:428
+#: classes/core/trait-woe-core-extractor-ui.php:430
 msgid "Embedded Product Image"
 msgstr ""
 
@@ -700,7 +700,7 @@ msgstr ""
 msgid "Export unmarked orders only"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1082
+#: classes/core/trait-woe-core-extractor-ui.php:1089
 msgid "Exported items"
 msgstr ""
 
@@ -756,11 +756,11 @@ msgstr ""
 msgid "Filter orders by"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:743
+#: classes/core/trait-woe-core-extractor-ui.php:750
 msgid "First Name (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:838
+#: classes/core/trait-woe-core-extractor-ui.php:845
 msgid "First Name (Shipping)"
 msgstr ""
 
@@ -804,23 +804,23 @@ msgstr ""
 msgid "Fri"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:918
+#: classes/core/trait-woe-core-extractor-ui.php:925
 msgid "Full Address (Shipping)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:828
+#: classes/core/trait-woe-core-extractor-ui.php:835
 msgid "Full Adress (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:753
+#: classes/core/trait-woe-core-extractor-ui.php:760
 msgid "Full Name (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:848
+#: classes/core/trait-woe-core-extractor-ui.php:855
 msgid "Full Name (Shipping)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:388
+#: classes/core/trait-woe-core-extractor-ui.php:390
 msgid "Full names for categories"
 msgstr ""
 
@@ -844,7 +844,7 @@ msgstr ""
 msgid "Header text color"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:338
+#: classes/core/trait-woe-core-extractor-ui.php:340
 msgid "Height"
 msgstr ""
 
@@ -878,11 +878,11 @@ msgid ""
 "it). Probably, it's a conflict with another plugin or active theme."
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1357
+#: classes/core/trait-woe-core-extractor-ui.php:1364
 msgid "Image"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:368
+#: classes/core/trait-woe-core-extractor-ui.php:370
 msgid "Image URL"
 msgstr ""
 
@@ -908,39 +908,39 @@ msgstr ""
 msgid "It might not work for huge datasets!"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:945
+#: classes/core/trait-woe-core-extractor-ui.php:952
 msgid "Item #"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:965
+#: classes/core/trait-woe-core-extractor-ui.php:972
 msgid "Item Cost"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:970
+#: classes/core/trait-woe-core-extractor-ui.php:977
 msgid "Item Cost (inc. tax)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:975
+#: classes/core/trait-woe-core-extractor-ui.php:982
 msgid "Item Cost Before Discount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1030
+#: classes/core/trait-woe-core-extractor-ui.php:1037
 msgid "Item Discount Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1055
+#: classes/core/trait-woe-core-extractor-ui.php:1062
 msgid "Item Discount Amount + Tax"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1050
+#: classes/core/trait-woe-core-extractor-ui.php:1057
 msgid "Item Discount Tax"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1040
+#: classes/core/trait-woe-core-extractor-ui.php:1047
 msgid "Item download URL"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:940
+#: classes/core/trait-woe-core-extractor-ui.php:947
 msgid "Item ID"
 msgstr ""
 
@@ -952,7 +952,7 @@ msgstr ""
 msgid "Item metadata"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:950
+#: classes/core/trait-woe-core-extractor-ui.php:957
 msgid "Item Name"
 msgstr ""
 
@@ -960,7 +960,7 @@ msgstr ""
 msgid "Item names"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1035
+#: classes/core/trait-woe-core-extractor-ui.php:1042
 msgid "Item Tax Rate"
 msgstr ""
 
@@ -989,11 +989,11 @@ msgstr ""
 msgid "Landscape"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:748
+#: classes/core/trait-woe-core-extractor-ui.php:755
 msgid "Last Name (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:843
+#: classes/core/trait-woe-core-extractor-ui.php:850
 msgid "Last Name (Shipping)"
 msgstr ""
 
@@ -1005,7 +1005,7 @@ msgstr ""
 msgid "Legal"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:333
+#: classes/core/trait-woe-core-extractor-ui.php:335
 msgid "Length"
 msgstr ""
 
@@ -1017,15 +1017,15 @@ msgstr ""
 msgid "Line Break"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:529
+#: classes/core/trait-woe-core-extractor-ui.php:531
 msgid "Line number"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1358
+#: classes/core/trait-woe-core-extractor-ui.php:1365
 msgid "Link"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:604
+#: classes/core/trait-woe-core-extractor-ui.php:606
 msgid "Link to edit order"
 msgstr ""
 
@@ -1047,7 +1047,7 @@ msgid ""
 "Look at %s for popular plugins or check %s to study how to extend the plugin."
 msgstr ""
 
-#: classes/core/class-wc-order-export-engine.php:544
+#: classes/core/class-wc-order-export-engine.php:543
 msgid "Main SQL queries are listed below"
 msgstr ""
 
@@ -1074,7 +1074,7 @@ msgid "Misc settings"
 msgstr ""
 
 #: view/settings-form.php:153 view/settings-form.php:810
-#: classes/core/trait-woe-core-extractor-ui.php:559
+#: classes/core/trait-woe-core-extractor-ui.php:561
 msgid "Modification Date"
 msgstr ""
 
@@ -1082,7 +1082,7 @@ msgstr ""
 msgid "Mon"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1354
+#: classes/core/trait-woe-core-extractor-ui.php:1361
 msgid "Money"
 msgstr ""
 
@@ -1099,14 +1099,14 @@ msgstr ""
 msgid "No page numbers"
 msgstr ""
 
-#: classes/formats/class-woe-formatter-pdf.php:182
+#: classes/formats/class-woe-formatter-pdf.php:183
 #: classes/formats/class-woe-formatter-html.php:156
 #: classes/formats/abstract-class-woe-formatter-sv.php:108
-#: classes/formats/class-woe-formatter-xls.php:234
+#: classes/formats/class-woe-formatter-xls.php:235
 msgid "No results"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:393
+#: classes/core/trait-woe-core-extractor-ui.php:395
 msgid "Non variation attributes"
 msgstr ""
 
@@ -1115,11 +1115,11 @@ msgstr ""
 msgid "Nothing to export. Please, adjust your filters"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1355
+#: classes/core/trait-woe-core-extractor-ui.php:1362
 msgid "Number"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1124
+#: classes/core/trait-woe-core-extractor-ui.php:1131
 msgid "Number of coupons used"
 msgstr ""
 
@@ -1138,11 +1138,11 @@ msgid "or type meta key here"
 msgstr ""
 
 #: view/settings-form.php:146 view/settings-form.php:809
-#: classes/core/trait-woe-core-extractor-ui.php:549
+#: classes/core/trait-woe-core-extractor-ui.php:551
 msgid "Order Date"
 msgstr ""
 
-#: view/settings-form.php:808 classes/core/trait-woe-core-extractor-ui.php:534
+#: view/settings-form.php:808 classes/core/trait-woe-core-extractor-ui.php:536
 msgid "Order ID"
 msgstr ""
 
@@ -1150,55 +1150,55 @@ msgstr ""
 msgid "Order item fields"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1045
+#: classes/core/trait-woe-core-extractor-ui.php:1052
 msgid "Order Item Metadata"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:980
+#: classes/core/trait-woe-core-extractor-ui.php:987
 msgid "Order Line (w/o tax)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1000
+#: classes/core/trait-woe-core-extractor-ui.php:1007
 msgid "Order Line Subtotal"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1005
+#: classes/core/trait-woe-core-extractor-ui.php:1012
 msgid "Order Line Subtotal Tax"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:985
+#: classes/core/trait-woe-core-extractor-ui.php:992
 msgid "Order Line Tax"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:995
+#: classes/core/trait-woe-core-extractor-ui.php:1002
 msgid "Order Line Tax (- Refund)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:990
+#: classes/core/trait-woe-core-extractor-ui.php:997
 msgid "Order Line Tax Refunded"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1010
+#: classes/core/trait-woe-core-extractor-ui.php:1017
 msgid "Order Line Total"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1025
+#: classes/core/trait-woe-core-extractor-ui.php:1032
 msgid "Order Line Total (- Refund)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1015
+#: classes/core/trait-woe-core-extractor-ui.php:1022
 msgid "Order Line Total (include tax)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1020
+#: classes/core/trait-woe-core-extractor-ui.php:1027
 msgid "Order Line Total Refunded"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:599
+#: classes/core/trait-woe-core-extractor-ui.php:601
 msgid "Order Notes"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:539
+#: classes/core/trait-woe-core-extractor-ui.php:541
 msgid "Order Number"
 msgstr ""
 
@@ -1206,39 +1206,39 @@ msgstr ""
 msgid "Order Refund"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1239
+#: classes/core/trait-woe-core-extractor-ui.php:1246
 msgid "Order Refund Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1199
+#: classes/core/trait-woe-core-extractor-ui.php:1206
 msgid "Order Shipping + Tax Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1194
+#: classes/core/trait-woe-core-extractor-ui.php:1201
 msgid "Order Shipping Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1209
+#: classes/core/trait-woe-core-extractor-ui.php:1216
 msgid "Order Shipping Amount (- Refund)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1204
+#: classes/core/trait-woe-core-extractor-ui.php:1211
 msgid "Order Shipping Amount Refunded"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1214
+#: classes/core/trait-woe-core-extractor-ui.php:1221
 msgid "Order Shipping Tax Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1224
+#: classes/core/trait-woe-core-extractor-ui.php:1231
 msgid "Order Shipping Tax Amount (- Refund)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1219
+#: classes/core/trait-woe-core-extractor-ui.php:1226
 msgid "Order Shipping Tax Refunded"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:544
+#: classes/core/trait-woe-core-extractor-ui.php:546
 msgid "Order Status"
 msgstr ""
 
@@ -1254,23 +1254,23 @@ msgstr ""
 msgid "Order Subscription"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1149
+#: classes/core/trait-woe-core-extractor-ui.php:1156
 msgid "Order Subtotal - Cart Discount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1139
+#: classes/core/trait-woe-core-extractor-ui.php:1146
 msgid "Order Subtotal Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1159
+#: classes/core/trait-woe-core-extractor-ui.php:1166
 msgid "Order Subtotal Amount (- Refund)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1144
+#: classes/core/trait-woe-core-extractor-ui.php:1151
 msgid "Order Subtotal Amount + Cart Tax"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1154
+#: classes/core/trait-woe-core-extractor-ui.php:1161
 msgid "Order Subtotal Amount Refunded"
 msgstr ""
 
@@ -1278,31 +1278,31 @@ msgstr ""
 msgid "Order tag"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1249
+#: classes/core/trait-woe-core-extractor-ui.php:1256
 msgid "Order Total Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1244
+#: classes/core/trait-woe-core-extractor-ui.php:1251
 msgid "Order Total Amount (- Refund)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1254
+#: classes/core/trait-woe-core-extractor-ui.php:1261
 msgid "Order Total Amount without Tax"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1234
+#: classes/core/trait-woe-core-extractor-ui.php:1241
 msgid "Order Total Fee"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1259
+#: classes/core/trait-woe-core-extractor-ui.php:1266
 msgid "Order Total Tax Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1269
+#: classes/core/trait-woe-core-extractor-ui.php:1276
 msgid "Order Total Tax Amount (- Refund)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1264
+#: classes/core/trait-woe-core-extractor-ui.php:1271
 msgid "Order Total Tax Amount Refunded"
 msgstr ""
 
@@ -1311,7 +1311,7 @@ msgid "Order Type"
 msgstr ""
 
 #: classes/admin/class-wc-order-export-manage.php:263
-#: classes/formats/class-woe-formatter-xls.php:369
+#: classes/formats/class-woe-formatter-xls.php:370
 msgid "Orders"
 msgstr ""
 
@@ -1323,13 +1323,17 @@ msgstr ""
 msgid "Orientation"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1305
-#: classes/core/trait-woe-core-extractor-ui.php:1330
+#: classes/core/trait-woe-core-extractor-ui.php:611
+msgid "Origin"
+msgstr ""
+
+#: classes/core/trait-woe-core-extractor-ui.php:1312
+#: classes/core/trait-woe-core-extractor-ui.php:1337
 msgid "Other items"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1309
-#: classes/core/trait-woe-core-extractor-ui.php:1334
+#: classes/core/trait-woe-core-extractor-ui.php:1316
+#: classes/core/trait-woe-core-extractor-ui.php:1341
 msgid "Others"
 msgstr ""
 
@@ -1372,7 +1376,7 @@ msgstr ""
 msgid "Page size"
 msgstr ""
 
-#: view/settings-form.php:160 classes/core/trait-woe-core-extractor-ui.php:584
+#: view/settings-form.php:160 classes/core/trait-woe-core-extractor-ui.php:586
 msgid "Paid Date"
 msgstr ""
 
@@ -1382,11 +1386,11 @@ msgid ""
 "install."
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1119
+#: classes/core/trait-woe-core-extractor-ui.php:1126
 msgid "Payment Method"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1114
+#: classes/core/trait-woe-core-extractor-ui.php:1121
 msgid "Payment Method Title"
 msgstr ""
 
@@ -1398,11 +1402,11 @@ msgstr ""
 msgid "PDF options"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:823
+#: classes/core/trait-woe-core-extractor-ui.php:830
 msgid "Phone (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:913
+#: classes/core/trait-woe-core-extractor-ui.php:920
 msgid "Phone (Shipping)"
 msgstr ""
 
@@ -1418,7 +1422,7 @@ msgid ""
 "Order Export For WooCommerce!"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1364
+#: classes/core/trait-woe-core-extractor-ui.php:1371
 msgid "Please, choose the template"
 msgstr ""
 
@@ -1449,11 +1453,11 @@ msgstr ""
 msgid "Postcode"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:803
+#: classes/core/trait-woe-core-extractor-ui.php:810
 msgid "Postcode (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:898
+#: classes/core/trait-woe-core-extractor-ui.php:905
 msgid "Postcode (Shipping)"
 msgstr ""
 
@@ -1482,7 +1486,7 @@ msgstr ""
 msgid "Product categories"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:308
+#: classes/core/trait-woe-core-extractor-ui.php:310
 msgid "Product Current Price"
 msgstr ""
 
@@ -1494,19 +1498,19 @@ msgstr ""
 msgid "Product fields"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:278
+#: classes/core/trait-woe-core-extractor-ui.php:280
 msgid "Product Id"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:283
+#: classes/core/trait-woe-core-extractor-ui.php:285
 msgid "Product Name"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:288
+#: classes/core/trait-woe-core-extractor-ui.php:290
 msgid "Product Name (main)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1327
+#: classes/core/trait-woe-core-extractor-ui.php:1334
 msgid "Product order items"
 msgstr ""
 
@@ -1514,11 +1518,11 @@ msgstr ""
 msgid "Product rows start with a new line"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:303
+#: classes/core/trait-woe-core-extractor-ui.php:305
 msgid "Product Seller"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:373
+#: classes/core/trait-woe-core-extractor-ui.php:375
 msgid "Product Shipping Class"
 msgstr ""
 
@@ -1534,24 +1538,24 @@ msgstr ""
 msgid "Product taxonomies"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1303
-#: classes/core/trait-woe-core-extractor-ui.php:1328
+#: classes/core/trait-woe-core-extractor-ui.php:1310
+#: classes/core/trait-woe-core-extractor-ui.php:1335
 msgid "Product totals"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:358
+#: classes/core/trait-woe-core-extractor-ui.php:360
 msgid "Product URL"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:293
+#: classes/core/trait-woe-core-extractor-ui.php:295
 msgid "Product Variation"
 msgstr ""
 
 #: view/settings-form.php:1105
 #: classes/admin/class-wc-order-export-manage.php:712
-#: classes/core/trait-woe-core-extractor-ui.php:929
-#: classes/core/trait-woe-core-extractor-ui.php:1302
-#: classes/core/trait-woe-core-extractor-ui.php:1326
+#: classes/core/trait-woe-core-extractor-ui.php:936
+#: classes/core/trait-woe-core-extractor-ui.php:1309
+#: classes/core/trait-woe-core-extractor-ui.php:1333
 msgid "Products"
 msgstr ""
 
@@ -1567,11 +1571,11 @@ msgstr ""
 msgid "Profiles"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:955
+#: classes/core/trait-woe-core-extractor-ui.php:962
 msgid "Quantity"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:960
+#: classes/core/trait-woe-core-extractor-ui.php:967
 msgid "Quantity (- Refund)"
 msgstr ""
 
@@ -1611,7 +1615,7 @@ msgstr ""
 msgid "Reset settings"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor.php:1157
+#: classes/core/trait-woe-core-extractor.php:1160
 msgid "Rest of the World"
 msgstr ""
 
@@ -1696,13 +1700,13 @@ msgstr ""
 msgid "Settings were successfully updated!"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1307
-#: classes/core/trait-woe-core-extractor-ui.php:1332
+#: classes/core/trait-woe-core-extractor-ui.php:1314
+#: classes/core/trait-woe-core-extractor-ui.php:1339
 msgid "Shipping"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1301
-#: classes/core/trait-woe-core-extractor-ui.php:1325
+#: classes/core/trait-woe-core-extractor-ui.php:1308
+#: classes/core/trait-woe-core-extractor-ui.php:1332
 msgid "Shipping Address"
 msgstr ""
 
@@ -1714,15 +1718,15 @@ msgstr ""
 msgid "Shipping locations"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1179
+#: classes/core/trait-woe-core-extractor-ui.php:1186
 msgid "Shipping Method"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1184
+#: classes/core/trait-woe-core-extractor-ui.php:1191
 msgid "Shipping Method (no id)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1174
+#: classes/core/trait-woe-core-extractor-ui.php:1181
 msgid "Shipping Method Title"
 msgstr ""
 
@@ -1734,11 +1738,11 @@ msgstr ""
 msgid "Shipping name"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1189
+#: classes/core/trait-woe-core-extractor-ui.php:1196
 msgid "Shipping Zone"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:383
+#: classes/core/trait-woe-core-extractor-ui.php:385
 msgid "Short Description"
 msgstr ""
 
@@ -1750,11 +1754,11 @@ msgstr ""
 msgid "Skip fully refunded items"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:268
+#: classes/core/trait-woe-core-extractor-ui.php:270
 msgid "SKU"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:273
+#: classes/core/trait-woe-core-extractor-ui.php:275
 msgid "SKU (parent)"
 msgstr ""
 
@@ -1775,19 +1779,19 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:783
+#: classes/core/trait-woe-core-extractor-ui.php:790
 msgid "State Code (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:878
+#: classes/core/trait-woe-core-extractor-ui.php:885
 msgid "State Code (Shipping)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:798
+#: classes/core/trait-woe-core-extractor-ui.php:805
 msgid "State Name (Billing)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:893
+#: classes/core/trait-woe-core-extractor-ui.php:900
 msgid "State Name (Shipping)"
 msgstr ""
 
@@ -1795,15 +1799,15 @@ msgstr ""
 msgid "Status change jobs"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:353
+#: classes/core/trait-woe-core-extractor-ui.php:355
 msgid "Stock Quantity"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:348
+#: classes/core/trait-woe-core-extractor-ui.php:350
 msgid "Stock Status"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1353
+#: classes/core/trait-woe-core-extractor-ui.php:1360
 msgid "String"
 msgstr ""
 
@@ -1815,7 +1819,7 @@ msgstr ""
 msgid "Strip tags from Product Description/Variation"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:612
+#: classes/core/trait-woe-core-extractor-ui.php:619
 msgid "Subscription Relationship"
 msgstr ""
 
@@ -1831,75 +1835,75 @@ msgstr ""
 msgid "Summary Report By Products"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:693
+#: classes/core/trait-woe-core-extractor-ui.php:700
 msgid "Summary Report Sum of Items (Exported)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:408
-#: classes/core/trait-woe-core-extractor-ui.php:698
+#: classes/core/trait-woe-core-extractor-ui.php:410
+#: classes/core/trait-woe-core-extractor-ui.php:705
 msgid "Summary Report Total Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:413
+#: classes/core/trait-woe-core-extractor-ui.php:415
 msgid "Summary Report Total Amount (-Refund)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:418
+#: classes/core/trait-woe-core-extractor-ui.php:420
 msgid "Summary Report Total Amount (inc. tax)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:703
+#: classes/core/trait-woe-core-extractor-ui.php:710
 msgid "Summary Report Total Amount Paid"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:433
-#: classes/core/trait-woe-core-extractor-ui.php:713
+#: classes/core/trait-woe-core-extractor-ui.php:435
+#: classes/core/trait-woe-core-extractor-ui.php:720
 msgid "Summary Report Total Discount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:733
+#: classes/core/trait-woe-core-extractor-ui.php:740
 msgid "Summary Report Total Fee Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:683
+#: classes/core/trait-woe-core-extractor-ui.php:690
 msgid "Summary Report Total Items"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:688
+#: classes/core/trait-woe-core-extractor-ui.php:695
 msgid "Summary Report Total Items (Exported)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:678
+#: classes/core/trait-woe-core-extractor-ui.php:685
 msgid "Summary Report Total Orders"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:398
+#: classes/core/trait-woe-core-extractor-ui.php:400
 msgid "Summary Report Total Quantity"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:403
+#: classes/core/trait-woe-core-extractor-ui.php:405
 msgid "Summary Report Total Quantity (-Refund)"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:443
-#: classes/core/trait-woe-core-extractor-ui.php:723
+#: classes/core/trait-woe-core-extractor-ui.php:445
+#: classes/core/trait-woe-core-extractor-ui.php:730
 msgid "Summary Report Total Refund Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:438
-#: classes/core/trait-woe-core-extractor-ui.php:718
+#: classes/core/trait-woe-core-extractor-ui.php:440
+#: classes/core/trait-woe-core-extractor-ui.php:725
 msgid "Summary Report Total Refund Count"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:708
+#: classes/core/trait-woe-core-extractor-ui.php:715
 msgid "Summary Report Total Shipping"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:728
+#: classes/core/trait-woe-core-extractor-ui.php:735
 msgid "Summary Report Total Tax Amount"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:423
+#: classes/core/trait-woe-core-extractor-ui.php:425
 msgid "Summary Report Total Weight"
 msgstr ""
 
@@ -1935,7 +1939,7 @@ msgstr ""
 msgid "Table row text color"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:323
+#: classes/core/trait-woe-core-extractor-ui.php:325
 msgid "Tags"
 msgstr ""
 
@@ -1947,7 +1951,7 @@ msgstr ""
 msgid "Taxonomy"
 msgstr ""
 
-#: classes/core/class-wc-order-export-engine.php:395
+#: classes/core/class-wc-order-export-engine.php:394
 msgid "The code you are trying to save produced a fatal error on line %d:"
 msgstr ""
 
@@ -2015,28 +2019,28 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1077
+#: classes/core/trait-woe-core-extractor-ui.php:1084
 msgid "Total items"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1087
+#: classes/core/trait-woe-core-extractor-ui.php:1094
 msgid "Total products"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1092
+#: classes/core/trait-woe-core-extractor-ui.php:1099
 msgid "Total volume"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1072
+#: classes/core/trait-woe-core-extractor-ui.php:1079
 msgid "Total weight"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1308
-#: classes/core/trait-woe-core-extractor-ui.php:1333
+#: classes/core/trait-woe-core-extractor-ui.php:1315
+#: classes/core/trait-woe-core-extractor-ui.php:1340
 msgid "Totals"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:564
+#: classes/core/trait-woe-core-extractor-ui.php:566
 msgid "Transaction ID"
 msgstr ""
 
@@ -2062,7 +2066,7 @@ msgstr ""
 msgid "Turn off mode Summary report to export order fields"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:313
+#: classes/core/trait-woe-core-extractor-ui.php:315
 msgid "Type"
 msgstr ""
 
@@ -2080,7 +2084,7 @@ msgstr ""
 msgid "Unmark exported"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1341
+#: classes/core/trait-woe-core-extractor-ui.php:1348
 msgid "Use \"Add field\" to export specific product attribute"
 msgstr ""
 
@@ -2088,11 +2092,11 @@ msgstr ""
 msgid "Use only unnamed functions!"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1347
+#: classes/core/trait-woe-core-extractor-ui.php:1354
 msgid "Use section \"Product order item\" to add item meta"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:1340
+#: classes/core/trait-woe-core-extractor-ui.php:1347
 msgid "Use section \"Product order items\" to add attributes"
 msgstr ""
 
@@ -2108,7 +2112,7 @@ msgstr ""
 msgid "User roles"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:638
+#: classes/core/trait-woe-core-extractor-ui.php:645
 msgid "User Website"
 msgstr ""
 
@@ -2125,7 +2129,7 @@ msgstr ""
 msgid "Variable product attributes"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:298
+#: classes/core/trait-woe-core-extractor-ui.php:300
 msgid "Variation Id"
 msgstr ""
 
@@ -2137,11 +2141,11 @@ msgstr ""
 msgid "Wed"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:343
+#: classes/core/trait-woe-core-extractor-ui.php:345
 msgid "Weight"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor-ui.php:328
+#: classes/core/trait-woe-core-extractor-ui.php:330
 msgid "Width"
 msgstr ""
 
