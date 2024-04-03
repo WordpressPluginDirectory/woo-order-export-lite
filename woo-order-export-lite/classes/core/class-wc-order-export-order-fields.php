@@ -4,9 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class WC_Order_Export_Order_Fields {
+    /**
+     * @var WC_Order
+     */
 	var $order;
+	var $order_type;
 	var $order_id;
 	var $parent_order;
+	var $main_order;
 	var $order_status;
 	var $order_meta;
 	var $billing_country;
@@ -28,83 +33,99 @@ class WC_Order_Export_Order_Fields {
 		$this->order = $order;
 		$this->order_id = method_exists( $this->order, 'get_id' ) ? $order->get_id() : $order->id;
 
+		$order_data_store = WC_Data_Store::load( 'order' );
+		$this->order_type = $order_data_store->get_order_type( $this->order_id );
 
 		// get order meta
 		$this->order_meta = array();
-		if ( $order_post_meta = get_post_meta( $this->order_id ) ) {
-			foreach ( $order_post_meta as $meta_key => $meta_values ) {
-				if( apply_filters('woe_use_first_order_meta', false) )
-					$this->order_meta[ $meta_key ] = array_shift( $meta_values );
-				else
-					$this->order_meta[ $meta_key ] = join( WC_Order_Export_Data_Extractor::$export_custom_fields_separator, $meta_values );
+		if ( $order_post_meta = $this->order->get_meta_data() ) {
+			foreach ( $order_post_meta as $meta_data ) {
+                $meta_key = $meta_data->key;
+                $meta_value = $meta_data->value;
+                if ( is_array($meta_value) OR is_object($meta_value) )
+					$meta_value = json_encode($meta_value);
+				if( !isset($this->order_meta[$meta_key]) )	
+					$this->order_meta[$meta_key] = $meta_value;
+				elseif (!apply_filters('woe_use_first_order_meta', false))
+                     $this->order_meta[$meta_key] .= WC_Order_Export_Data_Extractor::$export_custom_fields_separator . $meta_value;
 			}
 		}
 
-		
+        // get billing email via wc method that needed for other fields, if it isn't in meta
+		if (!isset($this->order_meta['_billing_email'])) {
+            $this->order_meta['_billing_email'] = $this->order->get_billing_email();
+        }
 
-		// add fields for WC 3.0
-		$billing_fields  = array( "billing_country", "billing_state" );
-		$shipping_fields = array( "shipping_country", "shipping_state" );
-		$fields_30       = array_merge( $billing_fields, $shipping_fields );
-		foreach ( $fields_30 as $field_30 ) {
-			$this->$field_30 = method_exists( $this->order,
-				'get_' . $field_30 ) ? $this->order->{'get_' . $field_30}() : $this->order->$field_30;
-
-		}
-
+        //for refunds
 		$parent_order_id = method_exists( $this->order,
 			'get_parent_id' ) ? $this->order->get_parent_id() : $this->order->post->post_parent;
 		$this->parent_order    = $parent_order_id ? new WC_Order( $parent_order_id ) : false;
 		$this->post            = method_exists( $this->order, 'get_id' ) ? get_post( $this->order->get_id() ) : $this->order->post;
 
+		//address details from this order
+		$this->main_order  = $this->parent_order ? $this->parent_order : $this->order;
+
 		// correct meta for child orders
 		if ( $parent_order_id ) {
 			// overwrite child values for refunds
-			$is_refund                  = ( $this->post->post_type == 'shop_order_refund' );
+			$is_refund                  = ( $this->order_type == 'shop_order_refund' );
 			$overwrite_child_order_meta = apply_filters( 'woe_overwrite_child_order_meta', $is_refund );
 
-			if ( $parent_order_meta = get_post_meta( $parent_order_id ) ) {
-				foreach ( $parent_order_meta as $meta_key => $meta_values ) {
+			if ( $parent_order_meta = $this->parent_order->get_meta_data() ) {
+				//reformat $parent_order_meta
+				$formatted_order_meta = array();
+				foreach( $parent_order_meta as $parent_meta) {
+					$key = $parent_meta->key;
+					$value = $parent_meta->value;
+					if( !is_string($value)) 
+						$value = json_encode($value);
+					if( !isset($formatted_order_meta[$key]) )
+						$formatted_order_meta[$key] = array($value);
+					else
+						$formatted_order_meta[$key][] = $value;
+				}
+				foreach ( $formatted_order_meta as $meta_key => $meta_values ) {
 					if ( $overwrite_child_order_meta OR ! isset( $this->order_meta[ $meta_key ] ) ) {
 						$this->order_meta[ $meta_key ] = join( WC_Order_Export_Data_Extractor::$export_custom_fields_separator, $meta_values );
 					}
 				}
 			}
 
-			//refund rewrites it
-			if ( $overwrite_child_order_meta ) {
-				foreach ( $fields_30 as $field_30 ) {
-					$this->$field_30 = method_exists( $this->parent_order,
-						'get_' . $field_30 ) ? $this->parent_order->{'get_' . $field_30}() : $this->parent_order->$field_30;
-				}
-			}
 			//refund status
 			if ( $is_refund ) {
 				$this->order_status = 'refunded';
 			}
 		}
 
+		// add fields for WC 3.0
+		$billing_fields  = array( "billing_country", "billing_state" );
+		$shipping_fields = array( "shipping_country", "shipping_state" );
+		$fields_30       = array_merge( $billing_fields, $shipping_fields );
+		foreach ( $fields_30 as $field_30 ) {
+			$this->$field_30 = method_exists( $this->main_order,
+				'get_' . $field_30 ) ? $this->main_order->{'get_' . $field_30}() : $this->main_order->$field_30;
+
+		}
+
 		// extra WP_User
-		$this->user = ! empty( $this->order_meta['_customer_user'] ) ? get_userdata( $this->order_meta['_customer_user'] ) : false;
+		$this->user = ! empty( $this->main_order->get_customer_id() ) ? get_userdata( $this->main_order->get_customer_id() ) : false;
 		// setup missed fields for full addresses
-		$optional_billing_fields = array( '_billing_address_1', '_billing_address_2', '_billing_first_name', '_billing_last_name', '_billing_city', '_billing_postcode', '_billing_country', '_billing_state' );
-		$optional_shipping_fields = array( '_shipping_address_1', '_shipping_address_2', '_shipping_first_name', '_shipping_last_name', '_shipping_city', '_shipping_postcode', '_shipping_country', '_shipping_state' );
+		$optional_billing_fields = array( '_billing_address_1', '_billing_address_2', '_billing_first_name', '_billing_company', '_billing_last_name', '_billing_city', '_billing_postcode', '_billing_country', '_billing_state', '_billing_phone' );
+		$optional_shipping_fields = array( '_shipping_address_1', '_shipping_address_2', '_shipping_first_name', '_shipping_company', '_shipping_last_name', '_shipping_city', '_shipping_postcode', '_shipping_country', '_shipping_state', '_shipping_phone' );
 		$optional_fields = array_merge( $optional_billing_fields, $optional_shipping_fields );
 		foreach ( $optional_fields as $optional_field ) {
-
-			if ( ! isset( $this->order_meta[ $optional_field ] ) ) {
-				$this->order_meta[ $optional_field ] = '';
+			if ( ! isset( $this->order_meta[ $optional_field ] ) AND method_exists( $this->main_order, 'get_'.$optional_field) ) {
+				$this->order_meta[ $optional_field ] = $this->main_order->{'get'.$optional_field}();
 			}
 		}
-		
+
 		//method WC_Order::has_shipping_address checks only these 2 fields, so we have to add filter
 		$has_shipping_address = false;
 		$has_shipping_validate_keys = apply_filters( "woe_has_shipping_validate_keys", array( "_shipping_address_1", "_shipping_address_2" ) );
 		foreach($has_shipping_validate_keys as $shippping_key ) {
-			if( !empty($this->order_meta[$shippping_key]) )
+			if( !empty($this->main_order->{'get'.$shippping_key}()) )
 				$has_shipping_address = true;
 		}
-
 		if ( $this->options['billing_details_for_shipping'] && !$has_shipping_address ) {
 			$this->set_shipping_fields( $optional_shipping_fields );
 		}
@@ -119,14 +140,15 @@ class WC_Order_Export_Order_Fields {
 
 		$billing_field = str_replace( "shipping_", "billing_", $shipping_field );
 
-		$this->order_meta[ $shipping_field ] = $this->order_meta[ $billing_field ];
+		if( isset($this->order_meta[ $billing_field ]) )
+			$this->order_meta[ $shipping_field ] = $this->order_meta[ $billing_field ];
 
 		$_shipping_field = substr($shipping_field, 1);
-
-		if (method_exists( $this->order, 'set_' . $_shipping_field )) {
-		    $this->order->{ 'set_' . $_shipping_field }( $this->order_meta[ $billing_field ] );
-		} else {
-		    $this->order->$_shipping_field = $this->order_meta[ $billing_field ];
+		$_billing_field  = substr($billing_field, 1);
+		if (method_exists( $this->main_order, 'set_' . $_shipping_field )) {
+		    $this->main_order->{ 'set_' . $_shipping_field }( $this->main_order->{ 'get_' . $_billing_field }() );
+		} elseif( isset($this->order_meta[ $billing_field ]) ) {
+		    $this->main_order->$_shipping_field = $this->order_meta[ $billing_field ];
 		}
 	    }
 
@@ -221,7 +243,7 @@ class WC_Order_Export_Order_Fields {
 		} elseif ( $field == 'order_id' ) {
 			$row[$field] =  $this->order_id;
 		} elseif ( $field == 'origin' ) {
-			$row[$field] =  WC_Order_Export_Data_Extractor::get_origin_for_order($this->order);
+			$row[$field] =  WC_Order_Export_Data_Extractor::get_origin_for_order($this->main_order);
 		} elseif ( $field == 'order_date' ) {
 			$row[$field] =  ! method_exists( $this->order,
 				"get_date_created" ) ? $this->order->order_date : ( $this->order->get_date_created() ? gmdate( 'Y-m-d H:i:s',
@@ -275,7 +297,9 @@ class WC_Order_Export_Order_Fields {
 		} elseif ( $field == 'order_shipping_minus_refund' ) {
 			$row[$field] = floatval( method_exists($this->order,"get_shipping_total") ? $this->order->get_shipping_total() : $this->order->get_total_shipping() ) - $this->order->get_total_shipping_refunded();
 			//shipping tax
-		} elseif ( $field == 'order_shipping_tax_refunded' ) {
+		} elseif ($field == 'order_shipping_tax') {
+            $row[$field] = $this->order->get_shipping_tax();
+        } elseif ( $field == 'order_shipping_tax_refunded' ) {
 			$row[$field] = WC_Order_Export_Data_Extractor::get_order_shipping_tax_refunded( $this->order_id );
 		} elseif ( $field == 'order_shipping_tax_minus_refund' ) {
 			$row[$field] = $this->order->get_shipping_tax() - WC_Order_Export_Data_Extractor::get_order_shipping_tax_refunded( $this->order_id );
@@ -307,10 +331,12 @@ class WC_Order_Export_Order_Fields {
 			}
 			else
 				$row[$field] =  "";
-		} elseif ( $field == 'customer_total_orders' ) {
+		} elseif ($field == 'customer_user') {
+            $row[$field] = isset ($this->user->ID) ? $this->user->ID : '';
+        } elseif ( $field == 'customer_total_orders' ) {
 			$row[$field] = ( isset( $this->user->ID ) ) ? wc_get_customer_order_count( $this->user->ID ) : WC_Order_Export_Data_Extractor::get_customer_order_count_by_email( $this->order_meta["_billing_email"] );
 		} elseif ( $field == 'customer_paid_orders' ) {
-			$row[$field] = WC_Order_Export_Data_Extractor::get_customer_paid_orders_count( $this->order_meta['_customer_user'], $this->order_meta["_billing_email"] );
+			$row[$field] = WC_Order_Export_Data_Extractor::get_customer_paid_orders_count( isset($this->user->ID) ? $this->user->ID : false, $this->order_meta["_billing_email"] );
 		} elseif ( $field == 'customer_total_spent' ) {
 			$row[$field] = ( isset( $this->user->ID ) ) ? wc_get_customer_total_spent( $this->user->ID ) : WC_Order_Export_Data_Extractor::get_customer_total_spent_by_email( $this->order_meta["_billing_email"] );
 		} elseif ( $field == 'customer_first_order_date' ) {
@@ -322,23 +348,15 @@ class WC_Order_Export_Order_Fields {
 			$row[$field] = $last_order? ( $last_order->get_date_created() ? gmdate( 'Y-m-d H:i:s',
 				$last_order->get_date_created()->getOffsetTimestamp() ) : '' ) : '';
 		} elseif ( $field == 'billing_address' ) {
-		        if($this->post->post_type == 'shop_order_refund')
-				$row[$field] = join( ", ",
-					array_filter( array(  $this->order_meta["_billing_address_1"], $this->order_meta["_billing_address_2"] ) ) );
-			else
-				$row[$field] = join( ", ",
-					array_filter( array( $this->order->get_billing_address_1(), $this->order->get_billing_address_2() ) ) );
+			$row[$field] = join( ", ",
+				array_filter( array( $this->main_order->get_billing_address_1(), $this->main_order->get_billing_address_2() ) ) );
 		} elseif ( $field == 'shipping_address' ) {
-		        if($this->post->post_type == 'shop_order_refund')
-				$row[$field] = join( ", ",
-					array_filter( array(  $this->order_meta["_shipping_address_1"], $this->order_meta["_shipping_address_2"] ) ) );
-			else
-				$row[$field] = join( ", ",
-					array_filter( array(  $this->order->get_shipping_address_1(), $this->order->get_shipping_address_2() ) ) );
+			$row[$field] = join( ", ",
+				array_filter( array(  $this->main_order->get_shipping_address_1(), $this->main_order->get_shipping_address_2() ) ) );
 		} elseif ( $field == 'billing_full_name' ) {
-			$row[$field] = trim( $this->order_meta["_billing_first_name"] . ' ' . $this->order_meta["_billing_last_name"] );
+			$row[$field] = trim( $this->main_order->get_billing_first_name() . ' ' . $this->main_order->get_billing_last_name() );
 		} elseif ( $field == 'shipping_full_name' ) {
-			$row[$field] = trim( $this->order_meta["_shipping_first_name"] . ' ' . $this->order_meta["_shipping_last_name"] );
+			$row[$field] = trim( $this->main_order->get_shipping_first_name() . ' ' . $this->main_order->get_shipping_last_name() );
 		} elseif ( $field == 'billing_country_full' ) {
 			$row[$field] = isset( WC_Order_Export_Data_Extractor::$countries[ $this->billing_country ] ) ? WC_Order_Export_Data_Extractor::$countries[ $this->billing_country ] : $this->billing_country;
 		} elseif ( $field == 'shipping_country_full' ) {
@@ -346,35 +364,35 @@ class WC_Order_Export_Order_Fields {
 		} elseif ( $field == 'billing_state_full' ) {
 			$country_states = WC()->countries->get_states( $this->billing_country );
 			$row[$field] = isset( $country_states[ $this->billing_state ] ) ? html_entity_decode( $country_states[ $this->billing_state ] ) : $this->billing_state;
-		} elseif ($field == 'fulladdress_shipping') {
-			$row[$field] = str_replace("<br/>", "\n", $this->order->get_formatted_shipping_address());
-		} elseif ($field == 'fulladdress_billing') {
-			$row[$field] = str_replace("<br/>", "\n", $this->order->get_formatted_billing_address());
 		} elseif ( $field == 'shipping_state_full' ) {
 			$country_states = WC()->countries->get_states( $this->shipping_country );
 			$row[$field] = isset( $country_states[ $this->shipping_state ] ) ? html_entity_decode( $country_states[ $this->shipping_state ] ) : $this->shipping_state;
 		} elseif ( $field == 'billing_citystatezip' ) {
-			$row[$field] = WC_Order_Export_Data_Extractor::get_city_state_postcode_field_value( $this->order, 'billing' );
+			$row[$field] = WC_Order_Export_Data_Extractor::get_city_state_postcode_field_value( $this->main_order, 'billing' );
+		} elseif ($field == 'fulladdress_shipping') {
+			$row[$field] = str_replace("<br/>", "\n", $this->main_order->get_formatted_shipping_address());
+		}elseif ($field == 'fulladdress_billing') {
+			$row[$field] = str_replace("<br/>", "\n", $this->main_order->get_formatted_billing_address());
 		} elseif ( $field == 'billing_citystatezip_us' ) {
-			$row[$field] = WC_Order_Export_Data_Extractor::get_city_state_postcode_field_value( $this->order, 'billing', true );
+			$row[$field] = WC_Order_Export_Data_Extractor::get_city_state_postcode_field_value( $this->main_order, 'billing', true );
 		} elseif ( $field == 'shipping_citystatezip' ) {
-			$row[$field] = WC_Order_Export_Data_Extractor::get_city_state_postcode_field_value( $this->order, 'shipping' );
+			$row[$field] = WC_Order_Export_Data_Extractor::get_city_state_postcode_field_value( $this->main_order, 'shipping' );
 		} elseif ( $field == 'shipping_citystatezip_us' ) {
-			$row[$field] = WC_Order_Export_Data_Extractor::get_city_state_postcode_field_value( $this->order, 'shipping', true );
+			$row[$field] = WC_Order_Export_Data_Extractor::get_city_state_postcode_field_value( $this->main_order, 'shipping', true );
 		} elseif ( $field == 'products' OR $field == 'coupons' ) {
 			if ( isset( $this->data[ $field ] ) ) {
 				$row[$field] = $this->data[ $field ];
 			}
 		} elseif ( $field == 'shipping_method_title' ) {
-			$row[$field] = $this->order->get_shipping_method();
+			$row[$field] = $this->main_order->get_shipping_method();
 		} elseif ( $field == 'shipping_method' OR $field == 'shipping_method_only') {
-			$shipping_methods = $this->order->get_items( 'shipping' );
+			$shipping_methods = $this->main_order->get_items( 'shipping' );
 			$shipping_method  = reset( $shipping_methods ); // take first entry
 			if ( ! empty( $shipping_method ) ) {
 				$row[$field] = $field == 'shipping_method_only' ? $shipping_method['method_id'] : $shipping_method['method_id'] . ':' . $shipping_method['instance_id'];
 			}
 		} elseif ( $field == 'shipping_zone' ) {
-			$row[$field] = WC_Order_Export_Data_Extractor::get_shipping_zone($this->order);
+			$row[$field] = WC_Order_Export_Data_Extractor::get_shipping_zone($this->main_order);
 		} elseif ( $field == 'coupons_used' ) {
 			$row[$field] = count( $this->data['coupons'] );
 		} elseif ( $field == 'total_weight_items' ) {
@@ -400,11 +418,11 @@ class WC_Order_Export_Order_Fields {
             foreach ( $this->order->get_items() as $item ) {
                 $product   = $item->get_product();
                 if ( !$product )  continue;
-                $value +=  $item->get_quantity() * (float)$product->get_width() * (float)$product->get_height() * (float)$product->get_length();
+                $value +=  $item->get_quantity() * floatval($product->get_width()) * floatval($product->get_height()) * floatval($product->get_length());
             }
             $row[$field] = $value;
 		} elseif ( $field == 'customer_note' ) {
-			$notes = array( $this->post->post_excerpt );
+			$notes = array( $this->order->get_customer_note() );
 			if ( $this->options['export_refund_notes'] ) {
 				$refunds = $this->order->get_refunds();
 				foreach ( $refunds as $refund ) {
@@ -445,9 +463,9 @@ class WC_Order_Export_Order_Fields {
 			}
 			$row[$field] = implode( "\n", array_filter( $comments ) );
 		} elseif ( $field == 'embedded_edit_order_link' ) {
-			$post_type_object = get_post_type_object( $this->post->post_type );
+			$post_type_object = get_post_type_object( $this->order_type );
 			if ( $post_type_object AND $post_type_object->_edit_link){
-				$edit_link = admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=edit', $this->post->ID ) );
+				$edit_link = admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=edit', $this->order_id ) );
 				$row[$field] = sprintf(
 				'<a href="%s" target="_blank">%s</a>',
 				$edit_link,
@@ -456,11 +474,11 @@ class WC_Order_Export_Order_Fields {
 			}
 		} elseif ( $field == 'subscription_relationship' AND function_exists("wcs_order_contains_subscription")) {
 			//copied logic from class WC_Subscriptions_Order
-			if ( wcs_order_contains_subscription( $this->post->ID, 'renewal' ) ) {
+			if ( wcs_order_contains_subscription( $this->order_id, 'renewal' ) ) {
 				$row[$field] = __( 'Renewal Order', 'woocommerce-subscriptions' );
-			} elseif ( wcs_order_contains_subscription( $this->post->ID, 'resubscribe' ) ) {
+			} elseif ( wcs_order_contains_subscription( $this->order_id, 'resubscribe' ) ) {
 				$row[$field] = __( 'Resubscribe Order', 'woocommerce-subscriptions' );
-			} elseif ( wcs_order_contains_subscription( $this->post->ID, 'parent' ) ) {
+			} elseif ( wcs_order_contains_subscription( $this->order_id, 'parent' ) ) {
 				$row[$field] = __( 'Parent Order', 'woocommerce-subscriptions' );
 			} else {
 				$row[$field] = "";
@@ -469,8 +487,12 @@ class WC_Order_Export_Order_Fields {
 			$row[$field] = $this->order->get_currency();
 		} elseif( $field == 'order_currency_symbol' ){
 			$row[$field] = get_woocommerce_currency_symbol( $this->order->get_currency() );
-		} elseif( method_exists( $this->order, 'get_' . $field ) ) {  // order_date...		
-				if ( $this->post->post_type == 'shop_order_refund' AND $this->parent_order )
+		} elseif ($field == 'cart_discount') {
+            $row[$field] = $this->order->get_discount_total();
+        } elseif ($field == 'cart_discount_tax') {
+            $row[$field] = $this->order->get_discount_tax();
+        } elseif( method_exists( $this->order, 'get_' . $field ) ) {  // order_date...
+				if ( $this->order_type == 'shop_order_refund' AND $this->parent_order )
 					$row[$field] = $this->parent_order->{'get_' . $field}(); //use main order details for refund
 				else
 					$row[$field] = $this->order->{'get_' . $field}();			
@@ -484,8 +506,7 @@ class WC_Order_Export_Order_Fields {
 		} elseif ( isset( $this->order_meta[ "_" . $field ] ) ) { // or hidden field
 			$row[$field] = $this->order_meta[ "_" . $field ];
 		} else { // order_date...
-				$row[$field] = get_post_meta( $this->order_id, '_' . $field, true );
-				//print_r($field."=".$label); echo "debug static!\n\n";
+            $row[$field] = $this->order->get_meta('_' . $field);
 		}
 		return $row;
 		

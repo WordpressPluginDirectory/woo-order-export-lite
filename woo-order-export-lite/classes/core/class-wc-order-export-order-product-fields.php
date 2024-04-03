@@ -220,9 +220,14 @@ class WC_Order_Export_Order_Product_Fields {
 						$field_value = $parent->get_sku();
 					}
 				}
-				else 
+				else
 					$field_value = $this->product->get_sku();
-			}	
+			}
+		}
+		elseif ( $field == 'stock_quantity' ) {
+			$field_value = '';
+			if( $this->product )
+				$field_value = $this->product->get_stock_quantity();
 		} elseif ( $field == 'download_url' ) {
 			$field_value = '';
 			if ( $this->product AND $this->product->is_downloadable() ) {
@@ -331,6 +336,9 @@ class WC_Order_Export_Order_Product_Fields {
 		if ( $this->options['strip_tags_product_fields'] AND in_array( $field, $this->product_fields_with_tags ) ) {
 			$field_value = strip_tags( $field_value );
 		}
+
+		if( is_null($field_value) ) $field_value = '';
+
 		if ( isset( $field_value ) ) {
 			$field_value = apply_filters( "woe_get_order_product_value_{$field}", $field_value, $this->order,
 				$this->item, $this->product, $this->item_meta );

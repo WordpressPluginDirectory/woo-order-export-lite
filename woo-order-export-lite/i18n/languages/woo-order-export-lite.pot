@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Order Export For WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-22 06:20+0000\n"
+"POT-Creation-Date: 2024-04-03 05:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,14 +16,14 @@ msgstr ""
 "X-Loco-Version: 2.6.7; wp-6.5-RC3\n"
 "X-Domain: woo-order-export-lite"
 
-#: classes/class-wc-order-export-admin.php:601
+#: classes/class-wc-order-export-admin.php:603
 #, php-format
 msgid "%s order marked."
 msgid_plural "%s orders marked."
 msgstr[0] ""
 msgstr[1] ""
 
-#: classes/class-wc-order-export-admin.php:610
+#: classes/class-wc-order-export-admin.php:612
 #, php-format
 msgid "%s order unmarked."
 msgid_plural "%s orders unmarked."
@@ -567,8 +567,7 @@ msgstr ""
 msgid "Drag rows to reorder exported fields"
 msgstr ""
 
-#: classes/core-hpos/class-wc-order-export-order-fields.php:481
-#: classes/core/class-wc-order-export-order-fields.php:454
+#: classes/core/class-wc-order-export-order-fields.php:472
 msgid "Edit order"
 msgstr ""
 

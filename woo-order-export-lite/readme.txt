@@ -5,7 +5,7 @@ Tags: order export,export orders,woocommerce,order,export
 Requires PHP: 5.4.0
 Requires at least: 4.7
 Tested up to: 6.5
-Stable tag: 3.4.6
+Stable tag: 3.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,12 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 3.5.0 - 2024-04-03 =
+* The plugin requires at least WooCommerce 4.0.0
+* Fixed bug - some address fields were empty for refunds
+* Fixed bug - option "Shipping fields use billing details" ignored fields "Shipping Company" and "Shipping Phone"
+* Fixed minor bugs, only for WooCommerce in legacy mode
 
 = 3.4.6 - 2024-03-25 =
 * New field "Origin" (>Setup Fields>Common)

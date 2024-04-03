@@ -553,6 +553,8 @@ class WC_Order_Export_Admin {
 			$new_actions['woe_unmark_exported'] = __( 'Unmark exported', 'woo-order-export-lite' );
 		}
 
+		if( empty($actions) ) $actions = array(); //fix if another plugin damaged $actions
+
 		return $new_actions + $actions;
 	}
 

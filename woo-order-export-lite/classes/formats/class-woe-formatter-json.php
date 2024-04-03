@@ -43,7 +43,7 @@ class WOE_Formatter_Json extends WOE_Formatter {
 
 	public function output( $rec ) {
 		$rec = parent::output( $rec );
-		if ( $this->prev_added ) {
+		if ( $this->prev_added AND  apply_filters("woe_json_print_delimiter", true) ) {
 			fwrite( $this->handle, "," );
 		}
 		if ( $this->mode == 'preview' ) {

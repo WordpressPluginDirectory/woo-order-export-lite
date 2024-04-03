@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-include_once 'class-wc-order-export-order-fields.php';
+include_once __DIR__ . '/../core/class-wc-order-export-order-fields.php';
 include_once __DIR__ . '/../core/class-wc-order-export-order-product-fields.php';
 include_once __DIR__ . '/../core/class-wc-order-export-order-coupon-fields.php';
 
@@ -811,7 +811,7 @@ class WC_Order_Export_Data_Extractor {
 			AND order_itemmeta.meta_key IN ( 'shipping_tax_amount')
 		", $order_id ) );
 
-		return abs( $refund_ship_taxes );
+		return !empty($refund_ship_taxes) ? abs( $refund_ship_taxes ) : 0;
 	}
 
 	public static function get_customer_order( $user, $order_meta, $first_or_last ) {
