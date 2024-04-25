@@ -1672,24 +1672,26 @@ function remove_time_from_date( $datetime ) {
                             <div class='div_meta segment-form all-segments'>
 								<div class='add_form_tip'><?php _e( "The plugin fetches meta keys from the existing orders. So you should create fake order if you've added new field just now.", 'woo-order-export-lite' )?></div>
                                 <label for="select_custom_meta_order">
-									<?php _e( 'Meta key', 'woo-order-export-lite' ) ?>:
+                                    <?php _e( 'Meta key', 'woo-order-export-lite' ) ?>:
                                 </label><br/>
-                                <select class="set-up__selects" id='select_custom_meta_order'>
-									<?php
-									foreach ( $order_custom_meta_fields['order'] as $meta_id => $meta_name ) {
-										echo "<option value='" . esc_attr($meta_name) . "' > " . esc_attr($meta_name) . "</option>";
-									};
-									?>
-                                </select>
+                                <div>
+                                    <select class="select2-i18n set-up__selects" id='select_custom_meta_order'>
+                                        <?php
+                                        foreach ( $order_custom_meta_fields['order'] as $meta_id => $meta_name ) {
+                                            echo "<option value='" . esc_attr($meta_name) . "' > " . esc_attr($meta_name) . "</option>";
+                                        };
+                                        ?>
+                                    </select>
+                                </div>
                                 <div id="custom_meta_order_mode" style="margin-bottom: 10px;">
                                     <input class="set-up__selects mt-sm" type='text' id='text_custom_meta_order'
                                            placeholder="<?php _e( 'or type meta key here',
-										       'woo-order-export-lite' ) ?>"/><br>
+                                               'woo-order-export-lite' ) ?>"/><br>
                                 </div>
                                 <div style="margin-bottom: 8px;">
                                     <input id="custom_meta_order_mode_used" type="checkbox"
                                            name="custom_meta_order_mode" value="used"> <?php _e( 'Hide unused fields',
-										'woo-order-export-lite' ) ?>
+                                        'woo-order-export-lite' ) ?>
                                 </div>
                                 <hr>
                                 <div style="margin-top: 20px;"><label for="colname_custom_meta"><?php _e( 'Column name',
@@ -1731,13 +1733,15 @@ function remove_time_from_date( $datetime ) {
                                 <label for="select_custom_meta_user">
 			                        <?php _e( 'Meta key', 'woo-order-export-lite' ) ?>:
                                 </label><br/>
-                                <select class="set-up__selects" id='select_custom_meta_user'>
-	                                <?php
-	                                foreach ( $order_custom_meta_fields['user'] as $meta_id => $meta_name ) {
-		                                echo "<option value='" . esc_html($meta_name) . "' >$meta_name</option>";
-	                                };
-	                                ?>
-                                </select>
+                                <div>
+                                    <select class="select2-i18n set-up__selects" id='select_custom_meta_user'>
+                                        <?php
+                                        foreach ( $order_custom_meta_fields['user'] as $meta_id => $meta_name ) {
+                                            echo "<option value='" . esc_html($meta_name) . "' >$meta_name</option>";
+                                        };
+                                        ?>
+                                    </select>
+                                </div>
                                 <div id="custom_meta_user_mode" style="margin-bottom: 10px;">
                                     <input class="set-up__selects mt-sm" type='text' id='text_custom_meta_user'
                                            placeholder="<?php _e( 'or type meta key here',
@@ -1764,11 +1768,16 @@ function remove_time_from_date( $datetime ) {
                                 </div>
                             </div>
                             <div class='div_meta products-segment segment-form products-add-field'>
-                                <label for="select_custom_meta_products"><?php _e( 'Product fields',
-										'woo-order-export-lite' ) ?>:</label><select class="set-up__selects"
-                                        id='select_custom_meta_products'></select>
-                                        <br>
-                                <label>&nbsp;</label><input class="set-up__selects mt-sm" type='text'
+                                <label for="select_custom_meta_products">
+                                    <?php _e( 'Product fields', 'woo-order-export-lite' ) ?>:
+                                </label>
+                                <div>
+                                    <select class="select2-i18n set-up__selects" id='select_custom_meta_products'>
+
+                                    </select>
+                                </div>
+
+                                <input class="set-up__selects mt-sm" type='text'
                                                             id='text_custom_meta_products'
                                                             placeholder="<?php _e( 'or type meta key here',
 									                            'woo-order-export-lite' ) ?>"/>
@@ -1828,11 +1837,15 @@ function remove_time_from_date( $datetime ) {
                             <div class='div_meta product_items-segment segment-form products-add-field'>
 								<div class='add_form_tip'><?php _e( "The plugin fetches meta keys from the existing orders. So you should create fake order if you've added new field just now.", 'woo-order-export-lite' )?></div>
 
-                                <label for="select_custom_meta_order_items"><?php _e( 'Order item fields',
-										'woo-order-export-lite' ) ?>:</label><select
-                                        id='select_custom_meta_order_items' style="width: 53.5%; max-width: 100%;"></select>
-                                        <br>
-                                <label>&nbsp;</label><input style="width: 53.5%; margin-top: .5rem;" type='text'
+                                <label for="select_custom_meta_order_items">
+                                    <?php _e( 'Order item fields', 'woo-order-export-lite' ) ?>:
+                                </label>
+                                <div>
+                                    <select class="select2-i18n set-up__selects" id='select_custom_meta_order_items'>
+
+                                    </select>
+                                </div>
+                                <input style="width: 53.5%; margin-top: .5rem; margin-bottom: 10px;" type='text'
                                                             id='text_custom_meta_order_items'
                                                             placeholder="<?php _e( 'or type meta key here',
 									                            'woo-order-export-lite' ) ?>"/>

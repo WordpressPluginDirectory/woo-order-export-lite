@@ -28,23 +28,46 @@ class WC_Order_Export_Data_Extractor {
 	const  HUGE_SHOP_CUSTOMERS = 1000;// more than 1000 users
 	const  HUGE_SHOP_COUPONS   = 1000;// more than 1000 coupons
 
+    static function get_where_last_orders($field, $sql_prefix = 'AND') {
+        global $wpdb;
+
+        $transient_key_total = 'woe_total_orders';
+        $total_orders = get_transient($transient_key_total);
+
+        if ($total_orders === false) {
+            $total_orders = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->posts}  WHERE post_type = '" . self::$object_type . "'" );
+            set_transient($transient_key_total, $total_orders, 300); // valid for 5 minutes
+        }
+
+        if ( $total_orders < self::HUGE_SHOP_ORDERS ) { // small shop , take all orders
+            $where = "";
+        } else { // we have a lot of orders, take last good orders, upto 1000
+            $transient_key_orders_ids = 'woe_last_orders_ids';
+            $orders_ids = get_transient($transient_key_orders_ids);
+
+            if ($orders_ids === false) {
+                $limit = self::HUGE_SHOP_ORDERS;
+                $orders_ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type = '" . self::$object_type . "' ORDER BY post_date DESC LIMIT {$limit}" );
+                $orders_ids[] = 0; // add fake zero
+                $orders_ids = join( ",", $orders_ids );
+
+                set_transient($transient_key_orders_ids, $orders_ids, 300); // valid for 5 minutes
+            }
+
+            $where = "$sql_prefix $field IN ($orders_ids)";
+        }
+
+        return $where;
+    }
+
 	public static function get_order_custom_fields() {
 		global $wpdb;
 		$transient_key = 'woe_get_order_custom_fields_result';
 
 		$fields = get_transient( $transient_key );
 		if ( $fields === false ) {
-			$total_orders = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->posts}  WHERE post_type = '" . self::$object_type . "'" );
-			//small shop , take all orders
-			if ( $total_orders < self::HUGE_SHOP_ORDERS ) {
-				$fields = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->posts} INNER JOIN {$wpdb->postmeta} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id WHERE post_type = '" . self::$object_type . "'" );
-			} else { // we have a lot of orders, take last good orders, upto 1000
-				$limit = self::HUGE_SHOP_ORDERS;
-				$order_ids   = $wpdb->get_col( "SELECT  ID FROM {$wpdb->posts} WHERE post_type = '" . self::$object_type . "' ORDER BY post_date DESC LIMIT {$limit}" );
-				$order_ids[] = 0; // add fake zero
-				$order_ids   = join( ",", $order_ids );
-				$fields      = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta}  WHERE post_id IN ($order_ids)" );
-			}
+            $where_posts = self::get_where_last_orders("ID");
+            $fields = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->posts} INNER JOIN {$wpdb->postmeta} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id WHERE post_type = '" . self::$object_type . "' " . $where_posts );
 			sort( $fields );
 			set_transient( $transient_key, $fields, 60 ); //valid for a minute
 		}
@@ -58,20 +81,10 @@ class WC_Order_Export_Data_Extractor {
 
 		$metas = get_transient( $transient_key );
 		if ( $metas === false ) {
-			$total_orders = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->posts}  WHERE post_type = '" . self::$object_type . "'" );
-			if ( $total_orders < self::HUGE_SHOP_ORDERS ) {
-				// WP internal table, take all metas
-				$metas = $wpdb->get_col( "SELECT DISTINCT meta.meta_key FROM {$wpdb->prefix}woocommerce_order_itemmeta meta inner join {$wpdb->prefix}woocommerce_order_items item on item.order_item_id=meta.order_item_id and item.order_item_type = 'line_item' " );
-				sort( $metas );
-				set_transient( $transient_key, $metas, 60 ); //valid for a minute
-			} else {
-				$limit = self::HUGE_SHOP_ORDERS;
-				$order_ids = $wpdb->get_col( "SELECT  ID FROM {$wpdb->posts} WHERE post_type = '" . self::$object_type . "' ORDER BY post_date DESC LIMIT {$limit}" );
-				$order_ids   = join( ",", $order_ids );
-				$metas = $wpdb->get_col( "SELECT DISTINCT meta.meta_key FROM {$wpdb->prefix}woocommerce_order_itemmeta meta inner join {$wpdb->prefix}woocommerce_order_items item on item.order_item_id=meta.order_item_id and item.order_item_type = 'line_item' WHERE item.order_id IN ($order_ids)" );
-				sort( $metas );
-				set_transient( $transient_key, $metas, 60 ); //valid for a minute
-			}
+            $where_posts = self::get_where_last_orders("item.order_id", "WHERE");
+			$metas = $wpdb->get_col( "SELECT DISTINCT meta.meta_key FROM {$wpdb->prefix}woocommerce_order_itemmeta meta inner join {$wpdb->prefix}woocommerce_order_items item on item.order_item_id=meta.order_item_id and item.order_item_type = 'line_item' $where_posts" );
+			sort( $metas );
+			set_transient( $transient_key, $metas, 60 ); //valid for a minute
 		}
 
 		return apply_filters( 'woe_get_product_itemmeta', $metas );
@@ -83,21 +96,10 @@ class WC_Order_Export_Data_Extractor {
 
 		$metas = false; //get_transient( $transient_key );
 		if ( $metas === false ) {
-			$total_orders = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->posts}  WHERE post_type = '" . self::$object_type . "'" );
-			if ( $total_orders < self::HUGE_SHOP_ORDERS ) {
-				// WP internal table, take all metas
-				$metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'shipping' AND order_item_name <> '' " );
-				sort( $metas );
-				set_transient( $transient_key, $metas, 60 ); //valid for a minute
-
-			} else {
-				$limit = self::HUGE_SHOP_ORDERS;
-				$order_ids = $wpdb->get_col( "SELECT  ID FROM {$wpdb->posts} WHERE post_type = '" . self::$object_type . "' ORDER BY post_date DESC LIMIT {$limit}" );
-				$order_ids   = join( ",", $order_ids );
-				$metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'shipping' AND order_id IN ($order_ids) AND order_item_name <> '' " );
-				sort( $metas );
-				set_transient( $transient_key, $metas, 60 ); //valid for a minute
-			}
+            $where_posts = self::get_where_last_orders("order_id");
+            $metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'shipping' $where_posts AND order_item_name <> '' " );
+			sort( $metas );
+			set_transient( $transient_key, $metas, 60 ); //valid for a minute
 		}
 
 		return apply_filters( 'woe_get_order_shipping_items', $metas );
@@ -109,20 +111,10 @@ class WC_Order_Export_Data_Extractor {
 
 		$metas = get_transient( $transient_key );
 		if ( $metas === false ) {
-			$total_orders = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->posts}  WHERE post_type = '" . self::$object_type . "'" );
-			if ( $total_orders < self::HUGE_SHOP_ORDERS ) {
-				// WP internal table, take all metas
-				$metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'fee' AND order_item_name <> '' " );
-				sort( $metas );
-				set_transient( $transient_key, $metas, 60 ); //valid for a minute
-			} else {
-				$limit = self::HUGE_SHOP_ORDERS;
-				$order_ids = $wpdb->get_col( "SELECT  ID FROM {$wpdb->posts} WHERE post_type = '" . self::$object_type . "' ORDER BY post_date DESC LIMIT {$limit}" );
-				$order_ids   = join( ",", $order_ids );
-				$metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'fee' AND order_id IN ($order_ids) AND order_item_name <> '' " );
-				sort( $metas );
-				set_transient( $transient_key, $metas, 60 ); //valid for a minute
-			}
+            $where_posts = self::get_where_last_orders("order_id");
+            $metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'fee' $where_posts AND order_item_name <> '' " );
+			sort( $metas );
+			set_transient( $transient_key, $metas, 60 ); //valid for a minute
 		}
 
 		return apply_filters( 'woe_get_order_fee_items', $metas );
@@ -134,20 +126,10 @@ class WC_Order_Export_Data_Extractor {
 
 		$metas = get_transient( $transient_key );
 		if ( $metas === false ) {
-			$total_orders = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->posts}  WHERE post_type = '" . self::$object_type . "'" );
-			if ( $total_orders < self::HUGE_SHOP_ORDERS ) {
-				// WP internal table, take all metas
-				$metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'tax' AND order_item_name <> '' " );
-				sort( $metas );
-				set_transient( $transient_key, $metas, 60 ); //valid for a minute
-			} else {
-				$limit = self::HUGE_SHOP_ORDERS;
-				$order_ids = $wpdb->get_col( "SELECT  ID FROM {$wpdb->posts} WHERE post_type = '" . self::$object_type . "' ORDER BY post_date DESC LIMIT {$limit}" );
-				$order_ids   = join( ",", $order_ids );
-				$metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'tax' AND order_id IN ($order_ids) AND order_item_name <> '' " );
-				sort( $metas );
-				set_transient( $transient_key, $metas, 60 ); //valid for a minute
-			}
+            $where_posts = self::get_where_last_orders("order_id");
+            $metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'tax' $where_posts AND order_item_name <> '' " );
+			sort( $metas );
+			set_transient( $transient_key, $metas, 60 ); //valid for a minute
 		}
 
 		return apply_filters( 'woe_get_order_tax_items', $metas );
@@ -960,18 +942,5 @@ class WC_Order_Export_Data_Extractor {
 				AND     meta.meta_value = '" . esc_sql( $value ) . "'"
 		);
 	}	
-	
-	/**
-	 * @param string $billing_email
-	 *
-	 * @return float
-	 */
-	public static function get_customer_order_stats( $order, $statuses, $operation){
-		global $wpdb;
-		$customer_id = intval ( $wpdb->get_var( $wpdb->prepare("SELECT customer_id FROM {$wpdb->prefix}wc_order_stats WHERE order_id = %d", $order->get_id() ) ) );
-		if( !$customer_id) return 0;
-		$result = $wpdb->get_var("SELECT $operation FROM {$wpdb->prefix}wc_order_stats WHERE customer_id = $customer_id  AND status IN ( $statuses )");
-		if(!$result) $result  = 0; // NULL for SUM!
-		return $result;
-	}
+
 }

@@ -5,11 +5,11 @@
  * Description: Export orders from WooCommerce with ease (Excel/CSV/XML/JSON supported)
  * Author: AlgolPlus
  * Author URI: https://algolplus.com/
- * Version: 3.5.0
+ * Version: 3.5.1
  * Text Domain: woo-order-export-lite
  * Domain Path: /i18n/languages/
  * WC requires at least: 4.0.0
- * WC tested up to: 8.7
+ * WC tested up to: 8.8
  *
  * Copyright: (c) 2015 AlgolPlus LLC. (algol.plus@gmail.com)
  *
@@ -41,7 +41,7 @@ if ( class_exists( 'WC_Order_Export_Admin' ) ) {
 }
 
 if ( ! defined( 'WOE_VERSION' ) ) {
-	define( 'WOE_VERSION', '3.5.0' );
+	define( 'WOE_VERSION', '3.5.1' );
 	define( 'WOE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'WOE_PLUGIN_BASEPATH', dirname( __FILE__ ) );
     define( 'WOE_PLUGIN_PATH', __FILE__  );

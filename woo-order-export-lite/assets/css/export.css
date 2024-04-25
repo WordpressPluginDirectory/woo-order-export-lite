@@ -617,7 +617,7 @@ input.date {
 
 }
 
-.tab-actions-forms span {
+.tab-actions-forms span:not(.select2, .select2 span) {
     display: block;
     width: 100px;
     height: 100%;
@@ -897,9 +897,13 @@ input[type=number] {
         margin: 0 .3rem 0 0 !important;
     }
 }
-.tab-actions-forms .segment-form .set-up__selects {
-    width: 54%;
+.tab-actions-forms .segment-form .set-up__selects, .tab-actions-forms .segment-form .set-up__selects + .select2 {
+    width: 54% !important;
     max-width: 100%;
+}
+.tab-actions-forms .segment-form .set-up__selects + .select2 .select2-selection {
+    padding: 5px;
+    min-height: 30px;
 }
 .tab-actions-forms .segment-form .set-up__selects_sm {
     width: 221px;

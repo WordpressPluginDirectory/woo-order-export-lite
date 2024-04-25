@@ -27,6 +27,7 @@ class WC_Order_Export_Order_Fields {
 
 	public function __construct($order, $static_vals,
 	$options, $export) {
+		$legacy_mode = ( get_option("woocommerce_custom_orders_table_enabled") != 'yes');
 		$this->static_vals = $static_vals;
 		$this->options = $options;
 		$this->export = $export;
@@ -38,8 +39,8 @@ class WC_Order_Export_Order_Fields {
 
 		// get order meta
 		$this->order_meta = array();
-		if ( $order_post_meta = $this->order->get_meta_data() ) {
-			foreach ( $order_post_meta as $meta_data ) {
+		if ( !$legacy_mode ) {// HPOS
+			foreach ( $this->order->get_meta_data() as $meta_data ) {
                 $meta_key = $meta_data->key;
                 $meta_value = $meta_data->value;
                 if ( is_array($meta_value) OR is_object($meta_value) )
@@ -49,13 +50,19 @@ class WC_Order_Export_Order_Fields {
 				elseif (!apply_filters('woe_use_first_order_meta', false))
                      $this->order_meta[$meta_key] .= WC_Order_Export_Data_Extractor::$export_custom_fields_separator . $meta_value;
 			}
+		} else { //Legacy
+			foreach ( get_post_meta( $this->order_id ) as $meta_key => $meta_values ) {
+				if( apply_filters('woe_use_first_order_meta', false) )
+					$this->order_meta[ $meta_key ] = array_shift( $meta_values );
+				else
+					$this->order_meta[ $meta_key ] = join( WC_Order_Export_Data_Extractor::$export_custom_fields_separator, $meta_values );
+			}
 		}
 
         // get billing email via wc method that needed for other fields, if it isn't in meta
 		if (!isset($this->order_meta['_billing_email'])) {
             $this->order_meta['_billing_email'] = $this->order->get_billing_email();
         }
-
         //for refunds
 		$parent_order_id = method_exists( $this->order,
 			'get_parent_id' ) ? $this->order->get_parent_id() : $this->order->post->post_parent;
@@ -71,10 +78,10 @@ class WC_Order_Export_Order_Fields {
 			$is_refund                  = ( $this->order_type == 'shop_order_refund' );
 			$overwrite_child_order_meta = apply_filters( 'woe_overwrite_child_order_meta', $is_refund );
 
-			if ( $parent_order_meta = $this->parent_order->get_meta_data() ) {
+			if ( !$legacy_mode ) { //HPOS
 				//reformat $parent_order_meta
 				$formatted_order_meta = array();
-				foreach( $parent_order_meta as $parent_meta) {
+				foreach( $this->parent_order->get_meta_data() as $parent_meta) {
 					$key = $parent_meta->key;
 					$value = $parent_meta->value;
 					if( !is_string($value)) 
@@ -85,6 +92,12 @@ class WC_Order_Export_Order_Fields {
 						$formatted_order_meta[$key][] = $value;
 				}
 				foreach ( $formatted_order_meta as $meta_key => $meta_values ) {
+					if ( $overwrite_child_order_meta OR ! isset( $this->order_meta[ $meta_key ] ) ) {
+						$this->order_meta[ $meta_key ] = join( WC_Order_Export_Data_Extractor::$export_custom_fields_separator, $meta_values );
+					}
+				}
+			} else { //Legacy
+				foreach (get_post_meta( $parent_order_id ) as $meta_key => $meta_values ) {
 					if ( $overwrite_child_order_meta OR ! isset( $this->order_meta[ $meta_key ] ) ) {
 						$this->order_meta[ $meta_key ] = join( WC_Order_Export_Data_Extractor::$export_custom_fields_separator, $meta_values );
 					}
@@ -114,7 +127,7 @@ class WC_Order_Export_Order_Fields {
 		$optional_shipping_fields = array( '_shipping_address_1', '_shipping_address_2', '_shipping_first_name', '_shipping_company', '_shipping_last_name', '_shipping_city', '_shipping_postcode', '_shipping_country', '_shipping_state', '_shipping_phone' );
 		$optional_fields = array_merge( $optional_billing_fields, $optional_shipping_fields );
 		foreach ( $optional_fields as $optional_field ) {
-			if ( ! isset( $this->order_meta[ $optional_field ] ) AND method_exists( $this->main_order, 'get_'.$optional_field) ) {
+			if ( ! isset( $this->order_meta[ $optional_field ] ) AND method_exists( $this->main_order, 'get'.$optional_field) ) {
 				$this->order_meta[ $optional_field ] = $this->main_order->{'get'.$optional_field}();
 			}
 		}
@@ -271,7 +284,7 @@ class WC_Order_Export_Order_Fields {
 		} elseif ( $field == 'order_subtotal' ) {
 			$row[$field] = wc_round_tax_total( $this->order->get_subtotal() );
 		} elseif ( $field == 'order_subtotal_plus_cart_tax' ) {
-			$row[$field] = wc_round_tax_total( $this->order->get_subtotal() + $this->order->get_cart_tax() );
+			$row[$field] = wc_round_tax_total( $this->order->get_subtotal() + floatval($this->order->get_cart_tax()) );
 		} elseif ( $field == 'order_subtotal_minus_discount' ) {
 			$row[$field] = $this->order->get_subtotal() - $this->order->get_total_discount();
 		} elseif ( $field == 'order_subtotal_refunded' ) {
@@ -291,7 +304,7 @@ class WC_Order_Export_Order_Fields {
 		} elseif ( $field == 'order_shipping' ) {
 			$row[$field] = method_exists($this->order,"get_shipping_total") ? $this->order->get_shipping_total() : $this->order->get_total_shipping();
 		} elseif ( $field == 'order_shipping_plus_tax' ) {
-			$row[$field] = ( method_exists($this->order,"get_shipping_total") ? $this->order->get_shipping_total() : floatval( $this->order->get_total_shipping() ) ) + floatval( $this->order->get_shipping_tax() );
+			$row[$field] = ( method_exists($this->order,"get_shipping_total") ? floatval($this->order->get_shipping_total()) : floatval( $this->order->get_total_shipping() ) ) + floatval( $this->order->get_shipping_tax() );
 		} elseif ( $field == 'order_shipping_refunded' ) {
 			$row[$field] = $this->order->get_total_shipping_refunded();
 		} elseif ( $field == 'order_shipping_minus_refund' ) {
@@ -302,7 +315,7 @@ class WC_Order_Export_Order_Fields {
         } elseif ( $field == 'order_shipping_tax_refunded' ) {
 			$row[$field] = WC_Order_Export_Data_Extractor::get_order_shipping_tax_refunded( $this->order_id );
 		} elseif ( $field == 'order_shipping_tax_minus_refund' ) {
-			$row[$field] = $this->order->get_shipping_tax() - WC_Order_Export_Data_Extractor::get_order_shipping_tax_refunded( $this->order_id );
+			$row[$field] = floatval($this->order->get_shipping_tax()) - WC_Order_Export_Data_Extractor::get_order_shipping_tax_refunded( $this->order_id );
 			//order tax
 		} elseif ( $field == 'order_tax' ) {
 			$row[$field] = wc_round_tax_total( $this->order->get_cart_tax() );
@@ -332,7 +345,7 @@ class WC_Order_Export_Order_Fields {
 			else
 				$row[$field] =  "";
 		} elseif ($field == 'customer_user') {
-            $row[$field] = isset ($this->user->ID) ? $this->user->ID : '';
+            $row[$field] = isset ($this->user->ID) ? $this->user->ID : 0;
         } elseif ( $field == 'customer_total_orders' ) {
 			$row[$field] = ( isset( $this->user->ID ) ) ? wc_get_customer_order_count( $this->user->ID ) : WC_Order_Export_Data_Extractor::get_customer_order_count_by_email( $this->order_meta["_billing_email"] );
 		} elseif ( $field == 'customer_paid_orders' ) {

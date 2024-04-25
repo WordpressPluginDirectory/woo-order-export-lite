@@ -1336,4 +1336,17 @@ trait WOE_Core_Extractor {
 		self::$order_meta_field_prefix = "{$prefix}_";
 	}
 	// Above functions copied from \woocommerce\src\Internal\Traits\OrderAttributionMeta.php
+	
+	/**
+	 * @return float/int
+	 */
+	public static function get_customer_order_stats( $order, $statuses, $operation){
+		global $wpdb;
+		$customer_id = intval ( $wpdb->get_var( $wpdb->prepare("SELECT customer_id FROM {$wpdb->prefix}wc_order_stats WHERE order_id = %d", $order->get_id() ) ) );
+		if( !$customer_id) return 0;
+		$result = $wpdb->get_var("SELECT $operation FROM {$wpdb->prefix}wc_order_stats WHERE customer_id = $customer_id  AND status IN ( $statuses )");
+		if(!$result) $result  = 0; // NULL for SUM!
+		return $result;
+	}
+	
 }

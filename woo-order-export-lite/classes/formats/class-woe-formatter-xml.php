@@ -49,7 +49,6 @@ class WOE_Formatter_Xml extends WOE_Formatter {
 	}
 
 	public function output_one_record( $rec ) {
-		$rec = parent::output( $rec );
 		$xml = new SimpleXMLElement( "<" . $this->settings['order_tag'] . "></" . $this->settings['order_tag'] . ">" );
 
 		$labels = $this->labels['order'];

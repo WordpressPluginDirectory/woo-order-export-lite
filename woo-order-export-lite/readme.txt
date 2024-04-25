@@ -5,7 +5,7 @@ Tags: order export,export orders,woocommerce,order,export
 Requires PHP: 5.4.0
 Requires at least: 4.7
 Tested up to: 6.5
-Stable tag: 3.5.0
+Stable tag: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,18 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 3.5.1 - 2024-04-25 =
+* Reduced page loading time for stores with a huge number of orders
+* Fixed bug - can't mark/unmark exported orders if sync with legacy is off (HPOS mode)
+* Fixed bug - can't filter orders by "_billling" / "_shipping" order meta (HPOS)
+* Fixed bug - can't filter orders by "_payment_method" order meta (HPOS)
+* Fixed bug - sections "Filter by billing/shipping" displayed empty dropdowns (HPOS)
+* Fixed bug - field "customer_user" is 0 for guests now (reverted change)
+* Fixed bug - some metas  can not be read for orders (legacy mode)
+* Fixed bug - customer stats was different in HPOS and legacy mode
+* Fixed bug - PHP warnings for "Coupon description" field
+* All dropdowns are searchable in section "Setup Fields"
 
 = 3.5.0 - 2024-04-03 =
 * The plugin requires at least WooCommerce 4.0.0

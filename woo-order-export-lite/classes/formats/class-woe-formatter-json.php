@@ -43,6 +43,12 @@ class WOE_Formatter_Json extends WOE_Formatter {
 
 	public function output( $rec ) {
 		$rec = parent::output( $rec );
+		$recs = apply_filters( 'woe_json_prepare_records', array($rec) );
+		foreach($recs as $rec)
+			$this->output_one_record($rec);
+	}
+
+	public function output_one_record( $rec ) {
 		if ( $this->prev_added AND  apply_filters("woe_json_print_delimiter", true) ) {
 			fwrite( $this->handle, "," );
 		}

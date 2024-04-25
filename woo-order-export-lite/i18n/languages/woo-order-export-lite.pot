@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Order Export For WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-03 05:45+0000\n"
+"POT-Creation-Date: 2024-04-25 05:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,14 +16,14 @@ msgstr ""
 "X-Loco-Version: 2.6.7; wp-6.5-RC3\n"
 "X-Domain: woo-order-export-lite"
 
-#: classes/class-wc-order-export-admin.php:603
+#: classes/class-wc-order-export-admin.php:610
 #, php-format
 msgid "%s order marked."
 msgid_plural "%s orders marked."
 msgstr[0] ""
 msgstr[1] ""
 
-#: classes/class-wc-order-export-admin.php:612
+#: classes/class-wc-order-export-admin.php:619
 #, php-format
 msgid "%s order unmarked."
 msgid_plural "%s orders unmarked."
@@ -43,7 +43,7 @@ msgstr ""
 msgid "0 - auto scale"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:321
+#: classes/class-wc-order-export-admin.php:323
 msgid "1st row only"
 msgstr ""
 
@@ -55,11 +55,11 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:316
+#: classes/class-wc-order-export-admin.php:318
 msgid "Add"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:309
+#: classes/class-wc-order-export-admin.php:311
 #, php-format
 msgid "Add %s fields"
 msgstr ""
@@ -120,7 +120,7 @@ msgstr ""
 msgid "Advanced Order Export For WooCommerce"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:211
+#: classes/class-wc-order-export-admin.php:213
 msgid ""
 "Advanced Order Export For WooCommerce is available <a href=\"admin.php?"
 "page=wc-order-export\">on this page</a>."
@@ -134,7 +134,7 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:320
+#: classes/class-wc-order-export-admin.php:322
 msgid "all rows"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 msgid "Are you sure to continue?"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:317
+#: classes/class-wc-order-export-admin.php:319
 msgid "as"
 msgstr ""
 
@@ -200,14 +200,14 @@ msgid ""
 "to export support."
 msgstr ""
 
-#: view/settings-form.php:1705 view/settings-form.php:1726
-#: view/settings-form.php:1762 view/settings-form.php:1802
-#: view/settings-form.php:1824 view/settings-form.php:1855
-#: view/settings-form.php:1877 view/settings-form.php:1903
-#: view/settings-form.php:1926 view/settings-form.php:1948
-#: view/settings-form.php:1970 view/settings-form.php:1992
-#: view/settings-form.php:2022 view/settings-form.php:2052
-#: view/settings-form.php:2082
+#: view/settings-form.php:1707 view/settings-form.php:1728
+#: view/settings-form.php:1766 view/settings-form.php:1811
+#: view/settings-form.php:1833 view/settings-form.php:1868
+#: view/settings-form.php:1890 view/settings-form.php:1916
+#: view/settings-form.php:1939 view/settings-form.php:1961
+#: view/settings-form.php:1983 view/settings-form.php:2005
+#: view/settings-form.php:2035 view/settings-form.php:2065
+#: view/settings-form.php:2095
 msgid "Cancel"
 msgstr ""
 
@@ -276,7 +276,7 @@ msgstr ""
 msgid "Cleanup phone (export only digits)"
 msgstr ""
 
-#: view/settings-form.php:2172
+#: view/settings-form.php:2185
 msgid "Click here to download"
 msgstr ""
 
@@ -284,16 +284,16 @@ msgstr ""
 msgid "code snippets"
 msgstr ""
 
-#: view/settings-form.php:1695 view/settings-form.php:1711
-#: view/settings-form.php:1752 view/settings-form.php:1794
-#: view/settings-form.php:1808 view/settings-form.php:1847
-#: view/settings-form.php:1861 view/settings-form.php:1894
-#: view/settings-form.php:1909 view/settings-form.php:1938
-#: view/settings-form.php:1960 view/settings-form.php:1982
+#: view/settings-form.php:1697 view/settings-form.php:1713
+#: view/settings-form.php:1756 view/settings-form.php:1803
+#: view/settings-form.php:1817 view/settings-form.php:1860
+#: view/settings-form.php:1874 view/settings-form.php:1907
+#: view/settings-form.php:1922 view/settings-form.php:1951
+#: view/settings-form.php:1973 view/settings-form.php:1995
 msgid "Column name"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:312
+#: classes/class-wc-order-export-admin.php:314
 msgid "columns"
 msgstr ""
 
@@ -334,14 +334,14 @@ msgstr ""
 msgid "Completed Date"
 msgstr ""
 
-#: view/settings-form.php:1703 view/settings-form.php:1724
-#: view/settings-form.php:1760 view/settings-form.php:1800
-#: view/settings-form.php:1822 view/settings-form.php:1853
-#: view/settings-form.php:1875 view/settings-form.php:1901
-#: view/settings-form.php:1923 view/settings-form.php:1945
-#: view/settings-form.php:1967 view/settings-form.php:1989
-#: view/settings-form.php:2019 view/settings-form.php:2049
-#: view/settings-form.php:2079
+#: view/settings-form.php:1705 view/settings-form.php:1726
+#: view/settings-form.php:1764 view/settings-form.php:1809
+#: view/settings-form.php:1831 view/settings-form.php:1866
+#: view/settings-form.php:1888 view/settings-form.php:1914
+#: view/settings-form.php:1936 view/settings-form.php:1958
+#: view/settings-form.php:1980 view/settings-form.php:2002
+#: view/settings-form.php:2032 view/settings-form.php:2062
+#: view/settings-form.php:2092
 msgid "Confirm"
 msgstr ""
 
@@ -403,7 +403,7 @@ msgstr ""
 msgid "Coupons"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:331
+#: classes/class-wc-order-export-admin.php:333
 msgid "coupons"
 msgstr ""
 
@@ -488,7 +488,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:390
+#: classes/class-wc-order-export-admin.php:392
 msgid "Date From is greater than Date To"
 msgstr ""
 
@@ -524,7 +524,7 @@ msgstr ""
 msgid "Discount Amount Tax"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:221
+#: classes/class-wc-order-export-admin.php:223
 msgid "Docs"
 msgstr ""
 
@@ -567,7 +567,7 @@ msgstr ""
 msgid "Drag rows to reorder exported fields"
 msgstr ""
 
-#: classes/core/class-wc-order-export-order-fields.php:472
+#: classes/core/class-wc-order-export-order-fields.php:485
 msgid "Edit order"
 msgstr ""
 
@@ -579,24 +579,24 @@ msgstr ""
 msgid "Embedded Product Image"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:394
+#: classes/class-wc-order-export-admin.php:396
 #: classes/core/trait-woe-core-extractor.php:171
 msgid "empty"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:383
+#: classes/class-wc-order-export-admin.php:385
 msgid "empty column name"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:384
+#: classes/class-wc-order-export-admin.php:386
 msgid "empty meta key"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:495
+#: classes/class-wc-order-export-admin.php:497
 msgid "Empty method"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:388
+#: classes/class-wc-order-export-admin.php:390
 msgid "empty value"
 msgstr ""
 
@@ -620,11 +620,11 @@ msgstr ""
 msgid "Exclude products"
 msgstr ""
 
-#: view/settings-form.php:2139
+#: view/settings-form.php:2152
 msgid "Export"
 msgstr ""
 
-#: view/settings-form.php:2143
+#: view/settings-form.php:2156
 msgid "Export [w/o progressbar]"
 msgstr ""
 
@@ -636,7 +636,7 @@ msgstr ""
 msgid "Export all products from the order"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:546
+#: classes/class-wc-order-export-admin.php:548
 #, php-format
 msgid "Export as %s"
 msgstr ""
@@ -663,10 +663,10 @@ msgstr ""
 msgid "Export only matched product items"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:238
-#: classes/class-wc-order-export-admin.php:239
-#: classes/class-wc-order-export-admin.php:244
-#: classes/class-wc-order-export-admin.php:245
+#: classes/class-wc-order-export-admin.php:240
+#: classes/class-wc-order-export-admin.php:241
+#: classes/class-wc-order-export-admin.php:246
+#: classes/class-wc-order-export-admin.php:247
 msgid "Export Orders"
 msgstr ""
 
@@ -690,7 +690,7 @@ msgstr ""
 msgid "Export Status"
 msgstr ""
 
-#: view/settings-form.php:2155
+#: view/settings-form.php:2168
 #, php-format
 msgid "Export total: %s orders"
 msgstr ""
@@ -707,7 +707,7 @@ msgstr ""
 msgid "Express export"
 msgstr ""
 
-#: view/settings-form.php:1932
+#: view/settings-form.php:1945
 msgid "Fee name"
 msgstr ""
 
@@ -719,7 +719,7 @@ msgstr ""
 msgid "Field format"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:319
+#: classes/class-wc-order-export-admin.php:321
 msgid "Fill order columns for"
 msgstr ""
 
@@ -823,15 +823,15 @@ msgstr ""
 msgid "Full names for categories"
 msgstr ""
 
-#: view/settings-form.php:2177
+#: view/settings-form.php:2190
 msgid "Generating file..."
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:324
+#: classes/class-wc-order-export-admin.php:326
 msgid "Grouping by coupon"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:323
+#: classes/class-wc-order-export-admin.php:325
 msgid "Grouping by product"
 msgstr ""
 
@@ -855,9 +855,9 @@ msgstr ""
 msgid "helpdesk system"
 msgstr ""
 
-#: view/settings-form.php:1691 view/settings-form.php:1748
-#: view/settings-form.php:1778 view/settings-form.php:1842
-#: view/settings-form.php:1885
+#: view/settings-form.php:1693 view/settings-form.php:1752
+#: view/settings-form.php:1787 view/settings-form.php:1855
+#: view/settings-form.php:1898
 msgid "Hide unused fields"
 msgstr ""
 
@@ -869,7 +869,7 @@ msgstr ""
 msgid "https://algolplus.com/"
 msgstr ""
 
-#: view/settings-form.php:2119
+#: view/settings-form.php:2132
 #, php-format
 msgid ""
 "If you see this message after page load, user interface won't work correctly!"
@@ -903,7 +903,7 @@ msgstr ""
 msgid "Import settings"
 msgstr ""
 
-#: view/settings-form.php:2144
+#: view/settings-form.php:2157
 msgid "It might not work for huge datasets!"
 msgstr ""
 
@@ -979,8 +979,8 @@ msgstr ""
 msgid "L,C or R. Comma separated list"
 msgstr ""
 
-#: view/settings-form.php:2010 view/settings-form.php:2040
-#: view/settings-form.php:2070
+#: view/settings-form.php:2023 view/settings-form.php:2053
+#: view/settings-form.php:2083
 msgid "Label"
 msgstr ""
 
@@ -1050,7 +1050,7 @@ msgstr ""
 msgid "Main SQL queries are listed below"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:552
+#: classes/class-wc-order-export-admin.php:554
 msgid "Mark exported"
 msgstr ""
 
@@ -1058,13 +1058,13 @@ msgstr ""
 msgid "Mark exported orders"
 msgstr ""
 
-#: view/settings-form.php:1675 view/settings-form.php:1732
-#: view/settings-form.php:1882 view/settings-form.php:2004
-#: view/settings-form.php:2034 view/settings-form.php:2064
+#: view/settings-form.php:1675 view/settings-form.php:1734
+#: view/settings-form.php:1895 view/settings-form.php:2017
+#: view/settings-form.php:2047 view/settings-form.php:2077
 msgid "Meta key"
 msgstr ""
 
-#: view/settings-form.php:2126
+#: view/settings-form.php:2139
 msgid "Might be different from actual export!"
 msgstr ""
 
@@ -1109,7 +1109,7 @@ msgstr ""
 msgid "Non variation attributes"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:392
+#: classes/class-wc-order-export-admin.php:394
 #: classes/admin/tabs/ajax/trait-wc-order-export-admin-tab-abstract-ajax-export.php:127
 msgid "Nothing to export. Please, adjust your filters"
 msgstr ""
@@ -1122,17 +1122,17 @@ msgstr ""
 msgid "Number of coupons used"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:313
+#: classes/class-wc-order-export-admin.php:315
 msgid "one row"
 msgstr ""
 
-#: view/settings-form.php:1781
+#: view/settings-form.php:1790
 msgid "OR"
 msgstr ""
 
-#: view/settings-form.php:1686 view/settings-form.php:1743
-#: view/settings-form.php:1773 view/settings-form.php:1837
-#: view/settings-form.php:1891
+#: view/settings-form.php:1688 view/settings-form.php:1747
+#: view/settings-form.php:1782 view/settings-form.php:1850
+#: view/settings-form.php:1904
 msgid "or type meta key here"
 msgstr ""
 
@@ -1145,7 +1145,7 @@ msgstr ""
 msgid "Order ID"
 msgstr ""
 
-#: view/settings-form.php:1831
+#: view/settings-form.php:1841
 msgid "Order item fields"
 msgstr ""
 
@@ -1440,7 +1440,7 @@ msgstr ""
 msgid "Please, review %s at first."
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:391
+#: classes/class-wc-order-export-admin.php:393
 msgid "Please, set up fields to export"
 msgstr ""
 
@@ -1464,15 +1464,15 @@ msgstr ""
 msgid "Prepend XML"
 msgstr ""
 
-#: view/settings-form.php:2171
+#: view/settings-form.php:2184
 msgid "Press 'Esc' to cancel the export"
 msgstr ""
 
-#: view/settings-form.php:2125
+#: view/settings-form.php:2138
 msgid "Preview"
 msgstr ""
 
-#: view/settings-form.php:2157
+#: view/settings-form.php:2170
 msgid "Preview size"
 msgstr ""
 
@@ -1493,7 +1493,7 @@ msgstr ""
 msgid "Product custom fields"
 msgstr ""
 
-#: view/settings-form.php:1767
+#: view/settings-form.php:1772
 msgid "Product fields"
 msgstr ""
 
@@ -1558,7 +1558,7 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:330
+#: classes/class-wc-order-export-admin.php:332
 msgid "products"
 msgstr ""
 
@@ -1586,7 +1586,7 @@ msgstr ""
 msgid "Remove all fields"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:333
+#: classes/class-wc-order-export-admin.php:335
 msgid "Remove all fields?"
 msgstr ""
 
@@ -1610,7 +1610,7 @@ msgstr ""
 msgid "repeat header as last line"
 msgstr ""
 
-#: view/settings-form.php:2151
+#: view/settings-form.php:2164
 msgid "Reset settings"
 msgstr ""
 
@@ -1635,7 +1635,7 @@ msgstr ""
 msgid "Root tag"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:311
+#: classes/class-wc-order-export-admin.php:313
 msgid "rows"
 msgstr ""
 
@@ -1643,11 +1643,11 @@ msgstr ""
 msgid "Sat"
 msgstr ""
 
-#: view/settings-form.php:2132
+#: view/settings-form.php:2145
 msgid "Save & Exit"
 msgstr ""
 
-#: view/settings-form.php:2129 view/settings-form.php:2134
+#: view/settings-form.php:2142 view/settings-form.php:2147
 msgid "Save settings"
 msgstr ""
 
@@ -1655,7 +1655,7 @@ msgstr ""
 msgid "Scheduled jobs"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:387
+#: classes/class-wc-order-export-admin.php:389
 msgid "select item field"
 msgstr ""
 
@@ -1663,7 +1663,7 @@ msgstr ""
 msgid "Select logo"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:385
+#: classes/class-wc-order-export-admin.php:387
 msgid "select product field or taxonomy"
 msgstr ""
 
@@ -1671,7 +1671,7 @@ msgstr ""
 msgid "Self closing tags"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:329
+#: classes/class-wc-order-export-admin.php:331
 msgid "Set up coupon fields"
 msgstr ""
 
@@ -1679,11 +1679,11 @@ msgstr ""
 msgid "Set up fields to export"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:328
+#: classes/class-wc-order-export-admin.php:330
 msgid "Set up product fields"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:220
+#: classes/class-wc-order-export-admin.php:222
 msgid "Settings"
 msgstr ""
 
@@ -1695,7 +1695,7 @@ msgstr ""
 msgid "Settings saved"
 msgstr ""
 
-#: view/settings-form.php:2164 view/tab/tools.php:88
+#: view/settings-form.php:2177 view/tab/tools.php:88
 msgid "Settings were successfully updated!"
 msgstr ""
 
@@ -1733,7 +1733,7 @@ msgstr ""
 msgid "Shipping methods"
 msgstr ""
 
-#: view/settings-form.php:1954
+#: view/settings-form.php:1967
 msgid "Shipping name"
 msgstr ""
 
@@ -1745,7 +1745,7 @@ msgstr ""
 msgid "Short Description"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:335
+#: classes/class-wc-order-export-admin.php:337
 msgid "Show total amount for this column"
 msgstr ""
 
@@ -1766,7 +1766,7 @@ msgstr ""
 msgid "Sort orders by %s in %s order"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:318
+#: classes/class-wc-order-export-admin.php:320
 msgid "Split values by"
 msgstr ""
 
@@ -1822,7 +1822,7 @@ msgstr ""
 msgid "Subscription Relationship"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:336
+#: classes/class-wc-order-export-admin.php:338
 msgid "Sum"
 msgstr ""
 
@@ -1910,7 +1910,7 @@ msgstr ""
 msgid "Sun"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:223
+#: classes/class-wc-order-export-admin.php:225
 msgid "Support"
 msgstr ""
 
@@ -1942,11 +1942,11 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: view/settings-form.php:1976
+#: view/settings-form.php:1989
 msgid "Tax name"
 msgstr ""
 
-#: view/settings-form.php:1783
+#: view/settings-form.php:1792
 msgid "Taxonomy"
 msgstr ""
 
@@ -1960,13 +1960,13 @@ msgid ""
 "outdated Select2.js"
 msgstr ""
 
-#: view/settings-form.php:1673 view/settings-form.php:1829
+#: view/settings-form.php:1673 view/settings-form.php:1838
 msgid ""
 "The plugin fetches meta keys from the existing orders. So you should create "
 "fake order if you've added new field just now."
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:334
+#: classes/class-wc-order-export-admin.php:336
 msgid ""
 "This action will reset filters, settings and fields to default state. Are "
 "you sure?"
@@ -2002,7 +2002,7 @@ msgstr ""
 msgid "Title for summary row"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:389
+#: classes/class-wc-order-export-admin.php:391
 msgid "Title is empty"
 msgstr ""
 
@@ -2061,7 +2061,7 @@ msgstr ""
 msgid "Tue"
 msgstr ""
 
-#: view/settings-form.php:2090
+#: view/settings-form.php:2103
 msgid "Turn off mode Summary report to export order fields"
 msgstr ""
 
@@ -2069,17 +2069,17 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:506
+#: classes/class-wc-order-export-admin.php:508
 #, php-format
 msgid "Unknown AJAX method %s"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:514
+#: classes/class-wc-order-export-admin.php:516
 #, php-format
 msgid "Unknown tab method %s"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:553
+#: classes/class-wc-order-export-admin.php:555
 msgid "Unmark exported"
 msgstr ""
 
@@ -2119,8 +2119,8 @@ msgstr ""
 msgid "Usernames"
 msgstr ""
 
-#: view/settings-form.php:1716 view/settings-form.php:1813
-#: view/settings-form.php:1866 view/settings-form.php:1914
+#: view/settings-form.php:1718 view/settings-form.php:1822
+#: view/settings-form.php:1879 view/settings-form.php:1927
 msgid "Value"
 msgstr ""
 
@@ -2148,7 +2148,7 @@ msgstr ""
 msgid "Width"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:518
+#: classes/class-wc-order-export-admin.php:520
 msgid "Wrong nonce"
 msgstr ""
 
@@ -2164,12 +2164,12 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:491
+#: classes/class-wc-order-export-admin.php:493
 msgid "You can not do it"
 msgstr ""
 
-#: view/settings-form.php:1999 view/settings-form.php:2029
-#: view/settings-form.php:2059
+#: view/settings-form.php:2012 view/settings-form.php:2042
+#: view/settings-form.php:2072
 msgid "You should add code to section \"Misc Settings\". Read the guide"
 msgstr ""
 

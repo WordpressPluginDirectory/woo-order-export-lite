@@ -22,6 +22,7 @@ class WC_Order_Export_Order_Product_Fields {
 	 * @var int
 	 */
 	public $parent_product_id;
+	public $parent_product;
 
 	public function __construct($item, $item_meta, $product, 
 	$order, $post, $line_id, $static_vals, $options, $woe_order) {
@@ -42,6 +43,7 @@ class WC_Order_Export_Order_Product_Fields {
 		if( $product ) {
 			$this->parent_product_id = method_exists( $product,
 				'get_parent_id' ) ? $product->get_parent_id() : ( isset( $product->parent ) ? $product->parent->id : 0 );
+			$this->parent_product = wc_get_product( $this->parent_product_id );
 		}
 	}
 
@@ -216,8 +218,8 @@ class WC_Order_Export_Order_Product_Fields {
 			$field_value = '';
 			if( $this->product ) {
 				if ( $this->product->is_type( 'variation' ) && $this->parent_product_id ) {
-					if ( $parent = wc_get_product( $this->parent_product_id ) ) {
-						$field_value = $parent->get_sku();
+					if ( $this->parent_product ) {
+						$field_value = $this->parent_product->get_sku();
 					}
 				}
 				else
@@ -269,7 +271,7 @@ class WC_Order_Export_Order_Product_Fields {
 			$attributes = array();
 			if ( $this->product ) {
 				//variation uses parent attributes
-				$product_attributes = $this->parent_product_id ? $this->product->parent->get_attributes() : $this->product->get_attributes();
+				$product_attributes = $this->parent_product ? $this->parent_product->get_attributes() : $this->product->get_attributes();
 				foreach ($product_attributes  as $attribute ) {
 					/** @var WC_Product_Attribute $attribute */
 					// attribute is not marked"used fro varation" OR it's simple product 
@@ -323,8 +325,8 @@ class WC_Order_Export_Order_Product_Fields {
 			{
 				$field_value = $this->product->get_attribute( $field );
 				if ( $field_value === '' and $this->parent_product_id ) {
-					if ( $parent = wc_get_product( $this->parent_product_id ) ) {
-						$field_value = $parent->get_attribute( $field );
+					if ( $this->parent_product ) {
+						$field_value = $this->parent_product->get_attribute( $field );
 					}
 				}
 			}

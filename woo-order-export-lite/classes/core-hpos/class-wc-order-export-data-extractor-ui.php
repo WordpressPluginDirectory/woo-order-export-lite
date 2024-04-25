@@ -63,16 +63,28 @@ class WC_Order_Export_Data_Extractor_UI extends WC_Order_Export_Data_Extractor {
 		$order_ids   = $wpdb->get_col( "SELECT ID FROM {$wpdb->prefix}wc_orders WHERE type = '" . self::$object_type . "' ORDER BY ID DESC LIMIT " . self::HUGE_SHOP_ORDERS );
 		if( empty($order_ids) )
 			return array();
-
 		$order_ids   = join( ",", $order_ids );
-		$values = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_value FROM {$wpdb->prefix}wc_orders_meta WHERE meta_key = %s  AND order_id IN ($order_ids)", $key ) );
-		sort( $values );
 
+		if( self::is_HPOS_orders_field($key) ) {
+			$field = substr($key,1) ;// ignore leading _
+			$values = $wpdb->get_col( "SELECT DISTINCT $field FROM {$wpdb->prefix}wc_orders WHERE id IN ($order_ids)" );
+		}elseif( $hpos_addr = self::parse_HPOS_order_address_field($key) ) {
+			$values = $wpdb->get_col( "SELECT DISTINCT $hpos_addr[field] FROM {$wpdb->prefix}wc_order_addresses WHERE order_id IN ($order_ids) AND address_type = '$hpos_addr[address_type]'" );
+		} else {
+			$values = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_value FROM {$wpdb->prefix}wc_orders_meta WHERE meta_key = %s  AND order_id IN ($order_ids)", $key ) );
+		}
+		sort( $values );
 		return apply_filters( 'woe_get_order_custom_fields_values', $values, $key);
 	}
 
 	public static function get_order_meta_values( $type, $key ) {
 		global $wpdb;
+
+		$key = strtolower($key);
+
+		if( !in_array($key, self::$table_order_address_fields) )
+			return array();
+
 
 		$order_ids   = $wpdb->get_col( "SELECT ID FROM {$wpdb->prefix}wc_orders WHERE type = '" . self::$object_type . "' ORDER BY ID DESC LIMIT " . self::HUGE_SHOP_ORDERS );
 		if( empty($order_ids) )
@@ -80,12 +92,11 @@ class WC_Order_Export_Data_Extractor_UI extends WC_Order_Export_Data_Extractor {
 
 		$order_ids   = join( ",", $order_ids );
 
-		$query   = $wpdb->prepare( "SELECT DISTINCT meta_value FROM {$wpdb->prefix}wc_orders_meta WHERE meta_key = %s AND order_id IN($order_ids)",
-			array( $type . strtolower( $key ) ) );
+		$query   = $wpdb->prepare( "SELECT DISTINCT $key FROM {$wpdb->prefix}wc_order_addresses WHERE address_type = %s AND order_id IN($order_ids)",
+			array( trim($type,"_") ) );
 		$results = $wpdb->get_col( $query );
 		$data    = array_filter( $results );
 		sort( $data );
-
 		return $data;
 	}
 

@@ -184,9 +184,11 @@ class WC_Order_Export_Admin {
 		if ( 'woe_export_status' === $column ) {
 			$is_exported = false;
 
-			if ( $order ? $order->get_meta('woe_order_exported') :
-                get_post_meta( $post->ID, 'woe_order_exported', true ) ) {
-				$is_exported = true;
+			foreach( apply_filters( "woe_export_status_postfixes_to_verify",  array("") ) as $key ) {
+				if ( $order ? $order->get_meta("woe_order_exported" . $key) :
+					get_post_meta( $post->ID, "woe_order_exported" . $key, true ) ) {
+					$is_exported = true;
+				}
 			}
 
 			if ( $is_exported ) {
@@ -565,8 +567,10 @@ class WC_Order_Export_Admin {
 				$new_redirect_to = admin_url( 'admin-ajax.php' ) . "?action=order_exporter&method=export_download_bulk_file&export_bulk_profile=now&ids=" . join( ',', $ids );
 				break;
 			case 'woe_mark_exported':
-				foreach ( $ids as $post_id ) {
-					update_post_meta( $post_id, 'woe_order_exported', 1 );
+				foreach ( $ids as $order_id ) {
+					$order = new WC_Order($order_id);
+					$order->update_meta_data('woe_order_exported' . apply_filters("woe_exported_postfix",''), current_time( 'timestamp' ));
+					$order->save();
 				}
 				$new_redirect_to = add_query_arg( array(
 					'woe_bulk_mark_exported'   => count( $ids ),
@@ -574,8 +578,11 @@ class WC_Order_Export_Admin {
 				), $redirect_to );
 				break;
 			case 'woe_unmark_exported':
-				foreach ( $ids as $post_id ) {
-					delete_post_meta( $post_id, 'woe_order_exported' );
+				foreach ( $ids as $order_id ) {
+					$order = new WC_Order($order_id);
+					foreach( apply_filters( "woe_export_status_postfixes_to_delete",  array("") ) as $key )
+						$order->delete_meta_data( 'woe_order_exported' . $key );
+					$order->save();
 				}
 				$new_redirect_to = add_query_arg( array(
 					'woe_bulk_mark_exported'   => false,
