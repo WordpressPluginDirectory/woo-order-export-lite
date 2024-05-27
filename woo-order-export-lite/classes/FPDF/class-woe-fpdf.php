@@ -2156,6 +2156,28 @@ class WOE_FPDF {
         return $arrInfo;
     }
 
+    private function _parseavif($str_file)
+    {
+        $arrInfo = array();
+
+        if (function_exists('imagecreatefromavif')) {
+            $objImage = imagecreatefromavif($str_file);
+
+            $strTmp = tempnam('.', 'png');
+            if (!$strTmp) {
+                throw new WOE_FPDF_Exception('Unable to create a temporary file', WOE_FPDF_Exception::IMAGE_NOT_WRITABLE);
+            }
+            if (!imagepng($objImage, $strTmp)) {
+                throw new WOE_FPDF_Exception('Error while saving to temporary file', WOE_FPDF_Exception::IMAGE_NOT_WRITABLE);
+            }
+            imagedestroy($objImage);
+            $arrInfo = $this->_parsepng($strTmp);
+            unlink($strTmp);
+        }
+
+        return $arrInfo;
+    }
+
 	/**
 	 * @param $str_file
 	 *

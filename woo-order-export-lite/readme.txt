@@ -5,7 +5,7 @@ Tags: order export,export orders,woocommerce,order,export
 Requires PHP: 5.4.0
 Requires at least: 4.7
 Tested up to: 6.5
-Stable tag: 3.5.1
+Stable tag: 3.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,13 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 3.5.2 - 2024-05-27 =
+* XLS/PDF formats support AVIF product images
+* Added "Stop renewal after" and "Subscription price" fields to >Setup Fields>Products (if Woo Subscriptions is active)
+* Fixed bug - empty "Custom Fields" dropdown in section "Filter by order" (HPOS mode, big shops only)
+* Fixed bug - missed header line for XLS/PDF if nothing to export
+* Removed inactive suspicious function to avoid false warnings from security plugins
 
 = 3.5.1 - 2024-04-25 =
 * Reduced page loading time for stores with a huge number of orders

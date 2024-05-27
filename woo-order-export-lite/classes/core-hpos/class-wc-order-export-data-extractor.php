@@ -79,9 +79,8 @@ class WC_Order_Export_Data_Extractor {
 
 		$fields = get_transient( $transient_key );
 		if ( $fields === false ) {
-            $where_posts = self::get_where_last_orders('id', 'WHERE');
-			$fields = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders INNER JOIN {$wpdb->prefix}wc_orders_meta ON {$wpdb->prefix}wc_orders.id = {$wpdb->prefix}wc_orders_meta.order_id $where_posts" );
-
+            $where_posts = self::get_where_last_orders('orders.id', 'WHERE');
+			$fields = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders AS orders INNER JOIN {$wpdb->prefix}wc_orders_meta ON orders.id = {$wpdb->prefix}wc_orders_meta.order_id $where_posts" );
 			//HPOS
 			$fields = array_merge( $fields, self::$table_orders_fields);
 			foreach( self::$table_order_address_fields as $field) {

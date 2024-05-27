@@ -1516,6 +1516,7 @@ function remove_time_from_date( $datetime ) {
                             <option>=</option>
                             <option>&lt;&gt;</option>
                             <option>LIKE</option>
+                            <option>NOT LIKE</option>
                         </select>
                         <input type="text" id="text_order_item_name" disabled class="like-input" style="display: none;">
                         <button id="add_item_names" class="button-secondary"><span class="dashicons dashicons-plus-alt"></span>

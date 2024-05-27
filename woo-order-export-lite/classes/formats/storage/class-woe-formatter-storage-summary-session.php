@@ -19,6 +19,7 @@ class WOE_Formatter_Storage_Summary_Session implements WOE_Formatter_Storage {
 
     public function __construct($summaryKey)
     {
+        $this->header = array();
 		$this->summaryKey = $summaryKey;
         if ($this->summaryKey == self::SUMMARY_PRODUCTS_KEY) {
             $this->summaryProducts = true;

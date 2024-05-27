@@ -213,7 +213,7 @@ jQuery( document ).ready( function ( $ ) {
 
     jQuery( '#item_name_compare' ).on( 'change', function () {
         var val_op = jQuery( '#item_name_compare' ).val();
-        if ( 'LIKE' === val_op ) {
+        if ( 'LIKE' === val_op || 'NOT LIKE' === val_op ) {
             jQuery( "#text_item_names" ).css( 'display', 'none' ).attr( 'disabled', 'disabled' );
             jQuery( "#text_item_names--select2" ).hide();
             jQuery( "#text_order_item_name" ).css( 'display', 'inline' ).attr( 'disabled', false );

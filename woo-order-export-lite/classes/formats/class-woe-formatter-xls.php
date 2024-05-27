@@ -342,6 +342,8 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 					$row[] = $label;
 				}
 			}
+			if(!$row) // print header even if no data
+				$row = $this->make_header( "" );
 
 			if ( ! empty( $this->settings['display_column_names'] ) AND $row ) {
                 if ($this->storage instanceof WOE_Formatter_Storage_Summary_Session) {
@@ -495,6 +497,15 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 							}
 							imagedestroy($objImage);
 						}
+                        //support avif
+                        if(preg_match('#\.avif$#i',$value) && function_exists('imagecreatefromavif')) {
+                            $objImage = imagecreatefromavif($path);
+                            $path .= ".png";
+                            if (!imagepng($objImage, $path)) {
+                                throw new Exception('Error while saving to temporary png file');
+                            }
+                            imagedestroy($objImage);
+                        }
 						$objDrawing->setPath( $path );
 						$objDrawing->setCoordinates( $cell->getCoordinate() );        //set image to cell
 						$row              = $cell->getRow();
@@ -549,7 +560,7 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 
 			do_action( 'woe_xls_print_footer', $this->objPHPExcel, $this );
 			$objWriter = PHPExcel_IOFactory::createWriter( $this->objPHPExcel,
-				$this->settings['use_xls_format'] ? 'Excel5' : 'Excel2007' );
+				apply_filters("woe_xls_file_format", $this->settings['use_xls_format'] ? 'Excel5' : 'Excel2007') );
 			$objWriter->save( $this->filename );
 
 			$this->storage->close();

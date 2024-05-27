@@ -334,6 +334,8 @@ class WOE_Formatter_PDF extends WOE_Formatter_Plain_Format {
 			foreach ( $this->storage->getColumns() as $column ) {
 				$row[] = $column->getMetaItem( "label" );
 			}
+			if(!$row) // print header even if no data
+				$row = $this->make_header( "" );
 			$row          = apply_filters( 'woe_row_before_format_pdf', $row );
 
 			if ( ! empty( $this->settings['display_column_names'] ) ) {

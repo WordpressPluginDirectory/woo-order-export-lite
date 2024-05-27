@@ -189,7 +189,7 @@ trait WOE_Core_Extractor_UI {
 			$key ) );
 		sort( $values );
 
-		return $values;
+		return apply_filters("woe_get_product_custom_fields_values", $values, $field);
 	}
 
 	public static function get_products_taxonomies_values( $key ) {
@@ -447,6 +447,21 @@ trait WOE_Core_Extractor_UI {
 				'format'  => 'money',
 			),
 		);
+
+        if (function_exists('wcs_get_subscription')) {
+            $map = array_merge($map, array(
+                'stop_renewal_after' => array(
+                    'label'	  => __( 'Stop Renewal After', 'woo-order-export-lite' ),
+                    'checked' => 0,
+                    'format'  => 'string',
+                ),
+                'subscription_price' => array(
+                    'label'	  => __( 'Subscription Price', 'woo-order-export-lite' ),
+                    'checked' => 0,
+                    'format'  => 'money',
+                ),
+            ));
+        }
 
 		foreach ( $map as $key => $value ) {
 			$map[ $key ]['colname'] = $value['label'];

@@ -293,6 +293,7 @@ class WOE_Formatter_Storage_Csv implements WOE_Formatter_Storage {
 	}
 
     public function delete() {
-        return unlink($this->filename);
+		if( file_exists($this->filename) )
+			unlink($this->filename);
     }
 }

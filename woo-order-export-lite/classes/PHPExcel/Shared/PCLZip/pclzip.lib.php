@@ -4852,7 +4852,6 @@ class PclZip
 
         // ----- Disable magic_quotes
         if ($this->magic_quotes_status == 1) {
-            //@set_magic_quotes_runtime(0);
         }
 
         // ----- Return

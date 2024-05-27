@@ -303,6 +303,12 @@ class WC_Order_Export_Order_Product_Fields {
 		} elseif ( isset( $this->item['item_meta'][ "_" . $field ] ) ) { // or hidden field
 			$field_value = join( WC_Order_Export_Data_Extractor::$export_itemmeta_values_separator,
 				$this->item['item_meta'][ "_" . $field ] );
+		} elseif ( $field == 'stop_renewal_after' && $this->product->get_type() == 'subscription' ) {
+            $subscription_ranges = wcs_get_subscription_ranges($this->product->get_meta('_subscription_period'));
+            $subscription_length = $this->product->get_meta('_subscription_length');
+            $field_value = $subscription_ranges[$subscription_length] ?? $subscription_length;
+		} elseif ( $field == 'subscription_price' && $this->product->get_type() == 'subscription' ) {
+			$field_value = $this->product->get_price();
 		}
 		else {
 		
