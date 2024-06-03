@@ -15,6 +15,11 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 
 	protected $summary_processing = false;
 
+	/**
+	 * @var WOE_Formatter_Storage
+	 */
+	protected $storage;
+
 	public function __construct(
 		$mode,
 		$filename,
@@ -506,7 +511,7 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 
 		$key = $order->get_billing_email();
 		if(!$key AND $order->get_parent_id()) {
-			$parent_order = new WC_order($order->get_parent_id());
+			$parent_order = new WC_Order($order->get_parent_id());
 			$key = $parent_order->get_billing_email();
 		}
 		$key = apply_filters( "woe_summary_customers_adjust_key", $key, $order );
@@ -839,7 +844,7 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 
 		$key = $order->get_billing_email();
 		if(!$key AND $order->get_parent_id()) {
-			$parent_order = new WC_order($order->get_parent_id());
+			$parent_order = new WC_Order($order->get_parent_id());
 			$key = $parent_order->get_billing_email();
 		}
 		$key = apply_filters( "woe_summary_customers_adjust_key", $key, $order );

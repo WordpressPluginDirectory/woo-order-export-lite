@@ -5,7 +5,7 @@ Tags: order export,export orders,woocommerce,order,export
 Requires PHP: 5.4.0
 Requires at least: 4.7
 Tested up to: 6.5
-Stable tag: 3.5.2
+Stable tag: 3.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,10 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 3.5.3 - 2024-06-03 =
+* Fixed PHP8 notices and warnings
+* Fixed non-reported bugs, detected by PHPStan
 
 = 3.5.2 - 2024-05-27 =
 * XLS/PDF formats support AVIF product images

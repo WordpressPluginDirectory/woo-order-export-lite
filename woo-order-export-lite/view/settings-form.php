@@ -1316,8 +1316,7 @@ function remove_time_from_date( $datetime ) {
 					<?php
 					global $wp_roles;
 					foreach ( $wp_roles->role_names as $k => $v ) { ?>
-                        <option value="<?php echo $k ?>" <?php echo( in_array( $k,
-							$settings['user_roles'] ) ? selected( true ) : '' ) ?>> <?php echo $v ?></option>
+                        <option value="<?php echo $k ?>" <?php selected( in_array( $k, $settings['user_roles'] )) ?>> <?php echo $v ?></option>
 					<?php } ?>
                 </select>
                 <div class="custom-fields__wrapper">

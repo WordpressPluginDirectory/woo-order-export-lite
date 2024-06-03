@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Order Export For WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-27 05:42+0000\n"
+"POT-Creation-Date: 2024-06-03 07:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -51,7 +51,7 @@ msgstr ""
 msgid "[Rest of the World]"
 msgstr ""
 
-#: view/settings-form.php:1645 view/settings-form.php:1660
+#: view/settings-form.php:1644 view/settings-form.php:1659
 msgid "Actions"
 msgstr ""
 
@@ -64,15 +64,15 @@ msgstr ""
 msgid "Add %s fields"
 msgstr ""
 
-#: view/settings-form.php:1654
+#: view/settings-form.php:1653
 msgid "Add calculated field"
 msgstr ""
 
-#: view/settings-form.php:1663
+#: view/settings-form.php:1662
 msgid "Add fee"
 msgstr ""
 
-#: view/settings-form.php:1648
+#: view/settings-form.php:1647
 msgid "Add field"
 msgstr ""
 
@@ -80,15 +80,15 @@ msgstr ""
 msgid "Add links to images"
 msgstr ""
 
-#: view/settings-form.php:1666
+#: view/settings-form.php:1665
 msgid "Add shipping"
 msgstr ""
 
-#: view/settings-form.php:1651
+#: view/settings-form.php:1650
 msgid "Add static field"
 msgstr ""
 
-#: view/settings-form.php:1669
+#: view/settings-form.php:1668
 msgid "Add tax"
 msgstr ""
 
@@ -138,7 +138,7 @@ msgstr ""
 msgid "all rows"
 msgstr ""
 
-#: view/settings-form.php:1375
+#: view/settings-form.php:1374
 msgid "Any coupon used"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgstr ""
 msgid "Billing Address"
 msgstr ""
 
-#: view/settings-form.php:1401
+#: view/settings-form.php:1400
 msgid "Billing locations"
 msgstr ""
 
@@ -200,14 +200,14 @@ msgid ""
 "to export support."
 msgstr ""
 
-#: view/settings-form.php:1708 view/settings-form.php:1729
-#: view/settings-form.php:1767 view/settings-form.php:1812
-#: view/settings-form.php:1834 view/settings-form.php:1869
-#: view/settings-form.php:1891 view/settings-form.php:1917
-#: view/settings-form.php:1940 view/settings-form.php:1962
-#: view/settings-form.php:1984 view/settings-form.php:2006
-#: view/settings-form.php:2036 view/settings-form.php:2066
-#: view/settings-form.php:2096
+#: view/settings-form.php:1707 view/settings-form.php:1728
+#: view/settings-form.php:1766 view/settings-form.php:1811
+#: view/settings-form.php:1833 view/settings-form.php:1868
+#: view/settings-form.php:1890 view/settings-form.php:1916
+#: view/settings-form.php:1939 view/settings-form.php:1961
+#: view/settings-form.php:1983 view/settings-form.php:2005
+#: view/settings-form.php:2035 view/settings-form.php:2065
+#: view/settings-form.php:2095
 msgid "Cancel"
 msgstr ""
 
@@ -244,7 +244,7 @@ msgstr ""
 msgid "Character encoding"
 msgstr ""
 
-#: view/settings-form.php:1405 view/settings-form.php:1455
+#: view/settings-form.php:1404 view/settings-form.php:1454
 msgid "City"
 msgstr ""
 
@@ -276,7 +276,7 @@ msgstr ""
 msgid "Cleanup phone (export only digits)"
 msgstr ""
 
-#: view/settings-form.php:2186
+#: view/settings-form.php:2185
 msgid "Click here to download"
 msgstr ""
 
@@ -284,12 +284,12 @@ msgstr ""
 msgid "code snippets"
 msgstr ""
 
-#: view/settings-form.php:1698 view/settings-form.php:1714
-#: view/settings-form.php:1757 view/settings-form.php:1804
-#: view/settings-form.php:1818 view/settings-form.php:1861
-#: view/settings-form.php:1875 view/settings-form.php:1908
-#: view/settings-form.php:1923 view/settings-form.php:1952
-#: view/settings-form.php:1974 view/settings-form.php:1996
+#: view/settings-form.php:1697 view/settings-form.php:1713
+#: view/settings-form.php:1756 view/settings-form.php:1803
+#: view/settings-form.php:1817 view/settings-form.php:1860
+#: view/settings-form.php:1874 view/settings-form.php:1907
+#: view/settings-form.php:1922 view/settings-form.php:1951
+#: view/settings-form.php:1973 view/settings-form.php:1995
 msgid "Column name"
 msgstr ""
 
@@ -334,14 +334,14 @@ msgstr ""
 msgid "Completed Date"
 msgstr ""
 
-#: view/settings-form.php:1706 view/settings-form.php:1727
-#: view/settings-form.php:1765 view/settings-form.php:1810
-#: view/settings-form.php:1832 view/settings-form.php:1867
-#: view/settings-form.php:1889 view/settings-form.php:1915
-#: view/settings-form.php:1937 view/settings-form.php:1959
-#: view/settings-form.php:1981 view/settings-form.php:2003
-#: view/settings-form.php:2033 view/settings-form.php:2063
-#: view/settings-form.php:2093
+#: view/settings-form.php:1705 view/settings-form.php:1726
+#: view/settings-form.php:1764 view/settings-form.php:1809
+#: view/settings-form.php:1831 view/settings-form.php:1866
+#: view/settings-form.php:1888 view/settings-form.php:1914
+#: view/settings-form.php:1936 view/settings-form.php:1958
+#: view/settings-form.php:1980 view/settings-form.php:2002
+#: view/settings-form.php:2032 view/settings-form.php:2062
+#: view/settings-form.php:2092
 msgid "Confirm"
 msgstr ""
 
@@ -355,7 +355,7 @@ msgid ""
 "install."
 msgstr ""
 
-#: view/settings-form.php:1408 view/settings-form.php:1458
+#: view/settings-form.php:1407 view/settings-form.php:1457
 msgid "Country"
 msgstr ""
 
@@ -395,7 +395,7 @@ msgstr ""
 msgid "Coupon Type"
 msgstr ""
 
-#: view/settings-form.php:1378
+#: view/settings-form.php:1377
 #: classes/admin/class-wc-order-export-manage.php:755
 #: classes/core/trait-woe-core-extractor-ui.php:1125
 #: classes/core/trait-woe-core-extractor-ui.php:1326
@@ -427,7 +427,7 @@ msgstr ""
 msgid "Custom css"
 msgstr ""
 
-#: view/settings-form.php:1012 view/settings-form.php:1325
+#: view/settings-form.php:1012 view/settings-form.php:1324
 msgid "Custom fields"
 msgstr ""
 
@@ -559,11 +559,11 @@ msgstr ""
 msgid "Download URL"
 msgstr ""
 
-#: view/settings-form.php:1656
+#: view/settings-form.php:1655
 msgid "Drag a field to list of exported fields"
 msgstr ""
 
-#: view/settings-form.php:1606
+#: view/settings-form.php:1605
 msgid "Drag rows to reorder exported fields"
 msgstr ""
 
@@ -620,11 +620,11 @@ msgstr ""
 msgid "Exclude products"
 msgstr ""
 
-#: view/settings-form.php:2153
+#: view/settings-form.php:2152
 msgid "Export"
 msgstr ""
 
-#: view/settings-form.php:2157
+#: view/settings-form.php:2156
 msgid "Export [w/o progressbar]"
 msgstr ""
 
@@ -659,7 +659,7 @@ msgstr ""
 msgid "Export now"
 msgstr ""
 
-#: view/settings-form.php:1501
+#: view/settings-form.php:1500
 msgid "Export only matched product items"
 msgstr ""
 
@@ -690,7 +690,7 @@ msgstr ""
 msgid "Export Status"
 msgstr ""
 
-#: view/settings-form.php:2169
+#: view/settings-form.php:2168
 #, php-format
 msgid "Export total: %s orders"
 msgstr ""
@@ -707,7 +707,7 @@ msgstr ""
 msgid "Express export"
 msgstr ""
 
-#: view/settings-form.php:1946
+#: view/settings-form.php:1945
 msgid "Fee name"
 msgstr ""
 
@@ -723,11 +723,11 @@ msgstr ""
 msgid "Fill order columns for"
 msgstr ""
 
-#: view/settings-form.php:1396
+#: view/settings-form.php:1395
 msgid "Filter by billing"
 msgstr ""
 
-#: view/settings-form.php:1369
+#: view/settings-form.php:1368
 msgid "Filter by coupon"
 msgstr ""
 
@@ -735,7 +735,7 @@ msgstr ""
 msgid "Filter by customer"
 msgstr ""
 
-#: view/settings-form.php:1496
+#: view/settings-form.php:1495
 msgid "Filter by item and metadata"
 msgstr ""
 
@@ -747,7 +747,7 @@ msgstr ""
 msgid "Filter by product"
 msgstr ""
 
-#: view/settings-form.php:1446
+#: view/settings-form.php:1445
 msgid "Filter by shipping"
 msgstr ""
 
@@ -823,7 +823,7 @@ msgstr ""
 msgid "Full names for categories"
 msgstr ""
 
-#: view/settings-form.php:2191
+#: view/settings-form.php:2190
 msgid "Generating file..."
 msgstr ""
 
@@ -855,9 +855,9 @@ msgstr ""
 msgid "helpdesk system"
 msgstr ""
 
-#: view/settings-form.php:1694 view/settings-form.php:1753
-#: view/settings-form.php:1788 view/settings-form.php:1856
-#: view/settings-form.php:1899
+#: view/settings-form.php:1693 view/settings-form.php:1752
+#: view/settings-form.php:1787 view/settings-form.php:1855
+#: view/settings-form.php:1898
 msgid "Hide unused fields"
 msgstr ""
 
@@ -869,7 +869,7 @@ msgstr ""
 msgid "https://algolplus.com/"
 msgstr ""
 
-#: view/settings-form.php:2133
+#: view/settings-form.php:2132
 #, php-format
 msgid ""
 "If you see this message after page load, user interface won't work correctly!"
@@ -903,7 +903,7 @@ msgstr ""
 msgid "Import settings"
 msgstr ""
 
-#: view/settings-form.php:2158
+#: view/settings-form.php:2157
 msgid "It might not work for huge datasets!"
 msgstr ""
 
@@ -947,7 +947,7 @@ msgstr ""
 msgid "Item meta data"
 msgstr ""
 
-#: view/settings-form.php:1539
+#: view/settings-form.php:1538
 msgid "Item metadata"
 msgstr ""
 
@@ -955,7 +955,7 @@ msgstr ""
 msgid "Item Name"
 msgstr ""
 
-#: view/settings-form.php:1505
+#: view/settings-form.php:1504
 msgid "Item names"
 msgstr ""
 
@@ -979,8 +979,8 @@ msgstr ""
 msgid "L,C or R. Comma separated list"
 msgstr ""
 
-#: view/settings-form.php:2024 view/settings-form.php:2054
-#: view/settings-form.php:2084
+#: view/settings-form.php:2023 view/settings-form.php:2053
+#: view/settings-form.php:2083
 msgid "Label"
 msgstr ""
 
@@ -1058,13 +1058,13 @@ msgstr ""
 msgid "Mark exported orders"
 msgstr ""
 
-#: view/settings-form.php:1676 view/settings-form.php:1735
-#: view/settings-form.php:1896 view/settings-form.php:2018
-#: view/settings-form.php:2048 view/settings-form.php:2078
+#: view/settings-form.php:1675 view/settings-form.php:1734
+#: view/settings-form.php:1895 view/settings-form.php:2017
+#: view/settings-form.php:2047 view/settings-form.php:2077
 msgid "Meta key"
 msgstr ""
 
-#: view/settings-form.php:2140
+#: view/settings-form.php:2139
 msgid "Might be different from actual export!"
 msgstr ""
 
@@ -1126,13 +1126,13 @@ msgstr ""
 msgid "one row"
 msgstr ""
 
-#: view/settings-form.php:1791
+#: view/settings-form.php:1790
 msgid "OR"
 msgstr ""
 
-#: view/settings-form.php:1689 view/settings-form.php:1748
-#: view/settings-form.php:1783 view/settings-form.php:1851
-#: view/settings-form.php:1905
+#: view/settings-form.php:1688 view/settings-form.php:1747
+#: view/settings-form.php:1782 view/settings-form.php:1850
+#: view/settings-form.php:1904
 msgid "or type meta key here"
 msgstr ""
 
@@ -1145,7 +1145,7 @@ msgstr ""
 msgid "Order ID"
 msgstr ""
 
-#: view/settings-form.php:1842
+#: view/settings-form.php:1841
 msgid "Order item fields"
 msgstr ""
 
@@ -1393,7 +1393,7 @@ msgstr ""
 msgid "Payment Method Title"
 msgstr ""
 
-#: view/settings-form.php:1430
+#: view/settings-form.php:1429
 msgid "Payment methods"
 msgstr ""
 
@@ -1448,7 +1448,7 @@ msgstr ""
 msgid "Portrait"
 msgstr ""
 
-#: view/settings-form.php:1407 view/settings-form.php:1457
+#: view/settings-form.php:1406 view/settings-form.php:1456
 msgid "Postcode"
 msgstr ""
 
@@ -1464,15 +1464,15 @@ msgstr ""
 msgid "Prepend XML"
 msgstr ""
 
-#: view/settings-form.php:2185
+#: view/settings-form.php:2184
 msgid "Press 'Esc' to cancel the export"
 msgstr ""
 
-#: view/settings-form.php:2139
+#: view/settings-form.php:2138
 msgid "Preview"
 msgstr ""
 
-#: view/settings-form.php:2171
+#: view/settings-form.php:2170
 msgid "Preview size"
 msgstr ""
 
@@ -1493,7 +1493,7 @@ msgstr ""
 msgid "Product custom fields"
 msgstr ""
 
-#: view/settings-form.php:1773
+#: view/settings-form.php:1772
 msgid "Product fields"
 msgstr ""
 
@@ -1582,7 +1582,7 @@ msgstr ""
 msgid "Read how to fix it"
 msgstr ""
 
-#: view/settings-form.php:1612
+#: view/settings-form.php:1611
 msgid "Remove all fields"
 msgstr ""
 
@@ -1610,7 +1610,7 @@ msgstr ""
 msgid "repeat header as last line"
 msgstr ""
 
-#: view/settings-form.php:2165
+#: view/settings-form.php:2164
 msgid "Reset settings"
 msgstr ""
 
@@ -1643,11 +1643,11 @@ msgstr ""
 msgid "Sat"
 msgstr ""
 
-#: view/settings-form.php:2146
+#: view/settings-form.php:2145
 msgid "Save & Exit"
 msgstr ""
 
-#: view/settings-form.php:2143 view/settings-form.php:2148
+#: view/settings-form.php:2142 view/settings-form.php:2147
 msgid "Save settings"
 msgstr ""
 
@@ -1675,7 +1675,7 @@ msgstr ""
 msgid "Set up coupon fields"
 msgstr ""
 
-#: view/settings-form.php:1586
+#: view/settings-form.php:1585
 msgid "Set up fields to export"
 msgstr ""
 
@@ -1695,7 +1695,7 @@ msgstr ""
 msgid "Settings saved"
 msgstr ""
 
-#: view/settings-form.php:2178 view/tab/tools.php:88
+#: view/settings-form.php:2177 view/tab/tools.php:88
 msgid "Settings were successfully updated!"
 msgstr ""
 
@@ -1713,7 +1713,7 @@ msgstr ""
 msgid "Shipping fields use billing details (if shipping address is empty)"
 msgstr ""
 
-#: view/settings-form.php:1451
+#: view/settings-form.php:1450
 msgid "Shipping locations"
 msgstr ""
 
@@ -1729,11 +1729,11 @@ msgstr ""
 msgid "Shipping Method Title"
 msgstr ""
 
-#: view/settings-form.php:1480
+#: view/settings-form.php:1479
 msgid "Shipping methods"
 msgstr ""
 
-#: view/settings-form.php:1968
+#: view/settings-form.php:1967
 msgid "Shipping name"
 msgstr ""
 
@@ -1774,7 +1774,7 @@ msgstr ""
 msgid "Start tag"
 msgstr ""
 
-#: view/settings-form.php:1406 view/settings-form.php:1456
+#: view/settings-form.php:1405 view/settings-form.php:1455
 msgid "State"
 msgstr ""
 
@@ -1950,11 +1950,11 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: view/settings-form.php:1990
+#: view/settings-form.php:1989
 msgid "Tax name"
 msgstr ""
 
-#: view/settings-form.php:1793
+#: view/settings-form.php:1792
 msgid "Taxonomy"
 msgstr ""
 
@@ -1968,7 +1968,7 @@ msgid ""
 "outdated Select2.js"
 msgstr ""
 
-#: view/settings-form.php:1674 view/settings-form.php:1839
+#: view/settings-form.php:1673 view/settings-form.php:1838
 msgid ""
 "The plugin fetches meta keys from the existing orders. So you should create "
 "fake order if you've added new field just now."
@@ -2006,7 +2006,7 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
-#: view/settings-form.php:1600
+#: view/settings-form.php:1599
 msgid "Title for summary row"
 msgstr ""
 
@@ -2022,7 +2022,7 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: view/settings-form.php:1600
+#: view/settings-form.php:1599
 msgid "Total"
 msgstr ""
 
@@ -2069,7 +2069,7 @@ msgstr ""
 msgid "Tue"
 msgstr ""
 
-#: view/settings-form.php:2104
+#: view/settings-form.php:2103
 msgid "Turn off mode Summary report to export order fields"
 msgstr ""
 
@@ -2127,8 +2127,8 @@ msgstr ""
 msgid "Usernames"
 msgstr ""
 
-#: view/settings-form.php:1719 view/settings-form.php:1823
-#: view/settings-form.php:1880 view/settings-form.php:1928
+#: view/settings-form.php:1718 view/settings-form.php:1822
+#: view/settings-form.php:1879 view/settings-form.php:1927
 msgid "Value"
 msgstr ""
 
@@ -2176,8 +2176,8 @@ msgstr ""
 msgid "You can not do it"
 msgstr ""
 
-#: view/settings-form.php:2013 view/settings-form.php:2043
-#: view/settings-form.php:2073
+#: view/settings-form.php:2012 view/settings-form.php:2042
+#: view/settings-form.php:2072
 msgid "You should add code to section \"Misc Settings\". Read the guide"
 msgstr ""
 

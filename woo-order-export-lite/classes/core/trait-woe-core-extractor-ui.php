@@ -189,7 +189,7 @@ trait WOE_Core_Extractor_UI {
 			$key ) );
 		sort( $values );
 
-		return apply_filters("woe_get_product_custom_fields_values", $values, $field);
+		return apply_filters("woe_get_product_custom_fields_values", $values, $key);
 	}
 
 	public static function get_products_taxonomies_values( $key ) {
