@@ -336,7 +336,7 @@ class WC_Order_Export_Order_Product_Fields {
 					}
 				}
 			}
-			if ( $field_value === '' ) {  //5. read from product/variation hidden field
+			if ( $field_value === '' AND apply_filters("woe_read_hidden_product_field", true) ) {  //5. read from product/variation hidden field
 				$field_value = get_post_meta( $this->variation_id, "_" . $field, true );
 			}
 		}

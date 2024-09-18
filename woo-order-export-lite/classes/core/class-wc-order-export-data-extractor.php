@@ -770,8 +770,11 @@ class WC_Order_Export_Data_Extractor {
 		}
 
 		// skip child orders?
-		if ( $settings['skip_suborders'] AND ! $settings['export_refunds'] ) {
-			$where[] = "orders.post_parent=0";
+		if ( $settings['skip_suborders']  ) {
+			if ( $settings['export_refunds'] )
+				$where[] = "(orders.post_parent=0  OR (orders.post_parent>0 AND orders.post_type='shop_order_refund') )";
+			else
+				$where[] = "orders.post_parent=0";
 		}
 
 		// Skip drafts and deleted

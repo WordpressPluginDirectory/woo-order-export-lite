@@ -462,6 +462,11 @@ class WC_Order_Export_Admin {
 	}
 
 	public function script_loader_src( $src, $handle ) {
+		//stop WP optimize! they disable button Apply in Bulk Actions
+		if ( preg_match( '#wp-optimize\/js\/wposmush#', $src ) ) {
+			return "";
+		}
+
 		// don't load ANY select2.js / select2.min.js  and OUTDATED select2.full.js
 		if ( ! preg_match( '/\/select2\.full\.js\?ver=[1-3]/', $src ) && ! preg_match( '/\/select2\.min\.js/',
 				$src ) && ! preg_match( '/\/select2\.js/', $src )

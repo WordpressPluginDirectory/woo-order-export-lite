@@ -135,7 +135,7 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 		if ($is_summary_mode) {
 			$rows = array($rec);
 		} else {
-			$rows = apply_filters( 'woe_fetch_order_data', $this->maybe_multiple_fields( $rec ) );
+			$rows = apply_filters( 'woe_fetch_order_data', $this->maybe_multiple_fields( $rec ), $this );
 		}
 
         if ($this->settings['remove_emojis']) {
@@ -371,7 +371,7 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 			if ( empty( $this->settings['sheet_name'] ) ) {
 				$this->settings['sheet_name'] = __( 'Orders', 'woo-order-export-lite' );
 			}
-			$sheet_name = WC_Order_Export_Engine::make_filename( $this->settings['sheet_name'] );
+			$sheet_name = WC_Order_Export_Engine::make_filename( $this->settings['sheet_name'], false );
 			$sheet->setTitle( $sheet_name );
 
 			// right-to-left worksheet?

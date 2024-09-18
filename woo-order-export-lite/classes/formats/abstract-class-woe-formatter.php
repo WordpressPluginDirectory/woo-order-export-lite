@@ -217,7 +217,7 @@ abstract class WOE_Formatter {
 		}
 	}
 
-	protected function make_header() {
+	public function make_header() {
 		do_action( 'woe_make_header_custom_formatter', $this->labels );
 
 		return '';

@@ -16,7 +16,7 @@ class WC_Order_Export_Engine {
 	public static $orders_exported = 0;
 	public static $make_separate_orders = false;
 
-	public static function make_filename( $mask ) {
+	public static function make_filename( $mask, $called_for_filename=true ) {
 		$time = apply_filters( 'woe_make_filename_current_time', current_time( 'timestamp' ) );
 		$date = WC_Order_Export_Data_Extractor::get_date_range( self::$current_job_settings, false );
 		$args = array(
@@ -33,7 +33,7 @@ class WC_Order_Export_Engine {
 			'{to_date}'   		=> isset( $date['to_date'] ) ? date( "Y-m-d", strtotime( $date['to_date'] ) ) : '',
 		);
 
-		if ( self::$make_separate_orders && strpos( $mask, '%order_id' ) === false  && strpos( $mask, '{order_number}' ) === false ) {
+		if ( $called_for_filename && self::$make_separate_orders && strpos( $mask, '%order_id' ) === false  && strpos( $mask, '{order_number}' ) === false ) {
 			$mask_parts                                          = explode( '.', $mask );
 			$before_prefix                                       = count( $mask_parts ) > 1 ? 2 : 1;
 			$mask_parts[ count( $mask_parts ) - $before_prefix ] .= '-%order_id';
@@ -400,8 +400,12 @@ class WC_Order_Export_Engine {
 
 	protected static function try_modify_status( $order_id, $settings ) {
 		if ( isset( $settings['change_order_status_to'] ) && wc_is_order_status( $settings['change_order_status_to'] ) ) {
-			$order = new WC_Order( $order_id );
-			$order->update_status( $settings['change_order_status_to'] );
+			$order_data_store = WC_Data_Store::load( 'order' );
+			$order_type = $order_data_store->get_order_type( $order_id );
+			if($order_type == "shop_order") { //set new status only for order!
+				$order = new WC_Order( $order_id );
+				$order->update_status( $settings['change_order_status_to'] );
+			}
 		}
 	}
 
@@ -572,7 +576,6 @@ class WC_Order_Export_Engine {
 
 		$filename = self::get_filename($settings['format'], $filename);
 
-		$formater = self::init_formater( '', $settings, $filename, $labels, $static_vals, 0 );
 //		$format   = strtolower( $settings['format'] );
 
 //		self::maybe_init_summary_report( $labels );
@@ -601,6 +604,10 @@ class WC_Order_Export_Engine {
 
 			return false;
 		}
+
+		$settings = apply_filters('woe_adjust_settings_for_known_orders', $settings, $order_ids);
+
+		$formater = self::init_formater( '', $settings, $filename, $labels, $static_vals, 0 );
 
 		// prepare for XLS/CSV moved to plain formatter
 		$formater->adjust_duplicated_fields_settings( $order_ids );

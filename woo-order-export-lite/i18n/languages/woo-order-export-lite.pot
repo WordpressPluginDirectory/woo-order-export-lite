@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Order Export For WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-03 07:45+0000\n"
+"POT-Creation-Date: 2024-09-18 07:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -13,17 +13,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.9; wp-6.5-RC3\n"
+"X-Loco-Version: 2.6.11; wp-6.5-RC3\n"
 "X-Domain: woo-order-export-lite"
 
-#: classes/class-wc-order-export-admin.php:610
+#: classes/class-wc-order-export-admin.php:615
 #, php-format
 msgid "%s order marked."
 msgid_plural "%s orders marked."
 msgstr[0] ""
 msgstr[1] ""
 
-#: classes/class-wc-order-export-admin.php:619
+#: classes/class-wc-order-export-admin.php:624
 #, php-format
 msgid "%s order unmarked."
 msgid_plural "%s orders unmarked."
@@ -47,7 +47,7 @@ msgstr ""
 msgid "1st row only"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor.php:1150
+#: classes/core/trait-woe-core-extractor.php:1160
 msgid "[Rest of the World]"
 msgstr ""
 
@@ -194,9 +194,15 @@ msgstr ""
 msgid "Can't create temporary file"
 msgstr ""
 
-#: classes/admin/tabs/ajax/trait-wc-order-export-ajax-helpers.php:129
+#: classes/admin/tabs/ajax/trait-wc-order-export-ajax-helpers.php:138
 msgid ""
 "Can't find exported file. Try button \"Export [w/o progressbar]\" or contact "
+"to export support."
+msgstr ""
+
+#: classes/admin/tabs/ajax/trait-wc-order-export-ajax-helpers.php:133
+msgid ""
+"Can't find transient key. Try button \"Export [w/o progressbar]\" or contact "
 "to export support."
 msgstr ""
 
@@ -592,7 +598,7 @@ msgstr ""
 msgid "empty meta key"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:497
+#: classes/class-wc-order-export-admin.php:502
 msgid "Empty method"
 msgstr ""
 
@@ -636,7 +642,7 @@ msgstr ""
 msgid "Export all products from the order"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:548
+#: classes/class-wc-order-export-admin.php:553
 #, php-format
 msgid "Export as %s"
 msgstr ""
@@ -1046,11 +1052,11 @@ msgid ""
 "Look at %s for popular plugins or check %s to study how to extend the plugin."
 msgstr ""
 
-#: classes/core/class-wc-order-export-engine.php:543
+#: classes/core/class-wc-order-export-engine.php:547
 msgid "Main SQL queries are listed below"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:554
+#: classes/class-wc-order-export-admin.php:559
 msgid "Mark exported"
 msgstr ""
 
@@ -1614,7 +1620,7 @@ msgstr ""
 msgid "Reset settings"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor.php:1160
+#: classes/core/trait-woe-core-extractor.php:1170
 msgid "Rest of the World"
 msgstr ""
 
@@ -2051,7 +2057,7 @@ msgstr ""
 msgid "Transaction ID"
 msgstr ""
 
-#: classes/admin/tabs/ajax/trait-wc-order-export-ajax-helpers.php:127
+#: classes/admin/tabs/ajax/trait-wc-order-export-ajax-helpers.php:131
 msgid ""
 "Transient API is broken. Try to disable \"Transients Manager\" plugin or "
 "contact to export support."
@@ -2077,17 +2083,17 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:508
+#: classes/class-wc-order-export-admin.php:513
 #, php-format
 msgid "Unknown AJAX method %s"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:516
+#: classes/class-wc-order-export-admin.php:521
 #, php-format
 msgid "Unknown tab method %s"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:555
+#: classes/class-wc-order-export-admin.php:560
 msgid "Unmark exported"
 msgstr ""
 
@@ -2156,7 +2162,7 @@ msgstr ""
 msgid "Width"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:520
+#: classes/class-wc-order-export-admin.php:525
 msgid "Wrong nonce"
 msgstr ""
 
@@ -2172,7 +2178,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:493
+#: classes/class-wc-order-export-admin.php:498
 msgid "You can not do it"
 msgstr ""
 

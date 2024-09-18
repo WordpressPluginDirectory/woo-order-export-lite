@@ -4,8 +4,8 @@ Donate link:
 Tags: order export,export orders,woocommerce,order,export
 Requires PHP: 5.4.0
 Requires at least: 4.7
-Tested up to: 6.5
-Stable tag: 3.5.3
+Tested up to: 6.6
+Stable tag: 3.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,15 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 3.5.4 - 2024-09-18 =
+* Added extra checks and made error messages more informative
+* Use user_id as grouping key for mode "Summary Report by Customers", billing email is still used for orders made by guests
+* Fixed bug - option  "Skip Suborders" suppressed option "Export Refunds"
+* Fixed bug - field "Product Variation" was wrong (some woocommerce hooks were not applied to it)
+* Fixed bug - empty field "Total amount(inc tax)"  for mode "Summary Report By Products"
+* Fixed bug - some temporary files were not deleted after exporting XLS/PDF files
+* Fixed bug - XLS failed to export arrays, in modes "Summary Report By Products/Customers"
 
 = 3.5.3 - 2024-06-03 =
 * Fixed PHP8 notices and warnings

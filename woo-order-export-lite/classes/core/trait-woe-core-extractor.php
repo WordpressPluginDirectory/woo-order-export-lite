@@ -1075,10 +1075,7 @@ trait WOE_Core_Extractor {
 			'_reduced_stock',
 		) );
 
-		$result = array();
-
-		$value_delimiter = apply_filters( 'woe_fetch_item_meta_value_delimiter', ': ' );
-
+		$formatted_meta = array();
 		// pull meta directly
 		$meta_data = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value, meta_id, order_item_id
 			FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE order_item_id = %d
@@ -1101,10 +1098,23 @@ trait WOE_Core_Extractor {
 				$meta['meta_key'] = wc_attribute_label( $meta['meta_key'], $product );
 			}
 
-			$value    = wp_kses_post( $meta['meta_key'] ) . $value_delimiter . wp_kses_post( force_balance_tags( $meta['meta_value'] ) );
-			$result[] = apply_filters( 'woe_fetch_item_meta', $value, $meta, $item, $product );
+			$formatted_meta[ $meta['meta_id'] ] = (object) array(
+				'key'           => $meta['meta_key'],
+				'value'         => $meta['meta_value'],
+				'display_key'   => wp_kses_post( $meta['meta_key']),
+				'display_value' => wp_kses_post( force_balance_tags( $meta['meta_value'] ) ),
+			);
 		}
 
+		//aplly woocommerce filters from addons plugins
+		$formatted_meta = apply_filters( 'woocommerce_order_item_get_formatted_meta_data', $formatted_meta, $item);
+
+		$value_delimiter = apply_filters( 'woe_fetch_item_meta_value_delimiter', ': ' );
+
+		$result = array();
+		foreach($formatted_meta as $meta) {
+			$result[] = apply_filters( 'woe_fetch_item_meta', $meta->display_key . $value_delimiter . $meta->display_value, $meta, $item, $product );
+		}
 		//list to string!
 		return join( apply_filters( 'woe_fetch_item_meta_lines_delimiter', ' | ' ), array_filter( $result ) );
 	}
@@ -1227,6 +1237,12 @@ trait WOE_Core_Extractor {
 					__( 'Direct', 'woocommerce' )
 					: 'Direct';
 				break;
+			case 'mobile_app':
+				$label  = '';
+				$source = $translated ?
+					__( 'Mobile app', 'woocommerce' )
+					: 'Mobile app';
+				break;
 			case 'admin':
 				$label  = '';
 				$source = $translated ?
@@ -1236,7 +1252,9 @@ trait WOE_Core_Extractor {
 
 			default:
 				$label  = '';
-				$source = __( 'Unknown', 'woocommerce' );
+				$source = $translated ?
+					__( 'Unknown', 'woocommerce' )
+					: 'Unknown';
 				break;
 		}
 

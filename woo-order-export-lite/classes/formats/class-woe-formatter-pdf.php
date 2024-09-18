@@ -104,7 +104,7 @@ class WOE_Formatter_PDF extends WOE_Formatter_Plain_Format {
 		if ($is_summary_mode) {
 			$rows = array($rec);
 		} else {
-			$rows = apply_filters( 'woe_fetch_order_data', $this->maybe_multiple_fields( $rec ) );
+			$rows = apply_filters( 'woe_fetch_order_data', $this->maybe_multiple_fields( $rec ), $this );
 		}
 
 		if ( $this->mode !== 'preview' || $is_summary_mode  ) {

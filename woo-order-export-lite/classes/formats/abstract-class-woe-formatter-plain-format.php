@@ -91,7 +91,7 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 			return array( $rec ); // need array for plain format iterators
 		}
 
-		return apply_filters( 'woe_fetch_order_data', $this->maybe_multiple_fields( $rec ) );
+		return apply_filters( 'woe_fetch_order_data', $this->maybe_multiple_fields( $rec ), $this );
 	}
 
 	protected function maybe_multiple_fields( $rec ) {
@@ -197,7 +197,7 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 	}
 
 
-	protected function make_header( $data = '' ) {
+	public function make_header( $data = '' ) {
 		$header             = array();
 		$repeat['products'] = $this->duplicate_settings['products']['repeat'];
 		$repeat['coupons']  = $this->duplicate_settings['coupons']['repeat'];
@@ -358,7 +358,7 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 							$value = $value ? $value : "";
 						}
 
-						$new_row[ $original_key ] = $value;
+						$new_row[ $original_key ] = is_array($value) ? json_encode($value) : $value;
 					}  // already calculated
 				}
 				$new_row                                  = apply_filters( 'woe_summary_column_keys',
@@ -392,6 +392,13 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 					'get_total' ) ? $product_item->get_total() : $product_item['line_total'];
 				$refunded = $order->get_total_refunded_for_item($item_id);
 				$_SESSION['woe_summary_products'][ $key ]['summary_report_total_amount_minus_refund'] += wc_round_tax_total( $total ) - wc_round_tax_total( $refunded );
+			}
+
+			if ( isset( $_SESSION['woe_summary_products'][ $key ]['summary_report_total_amount_inc_tax'] ) ) {
+				$total                                                                   = method_exists( $product_item,'get_total' ) ?
+					wc_round_tax_total($product_item->get_total()) + wc_round_tax_total($product_item->get_total_tax()) :
+					wc_round_tax_total($product_item['line_total']) + wc_round_tax_total($product_item['line_tax']);
+				$_SESSION['woe_summary_products'][ $key ]['summary_report_total_amount_inc_tax'] += $total;
 			}
 
 			if ( isset( $_SESSION['woe_summary_products'][ $key ]['summary_report_total_discount'] ) ) {
@@ -509,10 +516,10 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 
 		$order = new WC_Order( $order_id );
 
-		$key = $order->get_billing_email();
+		$key = $order->get_user_id() ? $order->get_user_id() : $order->get_billing_email();
 		if(!$key AND $order->get_parent_id()) {
 			$parent_order = new WC_Order($order->get_parent_id());
-			$key = $parent_order->get_billing_email();
+			$key = $parent_order->get_user_id() ? $parent_order->get_user_id() : $parent_order->get_billing_email();
 		}
 		$key = apply_filters( "woe_summary_customers_adjust_key", $key, $order );
 
@@ -763,7 +770,7 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 					}//total fields
 					else {
 						$value = $item[ $field_key ];
-						$new_row[ $original_key ] = $value;
+						$new_row[ $original_key ] = is_array($value) ? json_encode($value) : $value;
 					}  // already calculated
 				}
 				$new_row                                  = apply_filters( 'woe_summary_column_keys',
@@ -842,10 +849,10 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 		$order = new WC_Order( $order_id );
 		$row = $rowObj->getData();
 
-		$key = $order->get_billing_email();
+		$key = $order->get_user_id() ? $order->get_user_id() : $order->get_billing_email();
 		if(!$key AND $order->get_parent_id()) {
 			$parent_order = new WC_Order($order->get_parent_id());
-			$key = $parent_order->get_billing_email();
+			$key = $parent_order->get_user_id() ? $parent_order->get_user_id() : $parent_order->get_billing_email();
 		}
 		$key = apply_filters( "woe_summary_customers_adjust_key", $key, $order );
 
