@@ -281,6 +281,11 @@ trait WOE_Core_Extractor_UI {
 				'checked' => 0,
 				'format'  => 'number',
 			),
+			'_global_unique_id'                  => array(
+				'label'   => __( 'GTIN/EAN', 'woo-order-export-lite' ),
+				'checked' => 0,
+				'format'  => 'string',
+			),
 			'product_name'                => array(
 				'label'   => __( 'Product Name', 'woo-order-export-lite' ),
 				'checked' => 0,

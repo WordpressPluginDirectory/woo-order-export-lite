@@ -1084,6 +1084,9 @@ trait WOE_Core_Extractor {
 			if ( in_array( $meta['meta_key'], $hidden_order_itemmeta ) ) {
 				continue;
 			}
+			if ( substr( $meta['meta_key'],0,1) == "_" AND apply_filters("woe_hide_itemmeta_starting_with_underscore", true) ) {
+				continue;
+			}
 			if ( is_serialized( $meta['meta_value'] ) ) {
 				continue;
 			}
@@ -1113,6 +1116,9 @@ trait WOE_Core_Extractor {
 
 		$result = array();
 		foreach($formatted_meta as $meta) {
+			$meta->display_key = trim(strip_tags($meta->display_key));
+			if ( apply_filters("woe_remove_html_in_itemmeta", true) )
+				$meta->display_value = trim(strip_tags($meta->display_value));
 			$result[] = apply_filters( 'woe_fetch_item_meta', $meta->display_key . $value_delimiter . $meta->display_value, $meta, $item, $product );
 		}
 		//list to string!
