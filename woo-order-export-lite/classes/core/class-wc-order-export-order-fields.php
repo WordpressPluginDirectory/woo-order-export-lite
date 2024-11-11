@@ -502,6 +502,8 @@ class WC_Order_Export_Order_Fields {
 			$row[$field] = get_woocommerce_currency_symbol( $this->order->get_currency() );
 		} elseif ($field == 'cart_discount') {
             $row[$field] = $this->order->get_discount_total();
+		} elseif ($field == 'cart_discount_inc_tax') {
+            $row[$field] = $this->order->get_discount_total() + $this->order->get_discount_tax();
         } elseif ($field == 'cart_discount_tax') {
             $row[$field] = $this->order->get_discount_tax();
         } elseif( method_exists( $this->order, 'get_' . $field ) ) {  // order_date...

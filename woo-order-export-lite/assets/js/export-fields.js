@@ -492,7 +492,7 @@ function woe_make_unselected_field( $index, $field_data, $format, $format_change
 
 	$mapping_col_2.append( '<span class="field-prefix">' + label_prefix + '</span>' + $field_data.label + label_part );
 
-	if ( $index.charAt( 0 ) === '_' || $index.substr( 0, 3 ) === 'pa_' || ! $field_data.default || $index.indexOf( 'static_field' ) > - 1 ) {
+	if ( ($index.charAt( 0 ) === '_' || $index.substr( 0, 3 ) === 'pa_' || ! $field_data.default || $index.indexOf( 'static_field' ) > - 1 ) && $index!="_global_unique_id") {
 		$mapping_col_2.append( '<a href="#" onclick="return woe_remove_custom_field(this);" class="mapping_row-delete_custom_field" style="float: right;"><span class="ui-icon ui-icon-trash"></span></a>' );
 	}
 

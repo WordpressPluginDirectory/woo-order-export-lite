@@ -993,8 +993,8 @@ trait WOE_Core_Extractor {
 					$row[ $field ] = json_encode( $row[ $field ] );
 				}
 
-				if ( $options['convert_serialized_values'] ) {
-					$arr = maybe_unserialize( $row[ $field ] );
+				if ( $options['convert_serialized_values'] AND is_serialized($row[ $field ]) ) {
+					$arr = unserialize( trim($row[ $field ]), ['allowed_classes' => false] );
 					if ( is_array($arr) ) $row[$field] = join(",", $arr);
 				}
 			}

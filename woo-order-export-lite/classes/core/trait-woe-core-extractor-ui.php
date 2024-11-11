@@ -1157,6 +1157,11 @@ trait WOE_Core_Extractor_UI {
 				'checked' => 1,
 				'format'  => 'money',
 			),
+			'cart_discount_inc_tax'                 => array(
+				'label'   => __( 'Cart Discount Amount(inc. tax)', 'woo-order-export-lite' ),
+				'checked' => 1,
+				'format'  => 'money',
+			),
 			'cart_discount_tax'             => array(
 				'label'   => __( 'Cart Discount Amount Tax', 'woo-order-export-lite' ),
 				'checked' => 0,

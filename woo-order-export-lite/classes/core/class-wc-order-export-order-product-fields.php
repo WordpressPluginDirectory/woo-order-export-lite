@@ -144,6 +144,7 @@ class WC_Order_Export_Order_Product_Fields {
 			 *      This code was used in the first implementation.
 			 */
 			if ( $image = wp_get_attachment_image_src( $attachment_id, 'woocommerce_thumbnail' ) ) {
+				$image[0] = strtok($image[0], '?');//remove all arguments from url!
 				if ( ( $thumbfile = str_replace( wp_get_upload_dir()['baseurl'], wp_get_upload_dir()['basedir'], $image[0] ) ) && file_exists( $thumbfile ) ) {
 					$field_value = $thumbfile;
 				}

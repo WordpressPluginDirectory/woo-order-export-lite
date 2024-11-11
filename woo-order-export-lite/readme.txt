@@ -4,8 +4,8 @@ Donate link:
 Tags: order export,export orders,woocommerce,order,export
 Requires PHP: 5.4.0
 Requires at least: 4.7
-Tested up to: 6.6
-Stable tag: 3.5.5
+Tested up to: 6.7
+Stable tag: 3.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,11 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 3.5.6 - 2024-11-11 =
+* Fixed "PHP Object Injection" (CVE-2024-10828). Thank [@webbernaut](https://profiles.wordpress.org/webbernaut/) for reporting this vulnerability!
+* New field "Cart Discount Amount(inc. tax)" (>Setup Fields>Cart)
+* Fixed bug - field "Embedded product image" was empty if some CDNs were active
 
 = 3.5.5 - 2024-10-11 =
 * New field "GTIN/EAN" (>Setup Fields>Products)
