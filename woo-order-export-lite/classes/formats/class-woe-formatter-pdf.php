@@ -30,7 +30,7 @@ class WOE_Formatter_PDF extends WOE_Formatter_Plain_Format {
 	/**
 	 * @var WOE_Formatter_Storage
 	 */
-	protected $storage;
+	public $storage;
 
 	public function __construct( $mode, $filename, $settings, $format, $labels, $field_formats, $date_format, $offset ) {
 

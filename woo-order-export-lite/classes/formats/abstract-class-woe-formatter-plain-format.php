@@ -176,7 +176,7 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
             }
 
 			if ($type === 'money' || $type === 'number') {
-				return $direction === 'asc' ? $a[$field] - $b[$field] : $b[$field] - $a[$field];
+				return $direction === 'asc' ? (float)$a[$field] - (float)$b[$field] : (float)$b[$field] - (float)$a[$field];
 			}
 
 			if ($type === 'date') {

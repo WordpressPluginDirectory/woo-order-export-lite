@@ -402,7 +402,7 @@ trait WOE_Core_Extractor {
 	}
 	
     private static function get_date_meta_for_subscription_filters( $field, $date_from, $date_to ) {
-        $order_meta_where_parts[] = "ordermeta_{$field}.meta_key='_{$field}'";
+        $order_meta_where_parts = [];
 
         if ( ! empty( $date_from ) ) {
             $subsc_from = WC_Order_Export_Data_Extractor::format_date_to_day_start( $date_from );
@@ -866,6 +866,10 @@ trait WOE_Core_Extractor {
 			} else {
 				$product_id = 0;
 				$post       = false;
+			}
+
+			if ($options['exclude_free_items'] && ($item['total'] === '0' || $item['total'] === 0)) {
+				continue;
 			}
 
 			// skip based on products/items/meta

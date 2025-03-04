@@ -220,7 +220,7 @@ class WC_Order_Export_Admin {
 	public function add_action_links( $links ) {
 		$mylinks = array(
 			'<a href="admin.php?page=wc-order-export">' . __( 'Settings', 'woo-order-export-lite' ) . '</a>',
-			'<a href="https://docs.algolplus.com/order-export-docs/" target="_blank">' . __( 'Docs',
+			'<a href="https://docs.algolplus.com/category/algol_order_export/" target="_blank">' . __( 'Docs',
 				'woo-order-export-lite' ) . '</a>',
 			'<a href="https://docs.algolplus.com/support/" target="_blank">' . __( 'Support',
 				'woo-order-export-lite' ) . '</a>',
@@ -573,9 +573,11 @@ class WC_Order_Export_Admin {
 				break;
 			case 'woe_mark_exported':
 				foreach ( $ids as $order_id ) {
-					$order = new WC_Order($order_id);
-					$order->update_meta_data('woe_order_exported' . apply_filters("woe_exported_postfix",''), current_time( 'timestamp' ));
-					$order->save();
+					$order = wc_get_order($order_id);
+					if( $order ) {
+						$order->update_meta_data('woe_order_exported' . apply_filters("woe_exported_postfix",''), current_time( 'timestamp' ));
+						$order->save();
+					}
 				}
 				$new_redirect_to = add_query_arg( array(
 					'woe_bulk_mark_exported'   => count( $ids ),
@@ -584,10 +586,12 @@ class WC_Order_Export_Admin {
 				break;
 			case 'woe_unmark_exported':
 				foreach ( $ids as $order_id ) {
-					$order = new WC_Order($order_id);
-					foreach( apply_filters( "woe_export_status_postfixes_to_delete",  array("") ) as $key )
-						$order->delete_meta_data( 'woe_order_exported' . $key );
-					$order->save();
+					$order = wc_get_order($order_id);
+					if( $order ) {
+						foreach( apply_filters( "woe_export_status_postfixes_to_delete",  array("") ) as $key )
+							$order->delete_meta_data( 'woe_order_exported' . $key );
+						$order->save();
+					}
 				}
 				$new_redirect_to = add_query_arg( array(
 					'woe_bulk_mark_exported'   => false,

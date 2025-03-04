@@ -193,7 +193,7 @@ class WOE_Formatter_Storage_Summary_Session implements WOE_Formatter_Storage {
 			$direction  = !is_array($sort) ? 'asc' : (isset($sort[1]) ?  strtolower($sort[1]) : 'asc');
 			$type       = !is_array($sort) ? 'string' : (isset($sort[2]) ? $sort[2] : 'string');
 			if ($type === 'money' || $type === 'number') {
-				return $direction === 'asc' ? $a[$field] - $b[$field] : $b[$field] - $a[$field];
+				return $direction === 'asc' ? (float)$a[$field] - (float)$b[$field] : (float)$b[$field] - (float)$a[$field];
 			}
 
 			if ($type === 'date') {

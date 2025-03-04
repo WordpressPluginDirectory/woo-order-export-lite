@@ -3,15 +3,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$user_guide_link = '<a href="https://docs.algolplus.com/order-export-docs/" target=_blank>' . __( 'user guide',
+$user_guide_link = '<a href="https://docs.algolplus.com/category/algol_order_export/" target=_blank>' . __( 'user guide',
 		'woo-order-export-lite' ) . '</a>';
 $helpdesk_link = '<a href="https://algolplus.freshdesk.com" target=_blank>' . __( 'helpdesk system',
 		'woo-order-export-lite' ) . '</a>';
 $settings_link = '<a href="' . admin_url( 'admin.php?page=wc-order-export&tab=tools' ) . '" target=_blank>' . __( 'settings',
 		'woo-order-export-lite' ) . '</a>';
-$snippets_link = '<a href="https://algolplus.com/plugins/snippets-plugins/" target=_blank>' . __( 'code snippets',
+$snippets_link = '<a href="https://docs.algolplus.com/category/algol_order_export/developers-algol_order_export/codes-for-plugins-developers-algol_order_export/" target=_blank>' . __( 'code snippets',
 		'woo-order-export-lite' ) . '</a>';
-$samples_link  = '<a href="https://algolplus.com/plugins/code-samples/" target=_blank>' . __( 'this page',
+$samples_link  = '<a href="https://docs.algolplus.com/category/algol_order_export/developers-algol_order_export/code-samples-developers-algol_order_export/" target=_blank>' . __( 'this page',
 		'woo-order-export-lite' ) . '</a>';
 ?>
 <div class="weo_clearfix"></div>

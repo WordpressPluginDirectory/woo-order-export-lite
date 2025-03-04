@@ -263,6 +263,7 @@ class WC_Order_Export_Manage {
 			'format_xls_sheet_name'                    => __( 'Orders', 'woo-order-export-lite' ),
 			'format_xls_display_column_names'          => 1,
 			'format_xls_auto_width'                    => 1,
+			'format_xls_auto_height'                   => 1,
 			'format_xls_direction_rtl'                 => 0,
 			'format_xls_force_general_format'          => 0,
             'format_xls_remove_emojis'                 => 0,
@@ -352,6 +353,7 @@ class WC_Order_Export_Manage {
 			'skip_suborders'               => 0,
 			'export_refunds'               => 0,
 			'export_matched_items'		   => 0,
+			'exclude_free_items'           => 0,
 			'date_format'                  => 'Y-m-d',
 			'time_format'                  => 'H:i',
 			'sort_direction'               => 'DESC',
@@ -390,6 +392,9 @@ class WC_Order_Export_Manage {
 					),
 			),
 			'summary_report_by_customers' => 0,
+			'destination' => array (
+				'zapier_export_type'=>'order_items'
+			),
 		);
 	}
 

@@ -180,6 +180,8 @@ class WC_Order_Export_Order_Product_Fields {
 			$field_value = $this->order->get_total_refunded_for_item( $this->item_id );
 		} elseif ( $field == 'line_total_minus_refund' ) {
 			$field_value = $this->item_meta["_line_total"][0] - $this->order->get_total_refunded_for_item( $this->item_id );
+		} elseif ( $field == 'qty_refunded' ) {
+			$field_value = - $this->order->get_qty_refunded_for_item( $this->item_id ); // Yes we add negative! qty
 		} elseif ( $field == 'qty_minus_refund' ) {
 			$field_value = $this->item_meta["_qty"][0] + $this->order->get_qty_refunded_for_item( $this->item_id ); // Yes we add negative! qty
 			//tax refund
@@ -208,6 +210,18 @@ class WC_Order_Export_Order_Product_Fields {
 				$subtotal_tax    = $this->item['line_subtotal_tax'];
 			}
 			$field_value = ( $subtotal_amount <> 0 ) ? round( 100 * $subtotal_tax / $subtotal_amount, apply_filters('woe_tax_rate_rounding_precision', 2) ) : 0;
+		} elseif ( $field == 'tax_rates_list' ) {
+			$taxes = $this->item->get_taxes();
+			if(isset($taxes['total'])) {
+				$rates = array();
+				foreach($taxes['total'] as $tax_rate_id =>$amount) {
+					$rate = WC_Tax::get_rate_percent( $tax_rate_id );
+					if( apply_filters("woe_tax_rates_without_percent_sign", false) )
+						$rate = trim( str_replace("%", "", $rate) );
+					$rates[] = $rate;
+				}
+				$field_value = join( apply_filters("woe_tax_rates_list_delimiter", ", "), $rates);
+			}
 		} elseif ( $field == 'product_url' ) {
 			$field_value = get_permalink( $this->product_id );
 		} elseif ( $field == 'sku' ) {
@@ -296,14 +310,25 @@ class WC_Order_Export_Order_Product_Fields {
 		} elseif ( isset( $this->static_vals[ $field ] ) ) {
 			$field_value = $this->static_vals[ $field ];
 		} elseif ( isset( $this->item_meta[ $field ] ) ) {    //meta from order
-			$field_value = join( WC_Order_Export_Data_Extractor::$export_itemmeta_values_separator, $this->item_meta[ $field ] );
+			if( is_array($this->item_meta[ $field ]) )
+				$field_value = join( WC_Order_Export_Data_Extractor::$export_itemmeta_values_separator, $this->item_meta[ $field ] );
+			elseif( is_string($this->item_meta[ $field ]) )
+				$field_value = $this->item_meta[ $field ];
 		} elseif ( isset( $this->item_meta[ "_" . $field ] ) ) {// or hidden field
-			$field_value = join( WC_Order_Export_Data_Extractor::$export_itemmeta_values_separator, $this->item_meta[ "_" . $field ] );
+			if( is_array($this->item_meta[ "_" . $field ]) )
+				$field_value = join( WC_Order_Export_Data_Extractor::$export_itemmeta_values_separator, $this->item_meta[ "_" . $field ] );
+			elseif( is_string($this->item_meta[ "_" . $field ]) )
+				$field_value = $this->item_meta[ "_" . $field ] ;
 		} elseif ( isset( $this->item['item_meta'][ $field ] ) ) {  // meta from item line
-			$field_value = join( WC_Order_Export_Data_Extractor::$export_itemmeta_values_separator, $this->item['item_meta'][ $field ] );
+			if( is_array($this->item['item_meta'][ $field ]) )
+				$field_value = join( WC_Order_Export_Data_Extractor::$export_itemmeta_values_separator, $this->item['item_meta'][ $field ] );
+			elseif( is_string($this->item['item_meta'][ $field ]) )
+				$field_value = $this->item['item_meta'][ $field ];
 		} elseif ( isset( $this->item['item_meta'][ "_" . $field ] ) ) { // or hidden field
-			$field_value = join( WC_Order_Export_Data_Extractor::$export_itemmeta_values_separator,
-				$this->item['item_meta'][ "_" . $field ] );
+			if( is_array($this->item['item_meta'][ "_" . $field ]) )
+				$field_value = join( WC_Order_Export_Data_Extractor::$export_itemmeta_values_separator, $this->item['item_meta'][ "_" . $field ] );
+			elseif( is_string($this->item['item_meta'][ "_" . $field ]) )
+				$field_value = $this->item['item_meta'][ "_" . $field ];
 		} elseif ( $field == 'stop_renewal_after' && $this->product->get_type() == 'subscription' ) {
             $subscription_ranges = wcs_get_subscription_ranges($this->product->get_meta('_subscription_period'));
             $subscription_length = $this->product->get_meta('_subscription_length');

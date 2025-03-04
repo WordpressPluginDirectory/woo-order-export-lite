@@ -132,7 +132,7 @@ class PHPExcel_Writer_Excel5_Xf
 
     public $_diag, $_diag_color, $_style;
 
-    public function __construct(PHPExcel_Style $style = null)
+    public function __construct(?PHPExcel_Style $style = null)
     {
         $this->isStyleXf =     false;
         $this->fontIndex = 0;

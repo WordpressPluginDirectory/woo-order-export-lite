@@ -718,6 +718,7 @@ input.date {
 #order_fields .mapping_row:not(.flat-products-group):not(.flat-coupons-group) {
     position: relative;
     padding-right: 35px;
+    height: 30px;
 }
 
 #order_fields .mapping_row .mapping_row-delete_field_block {
@@ -950,13 +951,9 @@ input[type=number] {
 
 #order_fields .mapping_row .mapping_row-sum_field_block {
     position: absolute;
-    top: 0px;
+    top: 5px;
     right: 75px;
     font-size: 16px;
-}
-
-#order_fields .mapping_row .mapping_row-sum_field_block input {
-    display: none;
 }
 
 #fields .summary-row-title {

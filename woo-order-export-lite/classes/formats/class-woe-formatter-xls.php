@@ -379,6 +379,12 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 				$sheet->setRightToLeft( true );
 			}
 
+			if ( $this->settings['auto_height'] ) {
+				$sheet->getDefaultStyle()->getAlignment()->setWrapText(true);
+				$sheet->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+				$sheet->getDefaultRowDimension()->setRowHeight(-1); //set auto height, doesn't work in LibreOffice?!
+			}
+
 			do_action( 'woe_xls_print_header', $this->objPHPExcel, $this );
 
 			$imageColumns = array();
@@ -556,7 +562,6 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
                     }
 				}
 			}
-
 
 			do_action( 'woe_xls_print_footer', $this->objPHPExcel, $this );
 			$objWriter = PHPExcel_IOFactory::createWriter( $this->objPHPExcel,

@@ -570,8 +570,8 @@ class WC_Order_Export_Data_Extractor {
 				foreach ( $fields as $field => $values ) {
 					$values = self::sql_subset( $values );
 					if ( $values ) {
-						$left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.{$left_join_order_meta_order_id}";
-						$order_meta_where []    = " (ordermeta_{$field}.meta_key='_shipping_$field'  AND ordermeta_{$field}.meta_value $operator ($values)) ";
+						$left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.{$left_join_order_meta_order_id} AND ordermeta_{$field}.meta_key='_shipping_$field'";
+						$order_meta_where []    = " ordermeta_{$field}.meta_value $operator ($values) ";
 					}
 				}
 			}
@@ -583,8 +583,8 @@ class WC_Order_Export_Data_Extractor {
 				foreach ( $fields as $field => $values ) {
 					$values = self::sql_subset( $values );
 					if ( $values ) {
-						$left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.{$left_join_order_meta_order_id}";
-						$order_meta_where []    = " (ordermeta_{$field}.meta_key='_billing_$field'  AND ordermeta_{$field}.meta_value $operator ($values)) ";
+						$left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.{$left_join_order_meta_order_id} AND ordermeta_{$field}.meta_key='_billing_$field'";
+						$order_meta_where []    = " ordermeta_{$field}.meta_value $operator ($values) ";
 					}
 				}
 			}
@@ -629,8 +629,8 @@ class WC_Order_Export_Data_Extractor {
 			$field  = 'customer_user';
 			$values = self::sql_subset( $user_ids );
 			if ( $values ) {
-				$left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.{$left_join_order_meta_order_id}";
-				$order_meta_where []    = " (ordermeta_{$field}.meta_key='_customer_user'  AND ordermeta_{$field}.meta_value in ($values)) ";
+				$left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.{$left_join_order_meta_order_id} AND ordermeta_{$field}.meta_key='_customer_user'";
+				$order_meta_where []    = " ordermeta_{$field}.meta_value in ($values) ";
 			}
 		}
 
@@ -639,26 +639,26 @@ class WC_Order_Export_Data_Extractor {
 			$field  = 'payment_method';
 			$values = self::sql_subset( $settings['payment_methods'] );
 
-			$left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.{$left_join_order_meta_order_id}";
-			$order_meta_where []    = " (ordermeta_{$field}.meta_key='_{$field}'  AND ordermeta_{$field}.meta_value in ($values)) ";
+			$left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.{$left_join_order_meta_order_id} AND ordermeta_{$field}.meta_key='_{$field}'";
+			$order_meta_where []    = " ordermeta_{$field}.meta_value in ($values) ";
 		}
 
         if ( ! empty( $settings['sub_start_from_date'] ) || ! empty( $settings['sub_start_to_date'] ) ) {
             $field = 'schedule_start';
-            $left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.ID";
+            $left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.ID AND ordermeta_{$field}.meta_key='_{$field}'";
             $order_meta_where []    = self::get_date_meta_for_subscription_filters( $field, $settings['sub_start_from_date'], $settings['sub_start_to_date'] );
         }
 
 
         if ( ! empty( $settings['sub_end_from_date'] ) || ! empty( $settings['sub_end_to_date'] ) ) {
             $field = 'schedule_end';
-            $left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.ID";
+            $left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.ID AND ordermeta_{$field}.meta_key='_{$field}'";
             $order_meta_where []    = self::get_date_meta_for_subscription_filters( $field, $settings['sub_end_from_date'], $settings['sub_end_to_date'] );
         }
 
         if ( ! empty( $settings['sub_next_paym_from_date'] ) || ! empty( $settings['sub_next_paym_to_date'] ) ) {
             $field = 'schedule_next_payment';
-            $left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.ID";
+            $left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_{$field} ON ordermeta_{$field}.post_id = orders.ID AND ordermeta_{$field}.meta_key='_{$field}'";
             $order_meta_where []    = self::get_date_meta_for_subscription_filters( $field, $settings['sub_next_paym_from_date'], $settings['sub_next_paym_to_date'] );
         }
 
@@ -672,22 +672,26 @@ class WC_Order_Export_Data_Extractor {
 			apply_filters( "woe_sql_get_order_ids_left_joins", $left_join_order_meta ) );
 
 
+		//setup order types to work with
+		$order_types = array( "'" . self::$object_type . "'" );
+		$order_types = join( ",", apply_filters( "woe_sql_order_types", $order_types ) );
+
 		//top_level
-		$where = array( 1 );
+		$where = array( "orders.post_type in ( $order_types)" );
 		self::apply_order_filters_to_sql( $where, $settings );
 		$where     = apply_filters( 'woe_sql_get_order_ids_where', $where, $settings );
 		$order_sql = apply_filters( 'woe_sql_get_order_ids_where_AND', join( " AND ", $where ), $settings );
 
-		//setup order types to work with
-		$order_types = array( "'" . self::$object_type . "'" );
+		$final_where = "$order_sql $order_meta_where $order_items_where";
+		//final for refunds
 		if ( $settings['export_refunds'] ) {
-			$order_types[] = "'shop_order_refund'";
+			$refund_sql = self::build_refund_sql($settings);
+			$final_where = "($final_where)  OR ($refund_sql)";
 		}
-		$order_types = join( ",", apply_filters( "woe_sql_order_types", $order_types ) );
 
 		$sql = apply_filters( "woe_sql_get_order_ids", "SELECT " . apply_filters( "woe_sql_get_order_ids_fields", "orders.ID AS order_id" ) . " FROM {$wpdb->posts} AS orders
 			{$left_join_order_meta}
-			WHERE orders.post_type in ( $order_types) AND $order_sql $order_meta_where $order_items_where", $settings );
+			WHERE $final_where", $settings );
 
 		if ( self::$track_sql_queries ) {
 			self::$sql_queries[] = $sql;
@@ -695,6 +699,19 @@ class WC_Order_Export_Data_Extractor {
 
 		//die($sql);
 		return $sql;
+	}
+
+	private static function build_refund_sql($settings) {
+		$date_field = 'date'; //date created
+		$use_timestamps = false;
+		$where_meta = [];// unused
+		$where = array( "orders.post_type in ( 'shop_order_refund' )" );
+		foreach ( self::get_date_range( $settings, true, $use_timestamps, true ) as $date ) {
+			self::add_date_filter( $where, $where_meta, $date_field, $date );
+		}
+		if ( $settings['export_unmarked_orders'] )
+			$where[] = "ordermeta_cf_export_unmarked_orders.meta_value IS NULL";
+		return join(" AND ", $where);
 	}
 
 	private static function add_date_filter( &$where, &$where_meta, $date_field, $value ) {
@@ -771,10 +788,7 @@ class WC_Order_Export_Data_Extractor {
 
 		// skip child orders?
 		if ( $settings['skip_suborders']  ) {
-			if ( $settings['export_refunds'] )
-				$where[] = "(orders.post_parent=0  OR (orders.post_parent>0 AND orders.post_type='shop_order_refund') )";
-			else
-				$where[] = "orders.post_parent=0";
+			$where[] = "orders.post_parent=0";
 		}
 
 		// Skip drafts and deleted

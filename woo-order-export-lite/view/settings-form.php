@@ -152,6 +152,7 @@ function remove_time_from_date( $datetime ) {
                            value="modified">
 					<?php _e( 'Modification Date', 'woo-order-export-lite' ) ?>
                 </label>
+                 <?php if ( $woe_order_post_type && $woe_order_post_type !== 'shop_order_refund' ) { ?>
                 &#09;&#09;
                 <label title="<?php _e( 'You will export only paid orders', 'woo-order-export-lite' ) ?>" >
                     <input type="radio" name="settings[export_rule_field]"
@@ -166,6 +167,7 @@ function remove_time_from_date( $datetime ) {
                            value="date_completed">
 					<?php _e( 'Completed Date', 'woo-order-export-lite' ) ?>
                 </label>
+                 <?php }/*hide Paid/Completed if export Refunds*/ ?>
             </div>
             <br>
             <div id="my-date-filter" class="my-block"
@@ -215,7 +217,7 @@ function remove_time_from_date( $datetime ) {
         <div id="my-export-file" class="my-block">
             <div class="wc-oe-header">
 				<?php _e( 'Export filename', 'woo-order-export-lite' ) ?> :
-				<a style="float:right;font-weight:normal" target="_blank" href="https://docs.algolplus.com/algol_order_export/the-export-filename-block/">
+				<a style="float:right;font-weight:normal" target="_blank" href="https://docs.algolplus.com/algol_order_export/free-version-algol_order_export/export-now/export-filename/">
                 <?php _e('supported tags', 'woo-order-export-lite' ) ?></a>
             </div>
             <label id="export_filename" class="width-100">
@@ -248,6 +250,7 @@ function remove_time_from_date( $datetime ) {
                 <input type=hidden name="settings[format_xls_use_xls_format]" value=0>
                 <input type=hidden name="settings[format_xls_display_column_names]" value=0>
                 <input type=hidden name="settings[format_xls_auto_width]" value=0>
+                <input type=hidden name="settings[format_xls_auto_height]" value=0>
                 <input type=hidden name="settings[format_xls_direction_rtl]" value=0>
                 <input type=hidden name="settings[format_xls_force_general_format]" value=0>
                 <input type=hidden name="settings[format_xls_remove_emojis]" value=0>
@@ -267,6 +270,10 @@ function remove_time_from_date( $datetime ) {
                        value=1 <?php if ( @$settings['format_xls_auto_width'] ) {
 					echo 'checked';
 				} ?> > <?php _e( 'Auto column width', 'woo-order-export-lite' ) ?><br>
+                <input type=checkbox name="settings[format_xls_auto_height]"
+                       value=1 <?php if ( @$settings['format_xls_auto_height'] ) {
+					echo 'checked';
+				} ?> > <?php _e( 'Auto row height', 'woo-order-export-lite' ) ?><br>
                 <input type=checkbox name="settings[format_xls_direction_rtl]"
                        value=1 <?php if ( @$settings['format_xls_direction_rtl'] ) {
 					echo 'checked';
@@ -856,7 +863,7 @@ function remove_time_from_date( $datetime ) {
                         <option value="" <?php if ( empty( $settings['change_order_status_to'] ) ) {
 							echo 'selected';
 						} ?>><?php _e( "- don't modify -", 'woo-order-export-lite' ) ?></option>
-						<?php foreach ( wc_get_order_statuses() as $i => $status ) { ?>
+						<?php foreach ( apply_filters( 'woe_settings_order_statuses', wc_get_order_statuses() ) as $i => $status ) { ?>
                             <option value="<?php echo esc_attr($i) ?>" <?php if ( $i === $settings['change_order_status_to'] ) {
 								echo 'selected';
 							} ?>><?php echo $status ?></option>
@@ -982,6 +989,7 @@ function remove_time_from_date( $datetime ) {
                                     <input type="checkbox" name="settings[export_refunds]"
                                            value="1" <?php checked( $settings['export_refunds'] ) ?> />
 				                    <?php _e( "Export refunds", 'woo-order-export-lite' ) ?>
+				                    <i><?php _e( "(only date filters applied)", 'woo-order-export-lite' ) ?></i>
                                 </label>
 		                    <?php }
 	                    } ?>
@@ -1499,6 +1507,12 @@ function remove_time_from_date( $datetime ) {
                                 type="checkbox" name="settings[export_matched_items]"
                                 value="1" <?php checked( $settings['export_matched_items'] ) ?> /> <?php _e( 'Export only matched product items',
                             'woo-order-export-lite' ) ?></label></div>
+                <div><input type="hidden" name="settings[exclude_free_items]" value="0"/><label><input
+                                type="checkbox" name="settings[exclude_free_items]"
+                                value="1" <?php
+                        checked( $settings['exclude_free_items'] ) ?> /> <?php
+                        _e( 'Exclude free items',
+                            'woo-order-export-lite' ) ?></label></div>
                 <div class="custom-fields__wrapper">
                     <div>
                         <span class="wc-oe-header"><?php _e( 'Item names', 'woo-order-export-lite' ) ?></span>
@@ -1595,9 +1609,20 @@ function remove_time_from_date( $datetime ) {
                 <div id='fields' style='display:none;'>
 
                     <div class="fields-control-block"></div>
-                    <div class="summary-row-title hide">
-                        <?php _e( 'Title for summary row', 'woo-order-export-lite' ) ?> <input name="settings[summary_row_title]" value="<?php echo esc_attr(isset($settings['summary_row_title']) ? $settings['summary_row_title'] : __( 'Total', 'woo-order-export-lite' )); ?>">
-                    <hr>
+                    <div class="summary-row-title">
+                        <div style="margin-bottom: 10px">
+                            <input type="hidden" name="settings[display_summary_row]" value="0">
+                            <input type="checkbox" name="settings[display_summary_row]"
+                                   id="display_summary_row_checkbox" value="1"
+				                <?php checked( $settings['display_summary_row'] ?? '', '1' ); ?>>
+			                <?php _e( 'Display summary row (you must mark fields below)', 'woo-order-export-lite' ); ?>
+                        </div>
+                        <div id="title_for_summary_row_block">
+			                <?php _e( 'Title for summary row', 'woo-order-export-lite' ); ?>
+                            <input name="settings[summary_row_title]"
+                                   value="<?php echo esc_attr( $settings['summary_row_title'] ?? __( 'Total', 'woo-order-export-lite' ) ); ?>">
+                        </div>
+                        <hr>
                     </div>
                     <div class="fields-control">
                         <div style="display: inline-block; float: left">
@@ -2008,7 +2033,7 @@ function remove_time_from_date( $datetime ) {
                             </div>
                             <div class="div_calculated segment-form all-segments">
                                 <div style="padding-bottom: 0.4rem">
-                                    <a class='add_form_tip' href="https://docs.algolplus.com/algol_order_export/fields/" target="_blank">
+                                    <a class='add_form_tip' href="https://docs.algolplus.com/algol_order_export/developers-algol_order_export/common/add-calculated-field-for-order/" target="_blank">
                                         <?php _e( "You should add code to section \"Misc Settings\". Read the guide", 'woo-order-export-lite' )?>
                                     </a>
                                 </div>
@@ -2038,7 +2063,7 @@ function remove_time_from_date( $datetime ) {
                             </div>
                             <div class="div_calculated segment-form products-segment">
                                 <div style="padding-bottom: 0.4rem">
-                                    <a class='add_form_tip' href="https://docs.algolplus.com/algol_order_export/add-calculated-field-for-product/" target="_blank">
+                                    <a class='add_form_tip' href="https://docs.algolplus.com/algol_order_export/developers-algol_order_export/common/add-calculated-field-for-product/" target="_blank">
                                         <?php _e( "You should add code to section \"Misc Settings\". Read the guide", 'woo-order-export-lite' )?>
                                     </a>
                                 </div>
@@ -2068,7 +2093,7 @@ function remove_time_from_date( $datetime ) {
                             </div>
                             <div class="div_calculated segment-form product_items-segment">
                                 <div style="padding-bottom: 0.4rem">
-                                    <a class='add_form_tip' href="https://docs.algolplus.com/algol_order_export/add-calculated-field-for-product/" target="_blank">
+                                    <a class='add_form_tip' href="https://docs.algolplus.com/algol_order_export/developers-algol_order_export/common/add-calculated-field-for-product/" target="_blank">
                                         <?php _e( "You should add code to section \"Misc Settings\". Read the guide", 'woo-order-export-lite' )?>
                                     </a>
                                 </div>

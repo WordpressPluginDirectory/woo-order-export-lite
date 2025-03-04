@@ -698,20 +698,20 @@ class WC_Order_Export_Data_Extractor {
 
         if ( ! empty( $settings['sub_start_from_date'] ) || ! empty( $settings['sub_start_to_date'] ) ) {
             $field = 'schedule_start';
-            $left_join_order_meta[] = "LEFT JOIN {$wpdb->prefix}wc_orders_meta AS ordermeta_{$field} ON ordermeta_{$field}.order_id = orders.id";
+            $left_join_order_meta[] = "LEFT JOIN {$wpdb->prefix}wc_orders_meta AS ordermeta_{$field} ON ordermeta_{$field}.order_id = orders.id AND ordermeta_{$field}.meta_key='_{$field}'";
             $order_meta_where []    = self::get_date_meta_for_subscription_filters( $field, $settings['sub_start_from_date'], $settings['sub_start_to_date'] );
         }
 
 
         if ( ! empty( $settings['sub_end_from_date'] ) || ! empty( $settings['sub_end_to_date'] ) ) {
             $field = 'schedule_end';
-            $left_join_order_meta[] = "LEFT JOIN {$wpdb->prefix}wc_orders_meta AS ordermeta_{$field} ON ordermeta_{$field}.order_id = orders.id";
+            $left_join_order_meta[] = "LEFT JOIN {$wpdb->prefix}wc_orders_meta AS ordermeta_{$field} ON ordermeta_{$field}.order_id = orders.id AND ordermeta_{$field}.meta_key='_{$field}'";
             $order_meta_where []    = self::get_date_meta_for_subscription_filters( $field, $settings['sub_end_from_date'], $settings['sub_end_to_date'] );
         }
 
         if ( ! empty( $settings['sub_next_paym_from_date'] ) || ! empty( $settings['sub_next_paym_to_date'] ) ) {
             $field = 'schedule_next_payment';
-            $left_join_order_meta[] = "LEFT JOIN {$wpdb->prefix}wc_orders_meta AS ordermeta_{$field} ON ordermeta_{$field}.order_id = orders.id";
+            $left_join_order_meta[] = "LEFT JOIN {$wpdb->prefix}wc_orders_meta AS ordermeta_{$field} ON ordermeta_{$field}.order_id = orders.id AND ordermeta_{$field}.meta_key='_{$field}'";
             $order_meta_where []    = self::get_date_meta_for_subscription_filters( $field, $settings['sub_next_paym_from_date'], $settings['sub_next_paym_to_date'] );
         }
 
@@ -726,22 +726,26 @@ class WC_Order_Export_Data_Extractor {
 
 
 		//top_level
-		$where = array( 1 );
+		//setup order types to work with
+		$order_types = array( "'" . self::$object_type . "'" );
+		$order_types = join( ",", apply_filters( "woe_sql_order_types", $order_types ) );
+
+		$where = array( "orders.type in ($order_types)" );
 		$where = array_merge ($where, $HPOS_order_fields_where);
 		self::apply_order_filters_to_sql( $where, $settings );
 		$where     = apply_filters( 'woe_sql_get_order_ids_where', $where, $settings );
 		$order_sql = join( " AND ", $where );
 
-		//setup order types to work with
-		$order_types = array( "'" . self::$object_type . "'" );
+		$final_where = "$order_sql $order_meta_where $order_items_where";
+		//final for refunds
 		if ( $settings['export_refunds'] ) {
-			$order_types[] = "'shop_order_refund'";
+			$refund_sql = self::build_refund_sql($settings);
+			$final_where = "($final_where)  OR ($refund_sql)";
 		}
-		$order_types = join( ",", apply_filters( "woe_sql_order_types", $order_types ) );
 
 		$sql = apply_filters( "woe_sql_get_order_ids", "SELECT " . apply_filters( "woe_sql_get_order_ids_fields", "orders.ID AS order_id" ) . " FROM {$wpdb->prefix}wc_orders AS orders
 			{$left_join_order_meta}
-			WHERE orders.type in ($order_types) AND $order_sql $order_meta_where $order_items_where", $settings );
+			WHERE $final_where", $settings );
 
 		if ( self::$track_sql_queries ) {
 			self::$sql_queries[] = $sql;
@@ -750,6 +754,20 @@ class WC_Order_Export_Data_Extractor {
 		//die($sql);
 		return $sql;
 	}
+
+	private static function build_refund_sql($settings) {
+		$date_field = 'date'; //date created
+		$use_timestamps = false;
+		$where_meta = [];// unused
+		$where = array( "orders.type in ( 'shop_order_refund' )" );
+		foreach ( self::get_date_range( $settings, true, $use_timestamps, true ) as $date ) {
+			self::add_date_filter( $where, $where_meta, $date_field, $date );
+		}
+		if ( $settings['export_unmarked_orders'] )
+			$where[] = "ordermeta_cf_export_unmarked_orders.meta_value IS NULL";
+		return join(" AND ", $where);
+	}
+
 
 	private static function add_date_filter( &$where, &$where_meta, $date_field, $value ) {
 		if ( $date_field == 'date_paid' OR $date_field == 'date_completed' )
@@ -826,7 +844,7 @@ class WC_Order_Export_Data_Extractor {
 		}
 
 		// skip child orders?
-		if ( $settings['skip_suborders'] AND ! $settings['export_refunds'] ) {
+		if ( $settings['skip_suborders'] ) {
 			$where[] = "orders.parent_order_id=0";
 		}
 

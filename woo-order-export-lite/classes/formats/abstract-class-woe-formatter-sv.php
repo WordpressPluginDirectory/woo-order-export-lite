@@ -13,6 +13,7 @@ abstract class WOE_Formatter_sv extends WOE_Formatter_Plain_Format {
 	var $linebreak;
 	var $delimiter;
 	var $stream_filter;
+	var $escape = "\\";
 
 	public function __construct(
 		$mode,
@@ -55,7 +56,7 @@ abstract class WOE_Formatter_sv extends WOE_Formatter_Plain_Format {
 				if ( ! apply_filters( "woe_{$this->format}_custom_output_func", false, $this->handle, $data,
 					$this->delimiter, $this->linebreak, $this->enclosure, true ) ) {
 					if ( $this->enclosure !== '' ) {
-						fputcsv( $this->handle, $data, $this->delimiter, $this->enclosure );
+						fputcsv( $this->handle, $data, $this->delimiter, $this->enclosure, $this->escape );
 					} else {
 						fwrite( $this->handle, implode( $this->delimiter, $data ) . $this->linebreak );
 					}
@@ -87,7 +88,7 @@ abstract class WOE_Formatter_sv extends WOE_Formatter_Plain_Format {
 				if ( ! apply_filters( "woe_{$this->format}_custom_output_func", false, $this->handle, $row,
 					$this->delimiter, $this->linebreak, $this->enclosure, false ) ) {
 					if ( $this->enclosure !== '' ) {
-						fputcsv( $this->handle, $row, $this->delimiter, $this->enclosure );
+						fputcsv( $this->handle, $row, $this->delimiter, $this->enclosure, $this->escape );
 					} else {
 						fwrite( $this->handle, implode( $this->delimiter, $row ) . $this->linebreak );
 					}

@@ -344,6 +344,8 @@ class WC_Order_Export_Order_Fields {
 			}
 			else
 				$row[$field] =  "";
+		} elseif ( $field == 'returning_customer' ) {
+			$row[$field] = $this->get_returning_customer( $this->order_id );
 		} elseif ($field == 'customer_user') {
             $row[$field] = isset ($this->user->ID) ? $this->user->ID : 0;
         } elseif ( $field == 'customer_total_orders' ) {
@@ -499,11 +501,11 @@ class WC_Order_Export_Order_Fields {
 		} elseif ( $field == 'order_currency' ) {
 			$row[$field] = $this->order->get_currency();
 		} elseif( $field == 'order_currency_symbol' ){
-			$row[$field] = get_woocommerce_currency_symbol( $this->order->get_currency() );
+			$row[$field] = $this->get_woocommerce_currency_symbol( $this->order->get_currency() );
 		} elseif ($field == 'cart_discount') {
             $row[$field] = $this->order->get_discount_total();
 		} elseif ($field == 'cart_discount_inc_tax') {
-            $row[$field] = $this->order->get_discount_total() + $this->order->get_discount_tax();
+            $row[$field] = (float)$this->order->get_discount_total() + (float)$this->order->get_discount_tax();
         } elseif ($field == 'cart_discount_tax') {
             $row[$field] = $this->order->get_discount_tax();
         } elseif( method_exists( $this->order, 'get_' . $field ) ) {  // order_date...
@@ -525,5 +527,194 @@ class WC_Order_Export_Order_Fields {
 		}
 		return $row;
 		
+	}
+
+	function get_woocommerce_currency_symbol( $currency = '' ) {
+		if ( ! $currency ) {
+			$currency = get_woocommerce_currency();
+		}
+
+		$symbols = apply_filters( 'woocommerce_currency_symbols', array(
+			'AED' => 'د.إ',
+			'AFN' => '؋',
+			'ALL' => 'L',
+			'AMD' => 'AMD',
+			'ANG' => 'ƒ',
+			'AOA' => 'Kz',
+			'ARS' => '$',
+			'AUD' => '$',
+			'AWG' => 'ƒ',
+			'AZN' => 'AZN',
+			'BAM' => 'KM',
+			'BBD' => '$',
+			'BDT' => '৳ ',
+			'BGN' => 'лв.',
+			'BHD' => '.د.ب',
+			'BIF' => 'Fr',
+			'BMD' => '$',
+			'BND' => '$',
+			'BOB' => 'Bs.',
+			'BRL' => 'R$',
+			'BSD' => '$',
+			'BTC' => '฿',
+			'BTN' => 'Nu.',
+			'BWP' => 'P',
+			'BYR' => 'Br',
+			'BZD' => '$',
+			'CAD' => '$',
+			'CDF' => 'Fr',
+			'CHF' => 'CHF',
+			'CLP' => '$',
+			'CNY' => '¥',
+			'COP' => '$',
+			'CRC' => '₡',
+			'CUC' => '$',
+			'CUP' => '$',
+			'CVE' => '$',
+			'CZK' => 'Kč',
+			'DJF' => 'Fr',
+			'DKK' => 'DKK',
+			'DOP' => 'RD$',
+			'DZD' => 'د.ج',
+			'EGP' => 'EGP',
+			'ERN' => 'Nfk',
+			'ETB' => 'Br',
+			'EUR' => '€',
+			'FJD' => '$',
+			'FKP' => '£',
+			'GBP' => '£',
+			'GEL' => 'ლ',
+			'GGP' => '£',
+			'GHS' => '₵',
+			'GIP' => '£',
+			'GMD' => 'D',
+			'GNF' => 'Fr',
+			'GTQ' => 'Q',
+			'GYD' => '$',
+			'HKD' => '$',
+			'HNL' => 'L',
+			'HRK' => 'Kn',
+			'HTG' => 'G',
+			'HUF' => 'Ft',
+			'IDR' => 'Rp',
+			'ILS' => '₪',
+			'IMP' => '£',
+			'INR' => '₹',
+			'IQD' => 'ع.د',
+			'IRR' => '﷼',
+			'IRT' => 'تومان',
+			'ISK' => 'kr.',
+			'JEP' => '£',
+			'JMD' => '$',
+			'JOD' => 'د.ا',
+			'JPY' => '¥',
+			'KES' => 'KSh',
+			'KGS' => 'сом',
+			'KHR' => '៛',
+			'KMF' => 'Fr',
+			'KPW' => '₩',
+			'KRW' => '₩',
+			'KWD' => 'د.ك',
+			'KYD' => '$',
+			'KZT' => 'KZT',
+			'LAK' => '₭',
+			'LBP' => 'ل.ل',
+			'LKR' => 'රු',
+			'LRD' => '$',
+			'LSL' => 'L',
+			'LYD' => 'ل.د',
+			'MAD' => 'د.م.',
+			'MDL' => 'MDL',
+			'MGA' => 'Ar',
+			'MKD' => 'ден',
+			'MMK' => 'Ks',
+			'MNT' => '₮',
+			'MOP' => 'P',
+			'MRO' => 'UM',
+			'MUR' => '₨',
+			'MVR' => '.ރ',
+			'MWK' => 'MK',
+			'MXN' => '$',
+			'MYR' => 'RM',
+			'MZN' => 'MT',
+			'NAD' => '$',
+			'NGN' => '₦',
+			'NIO' => 'C$',
+			'NOK' => 'kr',
+			'NPR' => '₨',
+			'NZD' => '$',
+			'OMR' => 'ر.ع.',
+			'PAB' => 'B/.',
+			'PEN' => 'S/.',
+			'PGK' => 'K',
+			'PHP' => '₱',
+			'PKR' => '₨',
+			'PLN' => 'zł',
+			'PRB' => 'р.',
+			'PYG' => '₲',
+			'QAR' => 'ر.ق',
+			'RMB' => '¥',
+			'RON' => 'lei',
+			'RSD' => 'дин.',
+			'RUB' => '₽',
+			'RWF' => 'Fr',
+			'SAR' => 'ر.س',
+			'SBD' => '$',
+			'SCR' => '₨',
+			'SDG' => 'ج.س.',
+			'SEK' => 'kr',
+			'SGD' => '$',
+			'SHP' => '£',
+			'SLL' => 'Le',
+			'SOS' => 'Sh',
+			'SRD' => '$',
+			'SSP' => '£',
+			'STD' => 'Db',
+			'SYP' => 'ل.س',
+			'SZL' => 'L',
+			'THB' => '฿',
+			'TJS' => 'ЅМ',
+			'TMT' => 'm',
+			'TND' => 'د.ت',
+			'TOP' => 'T$',
+			'TRY' => '₺',
+			'TTD' => '$',
+			'TWD' => 'NT$',
+			'TZS' => 'Sh',
+			'UAH' => '₴',
+			'UGX' => 'UGX',
+			'USD' => '$',
+			'UYU' => '$',
+			'UZS' => 'UZS',
+			'VEF' => 'Bs F',
+			'VND' => '₫',
+			'VUV' => 'Vt',
+			'WST' => 'T',
+			'XAF' => 'Fr',
+			'XCD' => '$',
+			'XOF' => 'Fr',
+			'XPF' => 'Fr',
+			'YER' => '﷼',
+			'ZAR' => 'R',
+			'ZMW' => 'ZK',
+	) );
+
+		$currency_symbol = isset( $symbols[ $currency ] ) ? $symbols[ $currency ] : '';
+
+		return apply_filters( 'woocommerce_currency_symbol', $currency_symbol, $currency );
+	}
+
+	function get_returning_customer( $order_id ){
+		global $wpdb;
+		$returning_customer = $wpdb->get_var(
+			$wpdb->prepare("SELECT returning_customer FROM {$wpdb->prefix}wc_order_stats WHERE order_id = %d",$order_id )
+		);
+		if ($returning_customer === "1")
+			$value = __( 'Returning', 'woo-order-export-lite' );
+		elseif ($returning_customer === "0")
+			$value = __( 'New', 'woo-order-export-lite' );
+		else
+			$value = __( 'Unknown', 'woo-order-export-lite' );
+		return $value;
 	}
 }

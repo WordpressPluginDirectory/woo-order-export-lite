@@ -676,6 +676,11 @@ trait WOE_Core_Extractor_UI {
 				'checked' => 0,
 				'format'  => 'string',
 			),
+			'returning_customer'    => array(
+				'label'   => __( 'New or Returning', 'woo-order-export-lite' ),
+				'checked' => 0,
+				'format'  => 'string',
+			),
 			'customer_total_orders' => array(
 				'label'   => __( 'Customer Total Orders', 'woo-order-export-lite' ),
 				'checked' => 0,
@@ -988,6 +993,11 @@ trait WOE_Core_Extractor_UI {
 				'checked' => 1,
 				'format'  => 'number',
 			),
+			'qty_refunded'            => array(
+				'label'   => __( 'Quantity (Refunded)', 'woo-order-export-lite' ),
+				'checked' => 0,
+				'format'  => 'number',
+			),
 			'item_price'                  => array(
 				'label'   => __( 'Item Cost', 'woo-order-export-lite' ),
 				'checked' => 1,
@@ -1059,9 +1069,14 @@ trait WOE_Core_Extractor_UI {
 				'format'  => 'money',
 			),
 			'tax_rate'                    => array(
-				'label'   => __( 'Item Tax Rate', 'woo-order-export-lite' ),
+				'label'   => __( 'Tax Rate (calculated)', 'woo-order-export-lite' ),
 				'checked' => 0,
 				'format'  => 'number',
+			),
+			'tax_rates_list' => array(
+				'label'   => __( 'Tax Rates (exact)', 'woo-order-export-lite' ),
+				'checked' => 0,
+				'format'  => 'string',
 			),
 			'item_download_url'           => array(
 				'label'   => __( 'Item download URL', 'woo-order-export-lite' ),
