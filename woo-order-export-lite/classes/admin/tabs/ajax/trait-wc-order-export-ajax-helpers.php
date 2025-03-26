@@ -92,21 +92,26 @@ trait WC_Order_Export_Ajax_Helpers {
 	protected function send_contents_delete_file( $filename ) {
 		if ( ! empty( $filename ) ) {
 			if( !$this->function_disabled('readfile') ) {
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile
 				readfile( $filename );
 			} else {
 				// fallback, emulate readfile 
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 				$file = fopen($filename, 'rb');
 				if ( $file !== false ) {
 					while ( !feof($file) ) {
+						// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fread
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						echo fread($file, 4096);
 					}
+					// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 					fclose($file);
 				}
 			}
-			unlink( $filename );
+			wp_delete_file( $filename );
             //also delete storage file
             if(file_exists($filename . '.storage')) {
-                unlink($filename . '.storage');
+                wp_delete_file($filename . '.storage');
             }
 		}
 	}
@@ -120,11 +125,13 @@ trait WC_Order_Export_Ajax_Helpers {
 
 		$this->start_prevent_object_cache();
 
-		$filename = $this->tmp_filename ? $this->tmp_filename :	get_transient( $this->tempfile_prefix . $_REQUEST['file_id'] );
+		$file_id = isset($_REQUEST['file_id']) ? sanitize_text_field(wp_unslash($_REQUEST['file_id'])) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		$filename = $this->tmp_filename ? $this->tmp_filename :	get_transient( $this->tempfile_prefix . $file_id );
 		if ( $filename === false ) {
 			// should check if Trasient API broken
-			$key = "woe_test_api_".mt_rand(100000, 999999);
-			$value = mt_rand(100000, 999999); 
+			$key = "woe_test_api_".wp_rand(100000, 999999);
+			$value = wp_rand(100000, 999999);
 			set_transient($key, $value, 5);
 			$test_value = get_transient( $key );
 			if($test_value != $value)
@@ -139,7 +146,7 @@ trait WC_Order_Export_Ajax_Helpers {
 			die();
 		}
 
-		set_transient( $this->tempfile_prefix . $_REQUEST['file_id'], $filename, 5 * MINUTE_IN_SECONDS );
+		set_transient( $this->tempfile_prefix . $file_id, $filename, 5 * MINUTE_IN_SECONDS );
 		$this->stop_prevent_object_cache();
 
 		return $filename;
@@ -154,15 +161,15 @@ trait WC_Order_Export_Ajax_Helpers {
 	}
 
 	protected function delete_temp_file() {
-
-		$this->start_prevent_object_cache();
-		$filename = get_transient( $this->tempfile_prefix . $_REQUEST['file_id'] );
+        $this->start_prevent_object_cache();
+		$file_id = isset($_REQUEST['file_id']) ? sanitize_text_field(wp_unslash($_REQUEST['file_id'])) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$filename = get_transient( $this->tempfile_prefix . $file_id );
 		if ( $filename !== false ) {
-			delete_transient( $this->tempfile_prefix . $_REQUEST['file_id'] );
-			unlink( $filename );
+			delete_transient( $this->tempfile_prefix . $file_id );
+			wp_delete_file( $filename );
             //also delete storage file
             if(file_exists($filename . '.storage')) {
-                unlink($filename . '.storage');
+                wp_delete_file($filename . '.storage');
             }
 		}
 		$this->stop_prevent_object_cache();
@@ -170,7 +177,8 @@ trait WC_Order_Export_Ajax_Helpers {
 
 	protected function build_and_send_file( $settings, $export = false, $browser_output = true ) {
 		$result = [];
-		$filename = WC_Order_Export_Engine::build_file_full( $settings, '', 0, explode( ",", $_REQUEST['ids'] ) );
+		$ids = isset($_REQUEST['ids']) ? sanitize_text_field(wp_unslash($_REQUEST['ids'])) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$filename = WC_Order_Export_Engine::build_file_full( $settings, '', 0, explode( ",", $ids ) );
 		$download_name = WC_Order_Export_Engine::make_filename( $settings['export_filename'] );
 		WC_Order_Export_Manage::set_correct_file_ext( $settings );
 		if ( $export ) {

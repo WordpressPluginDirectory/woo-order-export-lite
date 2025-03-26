@@ -3,6 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching
+
 trait WOE_Core_Extractor {
 	static $order_meta_field_prefix = '';
 
@@ -16,7 +19,6 @@ trait WOE_Core_Extractor {
 	public static function get_user_custom_fields() {
 		global $wpdb;
 		$transient_key = 'woe_get_user_custom_fields_result';
-
 		$fields = get_transient( $transient_key );
 		if ( $fields === false ) {
 			$total_users = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->users}" );
@@ -24,8 +26,9 @@ trait WOE_Core_Extractor {
 				$fields = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->usermeta}" );
 			} else { // we have a lot of users, so take last users, upto 1000
 				$user_ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->users} ORDER BY ID DESC LIMIT 1000" );
-				$user_ids = join( ",", $user_ids );
-				$fields   = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->usermeta}  WHERE user_id IN ($user_ids)" );
+			    $list_placeholders = implode(',', array_fill(0, count($user_ids), '%d'));
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+				$fields   = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->usermeta}  WHERE user_id IN ($list_placeholders)",$user_ids) );
 			}
 			sort( $fields );
 			set_transient( $transient_key, $fields, 60 ); //valid for a minute
@@ -102,8 +105,9 @@ trait WOE_Core_Extractor {
 			} else { // we have a lot of orders, take last good orders, upto 1000
 				$product_ids   = $wpdb->get_col( "SELECT  ID FROM {$wpdb->posts} WHERE post_type IN('product','product_variation')  ORDER BY post_date DESC LIMIT 1000" );
 				$product_ids[] = 0; // add fake zero
-				$product_ids   = join( ",", $product_ids );
-				$fields        = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta}  WHERE post_id IN ($product_ids)" );
+				$list_placeholders = implode(',', array_fill(0, count($product_ids), '%d'));
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+				$fields        = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->postmeta}  WHERE post_id IN ($list_placeholders)",$product_ids) );
 			}
 			sort( $fields );
 			set_transient( $transient_key, $fields, 60 ); //valid for a minute
@@ -218,7 +222,7 @@ trait WOE_Core_Extractor {
 
 		// has exact products?
 		if ( $settings['products'] ) {
-			;// do nothing 
+			;// do nothing
 		} elseif ( empty( $settings['product_vendors'] ) AND empty( $settings['product_custom_fields'] ) ) {
 			$settings['products'] = array();
 		} else {
@@ -271,8 +275,8 @@ trait WOE_Core_Extractor {
 			}
 			//done
 			$product_where        = join( " AND ", $product_where );
-			$sql                  = "SELECT DISTINCT ID FROM {$wpdb->posts} AS products $left_join_product_meta  WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND $product_where ";
-			$settings['products'] = $wpdb->get_col( $sql );
+			//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$settings['products'] = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT ID FROM {$wpdb->posts} AS products $left_join_product_meta  WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND $product_where ") );
 			if ( empty( $settings['products'] ) ) // failed condition!
 			{
 				$settings['products'] = array( 0 );
@@ -281,9 +285,10 @@ trait WOE_Core_Extractor {
 
 		//  we have to use variations , if user sets product attributes
 		if ( $settings['products'] AND $settings['product_attributes'] ) {
-			$values               = self::sql_subset( $settings['products'] );
-			$sql                  = "SELECT DISTINCT ID FROM {$wpdb->posts} AS products WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND post_parent<>0 AND post_parent IN ($values)";
-			$settings['products'] = $wpdb->get_col( $sql );
+			$values               = $settings['products'] ;
+			$list_placeholders = implode(',', array_fill(0, count($values), '%d'));
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+			$settings['products'] = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT ID FROM {$wpdb->posts} AS products WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND post_parent<>0 AND post_parent IN ($list_placeholders)",$values) );
 			if ( empty( $settings['products'] ) ) // failed condition!
 			{
 				$settings['products'] = array( 0 );
@@ -348,7 +353,7 @@ trait WOE_Core_Extractor {
 			$cat_ids                = join( ',', $cat_ids );
 			$product_category_where = "SELECT  DISTINCT object_id FROM {$wpdb->term_relationships} AS product_in_cat
 						LEFT JOIN {$wpdb->term_taxonomy} AS product_category ON product_category.term_taxonomy_id = product_in_cat.term_taxonomy_id
-						WHERE product_category.term_id IN ($cat_ids) 
+						WHERE product_category.term_id IN ($cat_ids)
 					";
 			// get products and variations!
 			$product_category_where = "AND orderitemmeta_product.meta_value IN
@@ -400,7 +405,7 @@ trait WOE_Core_Extractor {
 		}
 		return " $field $operator '$value' ";
 	}
-	
+
     private static function get_date_meta_for_subscription_filters( $field, $date_from, $date_to ) {
         $order_meta_where_parts = [];
 
@@ -426,9 +431,9 @@ trait WOE_Core_Extractor {
     public static function format_date_to_day_start( $date ) {
         $ts = strtotime( $date );
         if ( self::is_datetime_timestamp( $ts ) ) {
-            $from_date = date( 'Y-m-d H:i:s', $ts );
+            $from_date = gmdate( 'Y-m-d H:i:s', $ts );
         } else {
-            $from_date = date( 'Y-m-d', $ts ) . " 00:00:00";
+            $from_date = gmdate( 'Y-m-d', $ts ) . " 00:00:00";
         }
         return $from_date;
     }
@@ -436,9 +441,9 @@ trait WOE_Core_Extractor {
     public static function format_date_to_day_end( $date ) {
         $ts = strtotime( $date );
         if ( self::is_datetime_timestamp( $ts ) ) {
-            $to_date = date( 'Y-m-d H:i:s', $ts );
+            $to_date = gmdate( 'Y-m-d H:i:s', $ts );
         } else {
-            $to_date = date( 'Y-m-d', $ts ) . " 23:59:59";
+            $to_date = gmdate( 'Y-m-d', $ts ) . " 23:59:59";
         }
 
         return $to_date;
@@ -448,7 +453,7 @@ trait WOE_Core_Extractor {
 		$result = array();
 		$diff_utc = current_time( "timestamp" ) - current_time( "timestamp", 1 );
 
-		// fixed date range 
+		// fixed date range
 		if ( ! empty( $settings['from_date'] ) OR ! empty( $settings['to_date'] ) ) {
 			if ( $settings['from_date'] ) {
 		                $from_date = self::format_date_to_day_start( $settings['from_date'] );
@@ -491,60 +496,60 @@ trait WOE_Core_Extractor {
 			case "last_run":
 				$last_run = isset( $settings['schedule']['last_run'] ) ? $settings['schedule']['last_run'] : '';
 				if ( isset( $last_run ) AND $last_run ) {
-					$from_date = date( 'Y-m-d H:i:s', $last_run );
+					$from_date = gmdate( 'Y-m-d H:i:s', $last_run );
 				}
 				break;
 			case "today":
-				$_date = date( 'Y-m-d', $_time );
+				$_date = gmdate( 'Y-m-d', $_time );
 
 				$from_date = sprintf( '%s %s', $_date, '00:00:00' );
 				$to_date   = sprintf( '%s %s', $_date, '23:59:59' );
 				break;
 			case "this_week":
-				$day        = ( date( 'w', $_time ) + 6 ) % 7;// 0 - Sun , must be Mon = 0
-				$_date      = date( 'Y-m-d', $_time );
-				$week_start = date( 'Y-m-d', strtotime( $_date . ' -' . $day . ' days' ) );
-				$week_end   = date( 'Y-m-d', strtotime( $_date . ' +' . ( 6 - $day ) . ' days' ) );
+				$day        = ( gmdate( 'w', $_time ) + 6 ) % 7;// 0 - Sun , must be Mon = 0
+				$_date      = gmdate( 'Y-m-d', $_time );
+				$week_start = gmdate( 'Y-m-d', strtotime( $_date . ' -' . $day . ' days' ) );
+				$week_end   = gmdate( 'Y-m-d', strtotime( $_date . ' +' . ( 6 - $day ) . ' days' ) );
 
 				$from_date = sprintf( '%s %s', $week_start, '00:00:00' );
 				$to_date   = sprintf( '%s %s', $week_end, '23:59:59' );
 				break;
 			case "this_month":
-				$month_start = date( 'Y-m-01', $_time );
-				$month_end   = date( 'Y-m-t', $_time );
+				$month_start = gmdate( 'Y-m-01', $_time );
+				$month_end   = gmdate( 'Y-m-t', $_time );
 
 				$from_date = sprintf( '%s %s', $month_start, '00:00:00' );
 				$to_date   = sprintf( '%s %s', $month_end, '23:59:59' );
 				break;
 			case "last_day":
-				$_date    = date( 'Y-m-d', $_time );
+				$_date    = gmdate( 'Y-m-d', $_time );
 				$last_day = strtotime( $_date . " -1 day" );
-				$_date    = date( 'Y-m-d', $last_day );
+				$_date    = gmdate( 'Y-m-d', $last_day );
 
 				$from_date = sprintf( '%s %s', $_date, '00:00:00' );
 				$to_date   = sprintf( '%s %s', $_date, '23:59:59' );
 				break;
 			case "last_week":
-				$day        = ( date( 'w', $_time ) + 6 ) % 7;// 0 - Sun , must be Mon = 0
-				$_date      = date( 'Y-m-d', $_time );
+				$day        = ( gmdate( 'w', $_time ) + 6 ) % 7;// 0 - Sun , must be Mon = 0
+				$_date      = gmdate( 'Y-m-d', $_time );
 				$last_week  = strtotime( $_date . " -1 week" );
-				$week_start = date( 'Y-m-d', strtotime( date( 'Y-m-d', $last_week ) . ' -' . $day . ' days' ) );
-				$week_end   = date( 'Y-m-d', strtotime( date( 'Y-m-d', $last_week ) . ' +' . ( 6 - $day ) . ' days' ) );
+				$week_start = gmdate( 'Y-m-d', strtotime( gmdate( 'Y-m-d', $last_week ) . ' -' . $day . ' days' ) );
+				$week_end   = gmdate( 'Y-m-d', strtotime( gmdate( 'Y-m-d', $last_week ) . ' +' . ( 6 - $day ) . ' days' ) );
 
 				$from_date = sprintf( '%s %s', $week_start, '00:00:00' );
 				$to_date   = sprintf( '%s %s', $week_end, '23:59:59' );
 				break;
 			case "last_month":
-				$_date       = date( 'Y-m-d', $_time );
+				$_date       = gmdate( 'Y-m-d', $_time );
 				$last_month  = strtotime( $_date . " -1 month" );
-				$month_start = date( 'Y-m-01', $last_month );
-				$month_end   = date( 'Y-m-t', $last_month );
+				$month_start = gmdate( 'Y-m-01', $last_month );
+				$month_end   = gmdate( 'Y-m-t', $last_month );
 
 				$from_date = sprintf( '%s %s', $month_start, '00:00:00' );
 				$to_date   = sprintf( '%s %s', $month_end, '23:59:59' );
 				break;
 			case "last_quarter":
-				$_date         = date( 'Y-m-d', $_time );
+				$_date         = gmdate( 'Y-m-d', $_time );
 				$last_month    = strtotime( $_date . " -3 month" );
 				$quarter_first_month = self::get_quarter_month( $last_month );
 				if( $quarter_first_month < 10 )
@@ -552,23 +557,23 @@ trait WOE_Core_Extractor {
 				$quarter_last_month = self::get_quarter_month( $last_month ) + 2;
 				if( $quarter_last_month < 10 )
 					$quarter_last_month = "0".$quarter_last_month;
-				$quarter_start = date( 'Y-' . $quarter_first_month . '-01', $last_month );
-				$quarter_end   = date( 'Y-' . $quarter_last_month . '-t', strtotime("$quarter_start +2 month") );
+				$quarter_start = gmdate( 'Y-' . $quarter_first_month . '-01', $last_month );
+				$quarter_end   = gmdate( 'Y-' . $quarter_last_month . '-t', strtotime("$quarter_start +2 month") );
 
 				$from_date = sprintf( '%s %s', $quarter_start, '00:00:00' );
 				$to_date   = sprintf( '%s %s', $quarter_end, '23:59:59' );
 				break;
 			case "this_year":
-				$year_start = date( 'Y-01-01', $_time );
+				$year_start = gmdate( 'Y-01-01', $_time );
 
 				$from_date = sprintf( '%s %s', $year_start, '00:00:00' );
 				break;
 			// =========== Modified By Hayato ==========
 			case "last_year":
-				$_date = date('Y-m-d',$_time);
+				$_date = gmdate('Y-m-d',$_time);
 				$last_year = strtotime($_date . " -1 year");
-				$last_year_start = date('Y-01-01',$last_year);
-				$last_year_end = date('Y-12-31',$last_year);
+				$last_year_start = gmdate('Y-01-01',$last_year);
+				$last_year_end = gmdate('Y-12-31',$last_year);
 				$from_date = sprintf('%s %s',$last_year_start, '00:00:00');
 				$to_date = sprintf('%s %s',$last_year_end, '23:59:59');
 				break;
@@ -576,9 +581,9 @@ trait WOE_Core_Extractor {
 			case "custom":
 				$export_rule_custom = isset( $settings['export_rule_custom'] ) ? $settings['export_rule_custom'] : '';
 				if ( isset( $export_rule_custom ) AND $export_rule_custom ) {
-					$day_start = date( 'Y-m-d',
-						strtotime( date( 'Y-m-d', $_time ) . ' -' . intval( $export_rule_custom ) . ' days' ) );
-					$day_end   = date( 'Y-m-d', $_time );
+					$day_start = gmdate( 'Y-m-d',
+						strtotime( gmdate( 'Y-m-d', $_time ) . ' -' . intval( $export_rule_custom ) . ' days' ) );
+					$day_end   = gmdate( 'Y-m-d', $_time );
 
 					$from_date = sprintf( '%s %s', $day_start, '00:00:00' );
 					$to_date   = sprintf( '%s %s', $day_end, '23:59:59' );
@@ -617,10 +622,10 @@ trait WOE_Core_Extractor {
 
 	public static function convert_date_to_utc( $date, $diff_utc ) {
 		return gmdate("Y-m-d H:i:s", strtotime($date) - $diff_utc);
-	}	
+	}
 
 	public static function get_quarter_month( $time ) {
-		$month = date( "m", $time );
+		$month = gmdate( "m", $time );
 		if ( $month <= 3 ) {
 			return 1;
 		}
@@ -642,18 +647,17 @@ trait WOE_Core_Extractor {
 		self::$export_line_categories_separator = apply_filters( 'woe_export_line_categories_separator', ",\n" );
 		self::$export_itemmeta_values_separator = apply_filters( 'woe_export_itemmeta_values_separator', ", " );
 		self::$export_custom_fields_separator   = apply_filters( 'woe_export_custom_fields_separator', ", " );
-		
+
 		//detect if has order stats tables
 		global $wpdb;
 		$table_name = $wpdb->prefix.'wc_order_stats';
-		$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
-		self::$has_order_stats = ($wpdb->get_var( $query ) == $table_name);
+		self::$has_order_stats = ($wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) ) ) == $table_name);
 
 		//to support Origin, since WC 8.5
 		self::set_order_meta_field_prefix();
 	}
 
-	//for debug 
+	//for debug
 	public static function start_track_queries() {
 		self::$track_sql_queries = true;
 		self::$sql_queries       = array();
@@ -668,17 +672,19 @@ trait WOE_Core_Extractor {
 		global $wpdb;
 
 		$ids[] = 0; // for safe
-		$ids   = join( ",", $ids );
-		$sql = "SELECT COUNT( * ) AS t
+		$list_placeholders = implode(',', array_fill(0, count($ids), '%d'));
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+		$max = $wpdb->get_var( $wpdb->prepare(
+				"SELECT COUNT( * ) AS t
 				FROM  `{$wpdb->prefix}woocommerce_order_items`
-				WHERE order_item_type =  '$type'
+				WHERE order_item_type =  %s
 				AND order_id
-				IN ( $ids)
+				IN ( $list_placeholders)
 				GROUP BY order_id
 				ORDER BY t DESC
-				LIMIT 1";
-
-		$max = $wpdb->get_var( $sql );
+				LIMIT 1",
+				array_merge([$type],$ids)
+		));
 		if ( ! $max ) {
 			$max = 1;
 		}
@@ -699,7 +705,7 @@ trait WOE_Core_Extractor {
 			$coupon = new WC_Order_Export_Order_Coupon_Fields( $item, $labels, $static_vals );
 			foreach ( $labels->unique_keys() as $field ) {
 				$row[ $field ] = $coupon->get($field);
-				
+
 				$row[ $field ] = apply_filters( "woe_get_order_coupon_value_{$field}", $row[ $field ], $order,
 					$item );
 			}
@@ -827,10 +833,10 @@ trait WOE_Core_Extractor {
 					}
 				}
 			}
-			
+
 			$product   = $item->get_product();
 			$product   = apply_filters( "woe_get_order_product", $product );
-			
+
 			$item_meta = get_metadata( 'order_item', $item_id );
 			foreach ( $item_meta as $key => $value ) {
 				$clear_key = wc_sanitize_taxonomy_name( $key );
@@ -841,13 +847,13 @@ trait WOE_Core_Extractor {
 						$item_meta[ 'attribute_' . $key ][0] = isset( $term->name ) ? $term->name : $value[0];
 					}
 				}
-				
+
 				//some plugins encode meta keys!
 				$key2 = html_entity_decode ($key,ENT_QUOTES);
 				if( !isset($item_meta[$key2]) )
 					$item_meta[$key2] = $item_meta[$key];
 			}
-			
+
 			$item_meta = apply_filters( "woe_get_order_product_item_meta", $item_meta );
 			$product   = apply_filters( "woe_get_order_product_and_item_meta", $product, $item_meta );
 			if ( $product ) {
@@ -899,7 +905,7 @@ trait WOE_Core_Extractor {
 		return apply_filters( "woe_fetch_order_products", $products, $order, $labels->get_legacy_labels(), $format = "",
 			$static_vals );
 	}
-	
+
 	/**
 	 * @param $product WC_Product
 	 *
@@ -1017,7 +1023,7 @@ trait WOE_Core_Extractor {
 
 		if ($options['strip_html_tags']) {
 			array_walk_recursive($row, function (&$item, $key) {
-				$item = strip_tags($item);
+				$item = wp_strip_all_tags($item);
 			});
 		}
 		$row = apply_filters( "woe_fetch_order", $row, $order, $object );
@@ -1099,9 +1105,12 @@ trait WOE_Core_Extractor {
 			if ( taxonomy_exists( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ) ) {
 				$term               = get_term_by( 'slug', $meta['meta_value'],
 					wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 				$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ), $product );
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 				$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value'];
 			} else {
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 				$meta['meta_key'] = wc_attribute_label( $meta['meta_key'], $product );
 			}
 
@@ -1120,9 +1129,9 @@ trait WOE_Core_Extractor {
 
 		$result = array();
 		foreach($formatted_meta as $meta) {
-			$meta->display_key = trim(strip_tags($meta->display_key));
+			$meta->display_key = trim(wp_strip_all_tags($meta->display_key));
 			if ( apply_filters("woe_remove_html_in_itemmeta", true) )
-				$meta->display_value = trim(strip_tags($meta->display_value));
+				$meta->display_value = trim(wp_strip_all_tags($meta->display_value));
 			$result[] = apply_filters( 'woe_fetch_item_meta', $meta->display_key . $value_delimiter . $meta->display_value, $meta, $item, $product );
 		}
 		//list to string!
@@ -1187,7 +1196,7 @@ trait WOE_Core_Extractor {
 				$value = $m[1];
 			}
 		}
-		return $value;		
+		return $value;
 	}
 
 	// Following functions copied from \woocommerce\src\Internal\Traits\OrderAttributionMeta.php
@@ -1205,7 +1214,7 @@ trait WOE_Core_Extractor {
 		$source      = $order->get_meta( self::get_meta_prefixed_field( 'utm_source' ) );
 		$origin      = self::get_origin_label( $source_type, $source );
 		if ( empty( $origin ) ) {
-			$origin = __( 'Unknown', 'woocommerce' );
+			$origin = __( 'Unknown', 'woo-order-export-lite' );
 		}
 		return esc_html( $origin );
 	}
@@ -1226,44 +1235,44 @@ trait WOE_Core_Extractor {
 			case 'utm':
 				$label = $translated ?
 					/* translators: %s is the source value */
-					__( 'Source: %s', 'woocommerce' )
+					__( 'Source: %s', 'woo-order-export-lite' )
 					: 'Source: %s';
 				break;
 			case 'organic':
 				$label = $translated ?
 					/* translators: %s is the source value */
-					__( 'Organic: %s', 'woocommerce' )
+					__( 'Organic: %s', 'woo-order-export-lite' )
 					: 'Organic: %s';
 				break;
 			case 'referral':
 				$label = $translated ?
 					/* translators: %s is the source value */
-					__( 'Referral: %s', 'woocommerce' )
+					__( 'Referral: %s', 'woo-order-export-lite' )
 					: 'Referral: %s';
 				break;
 			case 'typein':
 				$label  = '';
 				$source = $translated ?
-					__( 'Direct', 'woocommerce' )
+					__( 'Direct', 'woo-order-export-lite' )
 					: 'Direct';
 				break;
 			case 'mobile_app':
 				$label  = '';
 				$source = $translated ?
-					__( 'Mobile app', 'woocommerce' )
+					__( 'Mobile app', 'woo-order-export-lite' )
 					: 'Mobile app';
 				break;
 			case 'admin':
 				$label  = '';
 				$source = $translated ?
-					__( 'Web admin', 'woocommerce' )
+					__( 'Web admin', 'woo-order-export-lite' )
 					: 'Web admin';
 				break;
 
 			default:
 				$label  = '';
 				$source = $translated ?
-					__( 'Unknown', 'woocommerce' )
+					__( 'Unknown', 'woo-order-export-lite' )
 					: 'Unknown';
 				break;
 		}
@@ -1364,7 +1373,7 @@ trait WOE_Core_Extractor {
 		self::$order_meta_field_prefix = "{$prefix}_";
 	}
 	// Above functions copied from \woocommerce\src\Internal\Traits\OrderAttributionMeta.php
-	
+
 	/**
 	 * @return float/int
 	 */
@@ -1372,9 +1381,12 @@ trait WOE_Core_Extractor {
 		global $wpdb;
 		$customer_id = intval ( $wpdb->get_var( $wpdb->prepare("SELECT customer_id FROM {$wpdb->prefix}wc_order_stats WHERE order_id = %d", $order->get_id() ) ) );
 		if( !$customer_id) return 0;
-		$result = $wpdb->get_var("SELECT $operation FROM {$wpdb->prefix}wc_order_stats WHERE customer_id = $customer_id  AND status IN ( $statuses )");
+
+		$list_placeholders = implode(',', array_fill(0, count($statuses), '%s'));
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+		$result = $wpdb->get_var( $wpdb->prepare("SELECT $operation FROM {$wpdb->prefix}wc_order_stats WHERE customer_id = %d  AND status IN ($list_placeholders)",array_merge([$customer_id],$statuses)) );
 		if(!$result) $result  = 0; // NULL for SUM!
 		return $result;
 	}
-	
+
 }

@@ -368,7 +368,7 @@ class WC_Order_Export_Order_Product_Fields {
 		}
 
 		if ( $this->options['strip_tags_product_fields'] AND in_array( $field, $this->product_fields_with_tags ) ) {
-			$field_value = strip_tags( $field_value );
+			$field_value = wp_strip_all_tags( $field_value );
 		}
 
 		if( is_null($field_value) ) $field_value = '';

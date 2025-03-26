@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }

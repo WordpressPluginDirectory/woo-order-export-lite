@@ -1,4 +1,9 @@
 <?php
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fread
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -295,7 +300,7 @@ class WOE_Formatter_Storage_Csv implements WOE_Formatter_Storage {
 
     public function delete() {
 		if( file_exists($this->filename) )
-			unlink($this->filename);
+			wp_delete_file($this->filename);
     }
 
  	public function setColumns($columns) {

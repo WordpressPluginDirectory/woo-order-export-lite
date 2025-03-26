@@ -16,6 +16,7 @@ class WC_Order_Export_Order_Coupon_Fields {
 		$get_coupon_meta = ( array_diff( $labels->get_keys(), array( 'code', 'discount_amount', 'discount_amount_tax', 'excerpt' ) ) );
 
 		if ( $get_coupon_meta ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$recs = $wpdb->get_results( $wpdb->prepare( "SELECT meta_value,meta_key FROM {$wpdb->postmeta} AS meta
 				JOIN {$wpdb->posts} AS posts ON posts.ID = meta.post_id
 				WHERE posts.post_title=%s", $item->get_name() ) );

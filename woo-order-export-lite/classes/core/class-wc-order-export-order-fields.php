@@ -194,6 +194,7 @@ class WC_Order_Export_Order_Fields {
 
 			$key = substr( $field, 4 );
 
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$value = $wpdb->get_col( $wpdb->prepare(
 			"SELECT
 				itemmeta.meta_value
@@ -215,6 +216,7 @@ class WC_Order_Export_Order_Fields {
 
 			$key = substr( $field, 9 );
 
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$value = $wpdb->get_col( $wpdb->prepare(
 			"SELECT
 				itemmeta.meta_value
@@ -236,6 +238,7 @@ class WC_Order_Export_Order_Fields {
 
 			$key = substr( $field, 4 );
 
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$value = $wpdb->get_col( $wpdb->prepare(
 			"SELECT
 				SUM(itemmeta.meta_value)
@@ -471,7 +474,7 @@ class WC_Order_Export_Order_Fields {
 			if ( $notes ) {
 				foreach ( $notes as $note ) {
 					if ( ! empty( $this->options['export_all_comments'] ) || $note->comment_author !== __( 'WooCommerce',
-							'woocommerce' ) ) { // skip system notes by default
+							'woo-order-export-lite' ) ) { // skip system notes by default
 						$comments[] = apply_filters( 'woe_get_order_notes', $note->comment_content, $note, $this->order );
 					}
 				}
@@ -490,11 +493,11 @@ class WC_Order_Export_Order_Fields {
 		} elseif ( $field == 'subscription_relationship' AND function_exists("wcs_order_contains_subscription")) {
 			//copied logic from class WC_Subscriptions_Order
 			if ( wcs_order_contains_subscription( $this->order_id, 'renewal' ) ) {
-				$row[$field] = __( 'Renewal Order', 'woocommerce-subscriptions' );
+				$row[$field] = __( 'Renewal Order', 'woo-order-export-lite' );
 			} elseif ( wcs_order_contains_subscription( $this->order_id, 'resubscribe' ) ) {
-				$row[$field] = __( 'Resubscribe Order', 'woocommerce-subscriptions' );
+				$row[$field] = __( 'Resubscribe Order', 'woo-order-export-lite' );
 			} elseif ( wcs_order_contains_subscription( $this->order_id, 'parent' ) ) {
-				$row[$field] = __( 'Parent Order', 'woocommerce-subscriptions' );
+				$row[$field] = __( 'Parent Order', 'woo-order-export-lite' );
 			} else {
 				$row[$field] = "";
 			}
@@ -706,6 +709,7 @@ class WC_Order_Export_Order_Fields {
 
 	function get_returning_customer( $order_id ){
 		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$returning_customer = $wpdb->get_var(
 			$wpdb->prepare("SELECT returning_customer FROM {$wpdb->prefix}wc_order_stats WHERE order_id = %d",$order_id )
 		);

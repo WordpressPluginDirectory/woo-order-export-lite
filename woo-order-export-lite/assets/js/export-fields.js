@@ -98,7 +98,7 @@ function woe_create_selected_fields( old_output_format, format, format_changed )
 				var sum_btn = '<div class="mapping_col_3 mapping_row-sum_field_block">' +
 					'<input type="checkbox" name="orders[][sum]" value="1" '+ (typeof value.sum !== 'undefined' && +value.sum ? 'checked' : '') +'>' +
 					'</div>';
-				jQuery('.summary-row-title').removeClass('hide');
+			//	jQuery('.summary-row-title').removeClass('hide');
 			} else {
 				var sum_btn = '';
 			}
@@ -147,8 +147,12 @@ function woe_create_selected_fields( old_output_format, format, format_changed )
 		jQuery('#order_fields').find('.mapping_col_3.mapping_row-sum_field_block').hide();
 	}
 
-	if (!jQuery('#display_summary_row_checkbox').is(":checked")) {
+	if (['XLS', 'PDF'].indexOf(output_format) > -1)
+        jQuery('.summary-row-title').removeClass('hide');
+	else
         jQuery('.summary-row-title').addClass('hide');
+
+	if (!jQuery('#display_summary_row_checkbox').is(":checked")) {
 		jQuery('#title_for_summary_row_block').hide();
 	}
 
@@ -1870,10 +1874,10 @@ jQuery( document ).ready( function ( $ ) {
 				$( value ).hide();
 			} );
 
-			jQuery('.mapping_row-sum_field_block').removeClass('hide');
-
-			jQuery('.summary-row-title').removeClass('hide');
-
+			if (['XLS', 'PDF'].indexOf(output_format) > -1) {
+				jQuery('.mapping_row-sum_field_block').removeClass('hide');
+				jQuery('.summary-row-title').removeClass('hide');
+			}
 		}
 
 		$( '#unselected_fields .segment_choice[data-segment="' + segment + '"]' ).addClass( 'active' );

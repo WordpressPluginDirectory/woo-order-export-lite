@@ -28,32 +28,32 @@ $user_can_add_custom_php = intval(WC_Order_Export_Admin::user_can_add_custom_php
 		<?php wp_nonce_field( 'woe_nonce', 'woe_nonce' ); ?>
         <div class="woe-tab" id="woe-tab-general">
             <div class="woe-box woe-box-main">
-                <h3 class="woe-box-title"><?php _e( 'Export settings', 'woo-order-export-lite' ) ?></h3>
+                <h3 class="woe-box-title"><?php esc_html_e( 'Export settings', 'woo-order-export-lite' ) ?></h3>
                 <div class="row">
                     <div class="col-sm-12 form-group">
-                        <p><?php _e( 'Copy these settings and use it to migrate plugin to another WordPress install.',
+                        <p><?php esc_html_e( 'Copy these settings and use it to migrate plugin to another WordPress install.',
 								'woo-order-export-lite' ) ?></p>
                     </div>
                     <div class="col-sm-8 form-group woe-input-simple">
                         <select id="tools-export-selector">
                             <option data-json='<?php echo json_encode( $settings_export,
-								JSON_PRETTY_PRINT | JSON_HEX_APOS ) ?>'><?php _e( 'All',
+								JSON_PRETTY_PRINT | JSON_HEX_APOS ) ?>'><?php esc_html_e( 'All',
 									'woo-order-export-lite' ) ?></option>
                             <option data-json='<?php echo json_encode( $settings_export[ WC_Order_Export_Manage::EXPORT_NOW ],
 								JSON_PRETTY_PRINT | JSON_HEX_APOS ) ?>'>
-								<?php _e( 'Export now', 'woo-order-export-lite' ) ?></option>
+								<?php esc_html_e( 'Export now', 'woo-order-export-lite' ) ?></option>
 							<?php foreach ( $type_labels as $group => $label ): ?>
-                                <optgroup label="<?php echo $label ?>"></optgroup>
+                                <optgroup label="<?php echo esc_attr($label) ?>"></optgroup>
 								<?php foreach ( $settings_export[ $group ] as $item_id => $item ): ?>
                                     <option data-json='<?php echo json_encode( $item,
 										JSON_PRETTY_PRINT | JSON_HEX_APOS ) ?>'>
-										<?php echo $item_id . " - " . ( isset( $item['title'] ) ? $item['title'] : '' ) ?></option>
+										<?php echo esc_html($item_id . " - " . ( isset( $item['title'] ) ? $item['title'] : '' )) ?></option>
 								<?php endforeach; ?>
 							<?php endforeach; ?>
                         </select>
                         <textarea rows="10" id="tools-export-text" class='tools-textarea'></textarea>
                     </div>
-                        <p><?php _e( 'Just click inside the textarea and copy (Ctrl+C)',
+                        <p><?php esc_html_e( 'Just click inside the textarea and copy (Ctrl+C)',
 								'woo-order-export-lite' ) ?></p>
                 </div>
             </div>
@@ -62,16 +62,16 @@ $user_can_add_custom_php = intval(WC_Order_Export_Admin::user_can_add_custom_php
     <form method="post">
         <div class="woe-tab" id="woe-tab-general">
             <div class="woe-box woe-box-main">
-                <h3 class="woe-box-title"><?php _e( 'Import settings', 'woo-order-export-lite' ) ?></h3>
+                <h3 class="woe-box-title"><?php esc_html_e( 'Import settings', 'woo-order-export-lite' ) ?></h3>
                 <div class="row">
                     <div class="col-sm-12 form-group">
-                        <p><?php _e( 'Paste text into this field to import settings into the current WordPress install.',
+                        <p><?php esc_html_e( 'Paste text into this field to import settings into the current WordPress install.',
 								'woo-order-export-lite' ) ?></p>
                     </div>
                     <div class="col-sm-8 form-group woe-input-simple">
                         <textarea rows="10" id="tools-import-text" name="tools-import"></textarea>
                     </div>
-                        <p ><?php _e( 'This process will overwrite your settings for "Advanced Order Export For WooCommerce" !',
+                        <p ><?php esc_html_e( 'This process will overwrite your settings for "Advanced Order Export For WooCommerce" !',
 								'woo-order-export-lite' ) ?></p>
                 </div>
                 <div class="row">
@@ -81,11 +81,11 @@ $user_can_add_custom_php = intval(WC_Order_Export_Admin::user_can_add_custom_php
                         </div>
 
                         <input type="submit" class="woe-btn-tools"
-                               value="<?php _e( 'Import', 'woo-order-export-lite' ) ?>" name="woe-tools-import"
+                               value="<?php esc_html_e( 'Import', 'woo-order-export-lite' ) ?>" name="woe-tools-import"
                                id="submit-import">
 
                         <div id="Settings_updated"
-                             style='display:none;color:green;font-size: 120%;padding-bottom: 10px;'><?php _e( "Settings were successfully updated!",
+                             style='display:none;color:green;font-size: 120%;padding-bottom: 10px;'><?php esc_html_e( "Settings were successfully updated!",
 								'woo-order-export-lite' ) ?></div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@ $user_can_add_custom_php = intval(WC_Order_Export_Admin::user_can_add_custom_php
                 return;
             }
 
-            let userCanAddCustomPhp = <?php echo $user_can_add_custom_php; ?>;
+            let userCanAddCustomPhp = <?php echo esc_attr($user_can_add_custom_php); ?>;
             let defaultWarning = '<?php esc_attr_e( 'Are you sure to continue?', 'woo-order-export-lite' ) ?>';
             let customPHPWarning = '<?php esc_attr_e( 'Your settings uses custom PHP code. This code will be removed during import. Proceed?',
                 'woo-order-export-lite' ) ?>';

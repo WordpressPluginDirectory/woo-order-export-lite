@@ -535,7 +535,9 @@ class WC_Order_Export_Manage {
 
             if ($segment == 'common') {
                 $settings = WC_Order_Export_Main_Settings::get_settings();
-                $type = isset($settings['post_type']) ? $settings['post_type'] : (isset($_GET['woe_post_type']) ? $_GET['woe_post_type'] : '');
+				//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- optional parameter
+				$get_post_type = isset($_GET['woe_post_type']) ? sanitize_text_field(wp_unslash($_GET['woe_post_type'])) : 'shop_order';
+                $type = isset($settings['post_type']) ? $settings['post_type'] : $get_post_type;
                 if ( $type !== 'shop_order_refund' ) {
                     unset($default_segment_fields['orig_order_date']);
                 }

@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -37,7 +38,6 @@ class WOE_Formatter_Json extends WOE_Formatter {
 		parent::start( $data );
 
 		$start_text = $this->convert_literals( $this->settings['start_tag'] );
-
 		fwrite( $this->handle, apply_filters( "woe_json_start_text", $start_text ) );
 	}
 

@@ -9,7 +9,8 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax {
 
 	public function ajax_save_settings() {
 
-		$settings = WC_Order_Export_Manage::make_new_settings( $_POST );
+        $this->check_nonce();
+		$settings = WC_Order_Export_Manage::make_new_settings( $_POST ); //phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		/*
 		array_walk_recursive($settings, function(&$_value, $_key) {
@@ -20,7 +21,9 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax {
 		*/
                 $error = '';
                 try {
-                    $id = WC_Order_Export_Manage::save_export_settings( $_POST['mode'], (int) $_POST['id'], $settings );
+					$mode = isset($_POST['mode']) ? sanitize_text_field(wp_unslash($_POST['mode'])) : '';   //phpcs:ignore WordPress.Security.NonceVerification.Missing
+					$post_id = isset($_POST['id']) ? (int)sanitize_text_field(wp_unslash($_POST['id'])) : 0;//phpcs:ignore WordPress.Security.NonceVerification.Missing
+                    $id = WC_Order_Export_Manage::save_export_settings( $mode, $post_id, $settings );
                 } catch (Exception $ex) {
                     $error = $ex->getMessage();
                 }
@@ -29,7 +32,10 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax {
 	}
 
 	public function ajax_reset_profile() {
-		$id = WC_Order_Export_Manage::save_export_settings( $_POST['mode'], $_POST['id'], array() );
+        $this->check_nonce();
+		$mode = isset($_POST['mode']) ? sanitize_text_field(wp_unslash($_POST['mode'])) : '';   //phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$post_id = isset($_POST['id']) ? (int)sanitize_text_field(wp_unslash($_POST['id'])) : 0;//phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$id = WC_Order_Export_Manage::save_export_settings( $mode, $post_id, array() );
 		wp_send_json_success();
 	}
 

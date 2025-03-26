@@ -3,6 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
 class WOE_Formatter_Storage_Summary_Session implements WOE_Formatter_Storage {
     const SUMMARY_PRODUCTS_KEY = 'woe_summary_products';
     const SUMMARY_CUSTOMERS_KEY = 'woe_summary_customers';

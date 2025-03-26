@@ -5,6 +5,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once 'trait-woe-plain-format.php';
 
+// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
 abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 	use WOE_Order_Export_Plain_Format;
 	private $duplicate_settings = array();

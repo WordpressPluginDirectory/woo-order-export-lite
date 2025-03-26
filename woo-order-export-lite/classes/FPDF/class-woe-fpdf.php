@@ -1,4 +1,8 @@
 <?php
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fread
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 
 if ( ! class_exists( 'WOE_FPDF_TT_Font_File' ) ) {
 	require( 'class-woe-fpdf-tt-font-file.php' );
@@ -464,7 +468,7 @@ class WOE_FPDF {
 				$this->flt_scale_factor = 72;
 				break;
 			default:
-				throw new WOE_FPDF_Exception( 'Invalid unit specified: ' . $str_units, WOE_FPDF_Exception::INVALID_UNIT );
+				throw new WOE_FPDF_Exception( esc_html('Invalid unit specified: ' . $str_units), esc_html(WOE_FPDF_Exception::INVALID_UNIT) );
 		}
 
 		$str_size                     = $this->getPageSize( $str_size );
@@ -489,7 +493,7 @@ class WOE_FPDF {
 				break;
 
 			default:
-				throw new WOE_FPDF_Exception( 'Invalid orientation: ' . $str_orientation, WOE_FPDF_Exception::INVALID_ORIENTATION );
+				throw new WOE_FPDF_Exception( esc_html('Invalid orientation: ' . $str_orientation), esc_html(WOE_FPDF_Exception::INVALID_ORIENTATION) );
 				break;
 		}
 
@@ -585,7 +589,7 @@ class WOE_FPDF {
 		}
 
 		if ( ! in_array( $zoomMode, $zoomModes ) ) {
-			throw new WOE_FPDF_Exception( 'Invalid zoom mode specified: `' . $zoomMode . '`', WOE_FPDF_Exception::INVALID_ZOOM_MODE );
+			throw new WOE_FPDF_Exception( esc_html('Invalid zoom mode specified: `' . $zoomMode . '`'), esc_html(WOE_FPDF_Exception::INVALID_ZOOM_MODE) );
 		}
 
 		// Valid layout mode
@@ -595,7 +599,7 @@ class WOE_FPDF {
 		}
 
 		if ( ! in_array( $layoutMode, $layoutModes ) ) {
-			throw new WOE_FPDF_Exception( 'Invalid layout mode specified: `' . $layoutMode . '`', WOE_FPDF_Exception::INVALID_LAYOUT_MODE );
+			throw new WOE_FPDF_Exception( esc_html('Invalid layout mode specified: `' . $layoutMode . '`'), esc_html(WOE_FPDF_Exception::INVALID_LAYOUT_MODE) );
 		}
 
 		// Set zoom and layout modes
@@ -1110,10 +1114,10 @@ class WOE_FPDF {
 			fwrite( $fopen, $characterWidths );
 			fclose( $fopen );
 
-			// unlink char width 127 file
+			// wp_delete_file char width 127 file
 			$charWidth127file = $cachePath . self::FILE_CHARACTER_WIDTH . $baseName . '.json';
 			if ( file_exists( $charWidth127file ) ) {
-				@unlink( $charWidth127file );
+				@wp_delete_file( $charWidth127file );
 			}
 		}
 
@@ -1161,7 +1165,7 @@ class WOE_FPDF {
 				$str_family = 'helvetica';
 			}
 			if ( ! in_array( $str_family, $this->arr_core_fonts ) ) {
-				throw new WOE_FPDF_Exception( 'Undefined font: ' . $str_family . ' ' . $str_style, WOE_FPDF_Exception::UNDEFINED_FONT );
+				throw new WOE_FPDF_Exception( esc_html('Undefined font: ' . $str_family . ' ' . $str_style), esc_html(WOE_FPDF_Exception::UNDEFINED_FONT) );
 			}
 
 			if ( $str_family == 'symbol' || $str_family == 'zapfdingbats' ) {
@@ -1777,7 +1781,7 @@ class WOE_FPDF {
 			if ( $str_type == '' ) {
 				$int_position = strrpos( $str_file, '.' );
 				if ( ! $int_position ) {
-					throw new WOE_FPDF_Exception( 'Image file has no extension and no type was specified: ' . $str_file, WOE_FPDF_Exception::INVALID_IMAGE );
+					throw new WOE_FPDF_Exception( esc_html('Image file has no extension and no type was specified: ' . $str_file), esc_html(WOE_FPDF_Exception::INVALID_IMAGE) );
 				}
 				$str_type = substr( $str_file, $int_position + 1 );
 			}
@@ -1787,7 +1791,7 @@ class WOE_FPDF {
 			}
 			$str_method = '_parse' . $str_type;
 			if ( ! method_exists( $this, $str_method ) ) {
-				throw new WOE_FPDF_Exception( 'Unsupported image type: `' . $str_type . '`', WOE_FPDF_Exception::UNSUPPORTED_IMAGE );
+				throw new WOE_FPDF_Exception( esc_html('Unsupported image type: `' . $str_type . '`'), esc_html(WOE_FPDF_Exception::UNSUPPORTED_IMAGE) );
 			}
 			$arr_image_info                = $this->$str_method( $str_file );
 			$arr_image_info['i']           = count( $this->arr_images ) + 1;
@@ -1908,7 +1912,7 @@ class WOE_FPDF {
 	 */
 	public function setFontPath( $fontPath ) {
 		if ( ! file_exists( $fontPath ) || ! is_dir( $fontPath ) ) {
-			throw new WOE_FPDF_Exception( 'Font path does not exist `' . $fontPath . '`', WOE_FPDF_Exception::INVALID_FONT_PATH );
+			throw new WOE_FPDF_Exception( esc_html('Font path does not exist `' . $fontPath . '`'), esc_html(WOE_FPDF_Exception::INVALID_FONT_PATH) );
 		}
 
 		$this->str_font_path = realpath( $fontPath ) . '/';
@@ -1929,7 +1933,7 @@ class WOE_FPDF {
 	protected function checkOutput() {
 		if ( PHP_SAPI !== 'cli' ) {
 			if ( headers_sent( $str_file, $int_line ) ) {
-				throw new WOE_FPDF_Exception( "Some data has already been output, can't send PDF file, output started at " . $str_file . ":" . $int_line, WOE_FPDF_Exception::HEADER_ALREADY_SENT );
+				throw new WOE_FPDF_Exception( esc_html("Some data has already been output, can't send PDF file, output started at " . $str_file . ":" . $int_line), esc_html(WOE_FPDF_Exception::HEADER_ALREADY_SENT) );
 			}
 		}
 
@@ -1937,7 +1941,7 @@ class WOE_FPDF {
 
 			// The output buffer is not empty
 			if ( ! preg_match( '/^(\xEF\xBB\xBF)?\s*$/', ob_get_contents() ) ) {
-				throw new WOE_FPDF_Exception( 'Some data has already been output, can\'t send PDF file', WOE_FPDF_Exception::HEADER_ALREADY_SENT );
+				throw new WOE_FPDF_Exception( esc_html('Some data has already been output, can\'t send PDF file'), esc_html(WOE_FPDF_Exception::HEADER_ALREADY_SENT) );
 			}
 
 			// It contains only a UTF-8 BOM and/or whitespace, let's clean it
@@ -1954,7 +1958,7 @@ class WOE_FPDF {
 		if ( is_string( $mix_size ) ) {
 			$mix_size = strtolower( $mix_size );
 			if ( ! isset( $this->arr_standard_page_sizes[ $mix_size ] ) ) {
-				throw new WOE_FPDF_Exception( 'Invalid page size: ' . $mix_size, WOE_FPDF_Exception::INVALID_PAGE_SIZE );
+				throw new WOE_FPDF_Exception( esc_html('Invalid page size: ' . $mix_size), esc_html(WOE_FPDF_Exception::INVALID_PAGE_SIZE) );
 			}
 			$a = $this->arr_standard_page_sizes[ $mix_size ];
 
@@ -2027,7 +2031,7 @@ class WOE_FPDF {
 		include( $this->str_font_path . $str_font );
 		$arr_defined_vars = get_defined_vars();
 		if ( ! isset( $arr_defined_vars['name'] ) ) {
-			throw new WOE_FPDF_Exception( 'Could not include font definition file', WOE_FPDF_Exception::INVALID_FONT_FILE );
+			throw new WOE_FPDF_Exception( esc_html('Could not include font definition file'), esc_html(WOE_FPDF_Exception::INVALID_FONT_FILE) );
 		}
 
 		return $arr_defined_vars;
@@ -2108,10 +2112,10 @@ class WOE_FPDF {
 		// Extract info from a JPEG file
 		$arr_size_data = getimagesize( $str_file );
 		if ( ! $arr_size_data ) {
-			throw new WOE_FPDF_Exception( 'Missing or incorrect image file: ' . $str_file, WOE_FPDF_Exception::INVALID_IMAGE );
+			throw new WOE_FPDF_Exception( esc_html('Missing or incorrect image file: ' . $str_file), esc_html(WOE_FPDF_Exception::INVALID_IMAGE) );
 		}
 		if ( $arr_size_data[2] != 2 ) {
-			throw new WOE_FPDF_Exception( 'Not a JPEG file: ' . $str_file, WOE_FPDF_Exception::UNSUPPORTED_IMAGE );
+			throw new WOE_FPDF_Exception( 'Not a JPEG file: ' . esc_html($str_file), esc_html(WOE_FPDF_Exception::UNSUPPORTED_IMAGE) );
 		}
 		if ( ! isset( $arr_size_data['channels'] ) || $arr_size_data['channels'] == 3 ) {
 			$str_color_space = 'DeviceRGB';
@@ -2144,14 +2148,14 @@ class WOE_FPDF {
 
         $strTmp = tempnam('.', 'png');
         if (!$strTmp) {
-            throw new WOE_FPDF_Exception('Unable to create a temporary file', WOE_FPDF_Exception::IMAGE_NOT_WRITABLE);
+            throw new WOE_FPDF_Exception( esc_html('Unable to create a temporary file'), esc_html(WOE_FPDF_Exception::IMAGE_NOT_WRITABLE));
         }
         if (!imagepng($objImage, $strTmp)) {
-            throw new WOE_FPDF_Exception('Error while saving to temporary file', WOE_FPDF_Exception::IMAGE_NOT_WRITABLE);
+            throw new WOE_FPDF_Exception( esc_html('Error while saving to temporary file'), esc_html(WOE_FPDF_Exception::IMAGE_NOT_WRITABLE));
         }
         imagedestroy($objImage);
         $arrInfo = $this->_parsepng($strTmp);
-        unlink($strTmp);
+        wp_delete_file($strTmp);
 
         return $arrInfo;
     }
@@ -2165,14 +2169,14 @@ class WOE_FPDF {
 
             $strTmp = tempnam('.', 'png');
             if (!$strTmp) {
-                throw new WOE_FPDF_Exception('Unable to create a temporary file', WOE_FPDF_Exception::IMAGE_NOT_WRITABLE);
+                throw new WOE_FPDF_Exception( esc_html('Unable to create a temporary file'), esc_html(WOE_FPDF_Exception::IMAGE_NOT_WRITABLE) );
             }
             if (!imagepng($objImage, $strTmp)) {
-                throw new WOE_FPDF_Exception('Error while saving to temporary file', WOE_FPDF_Exception::IMAGE_NOT_WRITABLE);
+                throw new WOE_FPDF_Exception( esc_html('Error while saving to temporary file'), esc_html(WOE_FPDF_Exception::IMAGE_NOT_WRITABLE) );
             }
             imagedestroy($objImage);
             $arrInfo = $this->_parsepng($strTmp);
-            unlink($strTmp);
+            wp_delete_file($strTmp);
         }
 
         return $arrInfo;
@@ -2187,7 +2191,7 @@ class WOE_FPDF {
 		// Extract info from a PNG file
 		$ptr_file = fopen( $str_file, 'rb' );
 		if ( ! $ptr_file ) {
-			throw new WOE_FPDF_Exception( 'Can\'t open image file: ' . $str_file, WOE_FPDF_Exception::INVALID_IMAGE );
+			throw new WOE_FPDF_Exception( esc_html('Can\'t open image file: ' . $str_file), esc_html(WOE_FPDF_Exception::INVALID_IMAGE) );
 		}
 		$arr_info = $this->_parsepngstream( $ptr_file, $str_file );
 		fclose( $ptr_file );
@@ -2204,19 +2208,19 @@ class WOE_FPDF {
 	private function _parsepngstream( $ptr_file, $str_file ) {
 		// Check signature
 		if ( $this->_readstream( $ptr_file, 8 ) != chr( 137 ) . 'PNG' . chr( 13 ) . chr( 10 ) . chr( 26 ) . chr( 10 ) ) {
-			throw new WOE_FPDF_Exception( 'Not a PNG file: ' . $str_file, WOE_FPDF_Exception::UNSUPPORTED_IMAGE );
+			throw new WOE_FPDF_Exception( esc_html('Not a PNG file: ' . $str_file), esc_html(WOE_FPDF_Exception::UNSUPPORTED_IMAGE) );
 		}
 
 		// Read header chunk
 		$this->_readstream( $ptr_file, 4 );
 		if ( $this->_readstream( $ptr_file, 4 ) != 'IHDR' ) {
-			throw new WOE_FPDF_Exception( 'Incorrect PNG file: ' . $str_file, WOE_FPDF_Exception::UNSUPPORTED_IMAGE );
+			throw new WOE_FPDF_Exception( esc_html('Incorrect PNG file: ' . $str_file), esc_html(WOE_FPDF_Exception::UNSUPPORTED_IMAGE) );
 		}
 		$int_width              = $this->_readint( $ptr_file );
 		$int_height             = $this->_readint( $ptr_file );
 		$int_bits_per_component = ord( $this->_readstream( $ptr_file, 1 ) );
 		if ( $int_bits_per_component > 8 ) {
-			throw new WOE_FPDF_Exception( '16-bit depth not supported: ' . $str_file, WOE_FPDF_Exception::UNSUPPORTED_IMAGE );
+			throw new WOE_FPDF_Exception( esc_html('16-bit depth not supported: ' . $str_file), esc_html(WOE_FPDF_Exception::UNSUPPORTED_IMAGE) );
 		}
 		$int_color_channels = ord( $this->_readstream( $ptr_file, 1 ) );
 		if ( $int_color_channels == 0 || $int_color_channels == 4 ) {
@@ -2226,16 +2230,16 @@ class WOE_FPDF {
 		} elseif ( $int_color_channels == 3 ) {
 			$str_color_space = 'Indexed';
 		} else {
-			throw new WOE_FPDF_Exception( 'Unknown color type: ' . $str_file, WOE_FPDF_Exception::UNSUPPORTED_IMAGE );
+			throw new WOE_FPDF_Exception( 'Unknown color type: ' . esc_html($str_file), esc_html(WOE_FPDF_Exception::UNSUPPORTED_IMAGE) );
 		}
 		if ( ord( $this->_readstream( $ptr_file, 1 ) ) != 0 ) {
-			throw new WOE_FPDF_Exception( 'Unknown compression method: ' . $str_file, WOE_FPDF_Exception::UNSUPPORTED_IMAGE );
+			throw new WOE_FPDF_Exception( 'Unknown compression method: ' . esc_html($str_file), esc_html(WOE_FPDF_Exception::UNSUPPORTED_IMAGE) );
 		}
 		if ( ord( $this->_readstream( $ptr_file, 1 ) ) != 0 ) {
-			throw new WOE_FPDF_Exception( 'Unknown filter method: ' . $str_file, WOE_FPDF_Exception::UNSUPPORTED_IMAGE );
+			throw new WOE_FPDF_Exception( 'Unknown filter method: ' . esc_html($str_file), esc_html(WOE_FPDF_Exception::UNSUPPORTED_IMAGE) );
 		}
 		if ( ord( $this->_readstream( $ptr_file, 1 ) ) != 0 ) {
-			throw new WOE_FPDF_Exception( 'Interlacing not supported: ' . $str_file, WOE_FPDF_Exception::UNSUPPORTED_IMAGE );
+			throw new WOE_FPDF_Exception( 'Interlacing not supported: ' . esc_html($str_file), esc_html(WOE_FPDF_Exception::UNSUPPORTED_IMAGE) );
 		}
 		$this->_readstream( $ptr_file, 4 );
 		$str_predictor = '/Predictor 15 /Colors ' . ( $str_color_space == 'DeviceRGB' ? 3 : 1 ) . ' /BitsPerComponent ' . $int_bits_per_component . ' /Columns ' . $int_width;
@@ -2281,7 +2285,7 @@ class WOE_FPDF {
 		} while ( $int_line );
 
 		if ( $str_color_space == 'Indexed' && empty( $str_palette ) ) {
-			throw new WOE_FPDF_Exception( 'Missing palette in ' . $str_file, WOE_FPDF_Exception::UNSUPPORTED_IMAGE );
+			throw new WOE_FPDF_Exception( 'Missing palette in ' . esc_html($str_file), esc_html(WOE_FPDF_Exception::UNSUPPORTED_IMAGE) );
 		}
 		$arr_info = array(
 			'w'    => $int_width,
@@ -2296,7 +2300,7 @@ class WOE_FPDF {
 		if ( $int_color_channels >= 4 ) {
 			// Extract alpha channel
 			if ( ! function_exists( 'gzuncompress' ) ) {
-				throw new WOE_FPDF_Exception( 'Zlib not available, can\'t handle alpha channel: ' . $str_file, WOE_FPDF_Exception::EXTENSION_NOT_AVAILABLE );
+				throw new WOE_FPDF_Exception( 'Zlib not available, can\'t handle alpha channel: ' . esc_html($str_file), esc_html(WOE_FPDF_Exception::EXTENSION_NOT_AVAILABLE) );
 			}
 			$str_data  = gzuncompress( $str_data );
 			$str_color = '';
@@ -2348,13 +2352,13 @@ class WOE_FPDF {
 		while ( $int_bytes > 0 && ! feof( $ptr_file ) ) {
 			$str_data = fread( $ptr_file, $int_bytes );
 			if ( $str_data === false ) {
-				throw new WOE_FPDF_Exception( 'Error while reading stream', WOE_FPDF_Exception::INVALID_STREAM );
+				throw new WOE_FPDF_Exception( 'Error while reading stream', esc_html(WOE_FPDF_Exception::INVALID_STREAM) );
 			}
 			$int_bytes  -= strlen( $str_data );
 			$str_result .= $str_data;
 		}
 		if ( $int_bytes > 0 ) {
-			throw new WOE_FPDF_Exception( 'Unexpected end of stream', WOE_FPDF_Exception::INVALID_STREAM );
+			throw new WOE_FPDF_Exception( 'Unexpected end of stream', esc_html(WOE_FPDF_Exception::INVALID_STREAM) );
 		}
 
 		return $str_result;
@@ -2380,14 +2384,14 @@ class WOE_FPDF {
 	private function _parsegif( $str_file ) {
 		// Extract info from a GIF file (via PNG conversion)
 		if ( ! function_exists( 'imagepng' ) ) {
-			throw new WOE_FPDF_Exception( 'GD extension is required for GIF support', WOE_FPDF_Exception::EXTENSION_NOT_AVAILABLE );
+			throw new WOE_FPDF_Exception( 'GD extension is required for GIF support', esc_html(WOE_FPDF_Exception::EXTENSION_NOT_AVAILABLE) );
 		}
 		if ( ! function_exists( 'imagecreatefromgif' ) ) {
-			throw new WOE_FPDF_Exception( 'GD has no GIF read support', WOE_FPDF_Exception::EXTENSION_NOT_AVAILABLE );
+			throw new WOE_FPDF_Exception( 'GD has no GIF read support', esc_html(WOE_FPDF_Exception::EXTENSION_NOT_AVAILABLE) );
 		}
 		$obj_image = imagecreatefromgif( $str_file );
 		if ( ! $obj_image ) {
-			throw new WOE_FPDF_Exception( 'Missing or incorrect image file: ' . $str_file, WOE_FPDF_Exception::INVALID_IMAGE );
+			throw new WOE_FPDF_Exception( 'Missing or incorrect image file: ' . esc_html($str_file), esc_html(WOE_FPDF_Exception::INVALID_IMAGE) );
 		}
 		imageinterlace( $obj_image, 0 );
 		$ptr_file = @fopen( 'php://temp', 'rb+' );
@@ -2405,14 +2409,14 @@ class WOE_FPDF {
 			// Use temporary file
 			$str_tmp = tempnam( '.', 'gif' );
 			if ( ! $str_tmp ) {
-				throw new WOE_FPDF_Exception( 'Unable to create a temporary file', WOE_FPDF_Exception::IMAGE_NOT_WRITABLE );
+				throw new WOE_FPDF_Exception( 'Unable to create a temporary file', esc_html(WOE_FPDF_Exception::IMAGE_NOT_WRITABLE) );
 			}
 			if ( ! imagepng( $obj_image, $str_tmp ) ) {
-				throw new WOE_FPDF_Exception( 'Error while saving to temporary file', WOE_FPDF_Exception::IMAGE_NOT_WRITABLE );
+				throw new WOE_FPDF_Exception( 'Error while saving to temporary file', esc_html(WOE_FPDF_Exception::IMAGE_NOT_WRITABLE) );
 			}
 			imagedestroy( $obj_image );
 			$arr_info = $this->_parsepng( $str_tmp );
-			unlink( $str_tmp );
+			wp_delete_file( $str_tmp );
 		}
 
 		return $arr_info;
@@ -2750,7 +2754,7 @@ class WOE_FPDF {
 					$this->arr_fonts[ $str_key ]['n'] = $this->int_current_object + 1;
 					$str_method                       = '_put' . strtolower( $str_type );
 					if ( ! method_exists( $this, $str_method ) ) {
-						throw new WOE_FPDF_Exception( 'Unsupported font type: ' . $str_type, WOE_FPDF_Exception::UNSUPPORTED_FONT );
+						throw new WOE_FPDF_Exception( 'Unsupported font type: ' . esc_html($str_type), esc_html(WOE_FPDF_Exception::UNSUPPORTED_FONT) );
 					}
 					$this->$str_method( $arr_font_data );
 				}
@@ -3027,7 +3031,7 @@ class WOE_FPDF {
 		if ( ! empty( $this->str_creator ) ) {
 			$this->Out( '/Creator ' . $this->TextString( $this->str_creator ) );
 		}
-		$this->Out( '/CreationDate ' . $this->TextString( 'D:' . @date( 'YmdHis' ) ) );
+		$this->Out( '/CreationDate ' . $this->TextString( 'D:' . @gmdate( 'YmdHis' ) ) );
 	}
 
 	/**
@@ -3167,11 +3171,13 @@ class WOE_FPDF {
 	 */
 	public function setCachePath( $cachePath = null ) {
 		if ( ! file_exists( $cachePath ) ) {
+			// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_mkdir
 			@mkdir( $cachePath, 0775, true );
 		}
 
+		// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_is_writable
 		if ( ! file_exists( $cachePath ) || ! is_dir( $cachePath ) || ! is_writable( $cachePath ) ) {
-			throw new WOE_FPDF_Exception( 'Could not write to cache folder: ' . $cachePath, WOE_FPDF_Exception::INVALID_CACHE_FOLDER );
+			throw new WOE_FPDF_Exception( 'Could not write to cache folder: ' . esc_html($cachePath), esc_html(WOE_FPDF_Exception::INVALID_CACHE_FOLDER) );
 		}
 
 		$this->cachePath = realpath( $cachePath ) . '/';
@@ -3197,7 +3203,7 @@ class WOE_FPDF {
 		if ( $cachePath !== null ) {
 			$cacheFiles = glob( $cachePath . '*.*' );
 			foreach ( $cacheFiles as $cacheFile ) {
-				@unlink( $cacheFile );
+				@wp_delete_file( $cacheFile );
 			}
 		}
 	}

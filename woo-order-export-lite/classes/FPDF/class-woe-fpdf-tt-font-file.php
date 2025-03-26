@@ -1,4 +1,8 @@
 <?php
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fread
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 mb_internal_encoding('utf-8'); // @important
 
 
@@ -59,7 +63,7 @@ class WOE_FPDF_TT_Font_File
    public function getMetrics($file)
    {
       if (!file_exists($file)) {
-         throw new \RuntimeException('Can\'t open file ' . $file);
+         throw new \RuntimeException( esc_html('Can\'t open file ' . $file) );
       }
 
       $this->filename = $file;
@@ -84,7 +88,7 @@ class WOE_FPDF_TT_Font_File
       }
 
       if (!in_array($version, array(0x00010000, 0x74727565))) {
-         throw new \RuntimeException("Not a TrueType font: version=" . $version);
+         throw new \RuntimeException( esc_html("Not a TrueType font: version=" . $version) );
       }
 
       $this->readTableDirectory();
@@ -279,7 +283,7 @@ class WOE_FPDF_TT_Font_File
    {
       list($pos, $length) = $this->get_table_pos($tag);
       if ($length == 0) {
-         throw new \RuntimeException('Truetype font (' . $this->filename . '): error reading table: ' . $tag);
+         throw new \RuntimeException( esc_html('Truetype font (' . $this->filename . '): error reading table: ' . $tag) );
       }
       fseek($this->fh, $pos);
       return (fread($this->fh, $length));
@@ -311,7 +315,7 @@ class WOE_FPDF_TT_Font_File
       $name_offset = $this->seek_table('name');
       $format = $this->read_ushort();
       if ($format != 0)
-         throw new \RuntimeException('Unknown name table format ' . $format);
+         throw new \RuntimeException( esc_html('Unknown name table format ' . $format) );
       $numRecords = $this->read_ushort();
       $string_data_offset = $name_offset + $this->read_ushort();
       $names = array(1 => '', 2 => '', 3 => '', 4 => '', 6 => '');
@@ -404,7 +408,7 @@ class WOE_FPDF_TT_Font_File
       $indexToLocFormat = $this->read_ushort();
       $glyphDataFormat = $this->read_ushort();
       if ($glyphDataFormat != 0)
-         throw new \RuntimeException('Unknown glyph data format ' . $glyphDataFormat);
+         throw new \RuntimeException( esc_html('Unknown glyph data format ' . $glyphDataFormat) );
 
       ///////////////////////////////////
       // hhea metrics table
@@ -430,7 +434,7 @@ class WOE_FPDF_TT_Font_File
          $this->skip(2);
          $fsType = $this->read_ushort();
          if ($fsType == 0x0002 || ($fsType & 0x0300) != 0) {
-            throw new \RuntimeException('ERROR - Font file ' . $this->filename . ' cannot be embedded due to copyright restrictions.');
+            throw new \RuntimeException( esc_html('ERROR - Font file ' . $this->filename . ' cannot be embedded due to copyright restrictions.') );
          }
          $this->skip(20);
          $sF = $this->read_short();
@@ -484,7 +488,7 @@ class WOE_FPDF_TT_Font_File
       $this->skip(32);
       $metricDataFormat = $this->read_ushort();
       if ($metricDataFormat != 0)
-         throw new \RuntimeException('Unknown horizontal metric data format ' . $metricDataFormat);
+         throw new \RuntimeException( esc_html('Unknown horizontal metric data format ' . $metricDataFormat) );
       $numberOfHMetrics = $this->read_ushort();
       if ($numberOfHMetrics == 0)
          throw new \RuntimeException('Number of horizontal metrics is 0');
@@ -519,7 +523,7 @@ class WOE_FPDF_TT_Font_File
          $this->seek($save_pos);
       }
       if (!$unicode_cmap_offset)
-         throw new \RuntimeException('Font (' . $this->filename . ') does not have cmap for Unicode (platform 3, encoding 1, format 4, or platform 0, any encoding, format 4)');
+         throw new \RuntimeException( esc_html('Font (' . $this->filename . ') does not have cmap for Unicode (platform 3, encoding 1, format 4, or platform 0, any encoding, format 4)') );
 
 
       $glyphToChar = array();
@@ -606,7 +610,7 @@ class WOE_FPDF_TT_Font_File
       }
 
       if (!$unicode_cmap_offset)
-         throw new \RuntimeException('Font (' . $this->filename . ') does not have cmap for Unicode (platform 3, encoding 1, format 4, or platform 0, any encoding, format 4)');
+         throw new \RuntimeException( esc_html('Font (' . $this->filename . ') does not have cmap for Unicode (platform 3, encoding 1, format 4, or platform 0, any encoding, format 4)') );
 
 
       $glyphToChar = array();
@@ -1345,7 +1349,7 @@ class WOE_FPDF_TT_Font_File
             $this->glyphPos[] = ($arr[$n + 1]);
          }
       } else
-         throw new \RuntimeException('Unknown location table format ' . $indexToLocFormat);
+         throw new \RuntimeException( esc_html('Unknown location table format ' . $indexToLocFormat) );
    }
 
 

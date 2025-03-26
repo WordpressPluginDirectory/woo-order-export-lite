@@ -44,9 +44,10 @@ abstract class WOE_Formatter {
 		$this->settings          = $settings;
 		$this->offset            = $offset;
 		$this->labels            = $labels;
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 		$this->handle            = fopen( $filename, 'a' );
 		if ( ! $this->handle ) {
-			throw new Exception( $filename . __( 'can not open for output', 'woo-order-export-lite' ) );
+			throw new Exception( esc_html($filename) . esc_html__( 'can not open for output', 'woo-order-export-lite' ) );
 		}
 		$this->format               = $format;
 		$this->format_number_fields = ! empty( $this->settings['global_job_settings']['format_number_fields'] ) ? $this->settings['global_job_settings']['format_number_fields'] : false;
@@ -94,6 +95,7 @@ abstract class WOE_Formatter {
 	}
 
 	public function finish() {
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 		fclose( $this->handle );
 		$this->delete_counter();
 		do_action( "woe_formatter_finish", $this );
@@ -102,6 +104,7 @@ abstract class WOE_Formatter {
 
 	public function finish_partial() {
 		// child must fully implement this method
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 		fclose( $this->handle );
 		do_action( "woe_formatter_finish_partial", $this );
 		do_action( "woe_formatter_" . $this->format . "_finished_partially", $this );
@@ -159,7 +162,7 @@ abstract class WOE_Formatter {
 		}
 
 		if ( $ts ) {
-			$new_value = date( $this->date_format, $ts );
+			$new_value = gmdate( $this->date_format, $ts );
 		} else {
 			$new_value = '';
 		}

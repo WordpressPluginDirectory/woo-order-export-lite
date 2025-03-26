@@ -5,7 +5,7 @@
  * Description: Export WooCommerce orders to Excel/CSV/XML/JSON/PDF/TSV
  * Author: AlgolPlus
  * Author URI: https://algolplus.com/
- * Version: 3.6.0
+ * Version: 4.0.1
  * Text Domain: woo-order-export-lite
  * Domain Path: /i18n/languages/
  * WC requires at least: 4.0.0
@@ -13,14 +13,14 @@
  *
  * Copyright: (c) 2015 AlgolPlus LLC. (algol.plus@gmail.com)
  *
- * License: GNU General Public License v3.0
- * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ * License: GPLv3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  *
  * @package     woo-order-export-lite
  * @author      AlgolPlus LLC
  * @Category    Plugin
  * @copyright   Copyright (c) 2015 AlgolPlus LLC
- * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,7 +32,7 @@ if ( class_exists( 'WC_Order_Export_Admin' ) ) {
 	add_action( 'admin_notices', function () {
 			?>
             <div class="notice notice-warning is-dismissible">
-                <p><?php _e( 'Please, <a href="plugins.php">deactivate</a> Free version of Advanced Order Export For WooCommerce!',
+                <p><?php esc_html_e( 'Please, <a href="plugins.php">deactivate</a> Free version of Advanced Order Export For WooCommerce!',
 						'woo-order-export-lite' ); ?></p>
             </div>
 			<?php
@@ -41,11 +41,12 @@ if ( class_exists( 'WC_Order_Export_Admin' ) ) {
 }
 
 if ( ! defined( 'WOE_VERSION' ) ) {
-	define( 'WOE_VERSION', '3.6.0' );
+	define( 'WOE_VERSION', '4.0.1' );
+	define( 'WOE_MIN_PHP_VERSION', '8.1' );
 	define( 'WOE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'WOE_PLUGIN_BASEPATH', dirname( __FILE__ ) );
     define( 'WOE_PLUGIN_PATH', __FILE__  );
-}	
+}
 
 $extension_file = WOE_PLUGIN_BASEPATH.'/pro_version/pre-loader.php';
 if ( file_exists( $extension_file ) ) {

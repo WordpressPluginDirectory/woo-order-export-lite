@@ -17,7 +17,7 @@ class WC_Order_Export_Admin {
 	public $path_views_default, $settings;
 
 	protected $tabs;
-	
+
 	const last_bulk_export_results = 'woe-last-bulk-export-results';
 	public static $cap_export_orders = "export_woocommerce_orders";
 
@@ -38,6 +38,7 @@ class WC_Order_Export_Admin {
 			add_action( 'admin_menu', array( $this, 'add_menu' ) );
 
 			// load scripts on our pages only
+			//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- loaded from main menu
 			if ( isset( $_GET['page'] ) && $_GET['page'] == 'wc-order-export' ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'thematic_enqueue_scripts' ) );
 				add_filter( 'script_loader_src', array( $this, 'script_loader_src' ), 999, 2 );
@@ -46,7 +47,7 @@ class WC_Order_Export_Admin {
 			add_action( 'wp_loaded' , function() { //init tabs after loading text domains!
 				$this->tabs = $this->get_tabs();
 			});
-			
+
 
 			add_action( 'wp_ajax_order_exporter', array( $this, 'ajax_gate' ) );
 
@@ -59,7 +60,7 @@ class WC_Order_Export_Admin {
 			add_action( 'admin_notices', array( $this, 'export_orders_bulk_action_notices' ) );
 
 			//HPOS bulk actions
-			add_filter( 'bulk_actions-woocommerce_page_wc-orders', array( $this, 'export_orders_bulk_action' ) );     
+			add_filter( 'bulk_actions-woocommerce_page_wc-orders', array( $this, 'export_orders_bulk_action' ) );
 			add_filter( 'handle_bulk_actions-woocommerce_page_wc-orders', array(
 				$this,
 				'export_orders_bulk_action_process',
@@ -85,6 +86,7 @@ class WC_Order_Export_Admin {
             add_action( 'manage_woocommerce_page_wc-orders_custom_column', array( $this, 'add_order_status_column_content' ), 10, 2 );
 
 			// Style for 'Export Status' column
+			//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- WC orders list
 			if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'shop_order' ) {
 				add_action( 'admin_print_styles', array( $this, 'add_order_status_column_style' ) );
 				add_action( 'admin_enqueue_scripts', array( $this, 'woe_add_orders_style' ) );
@@ -123,7 +125,7 @@ class WC_Order_Export_Admin {
 		$new_columns = array();
 		foreach ( $columns as $column_name => $column_info ) {
 			if ( 'order_actions' === $column_name OR 'wc_actions' === $column_name ) { // Woocommerce uses wc_actions since 3.3.0
-				$label                            = __( 'Export Status', 'woo-order-export-lite' );
+				$label                            = esc_html__( 'Export Status', 'woo-order-export-lite' );
 				$new_columns['woe_export_status'] = $label;
 			}
 			$new_columns[ $column_name ] = $column_info;
@@ -159,6 +161,7 @@ class WC_Order_Export_Admin {
 				$order      = isset( $query_vars['order'] ) ? $query_vars['order'] : 'ASC';
 				$query_vars = array_merge( $query_vars, array(
 					'orderby'    => array( 'meta_value_num' => $order, 'date' => 'DESC' ),
+					// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 					'meta_query' => array(
 						'relation' => 'OR',
 						// NOT EXISTS required! Otherwise, you will not get all orders.
@@ -210,8 +213,14 @@ class WC_Order_Export_Admin {
 	public function display_plugin_activated_message() {
 		?>
         <div class="notice notice-success is-dismissible">
-            <p><?php _e( 'Advanced Order Export For WooCommerce is available <a href="admin.php?page=wc-order-export">on this page</a>.',
-					'woo-order-export-lite' ); ?></p>
+            <p><?php
+			/* translators: link to plugin's page */
+            echo sprintf( esc_html__( 'Advanced Order Export For WooCommerce is available %s.','woo-order-export-lite' ),
+							sprintf( '<a href="admin.php?page=wc-order-export">%s</a>',
+								esc_html__( 'this page','woo-order-export-lite' )
+							)
+						  );
+			?></p>
         </div>
 		<?php
 		update_option( $this->activation_notice_option, true, false );
@@ -219,10 +228,10 @@ class WC_Order_Export_Admin {
 
 	public function add_action_links( $links ) {
 		$mylinks = array(
-			'<a href="admin.php?page=wc-order-export">' . __( 'Settings', 'woo-order-export-lite' ) . '</a>',
-			'<a href="https://docs.algolplus.com/category/algol_order_export/" target="_blank">' . __( 'Docs',
+			'<a href="admin.php?page=wc-order-export">' . esc_html__( 'Settings', 'woo-order-export-lite' ) . '</a>',
+			'<a href="https://docs.algolplus.com/category/algol_order_export/" target="_blank">' . esc_html__( 'Docs',
 				'woo-order-export-lite' ) . '</a>',
-			'<a href="https://docs.algolplus.com/support/" target="_blank">' . __( 'Support',
+			'<a href="https://docs.algolplus.com/support/" target="_blank">' . esc_html__( 'Support',
 				'woo-order-export-lite' ) . '</a>',
 		);
 
@@ -237,13 +246,13 @@ class WC_Order_Export_Admin {
 	public function add_menu() {
 		if ( apply_filters( 'woe_current_user_can_export', true ) ) {
 			if ( current_user_can( 'manage_woocommerce' )  ) {
-				add_submenu_page( 'woocommerce', __( 'Export Orders', 'woo-order-export-lite' ),
+				add_submenu_page( 'woocommerce', esc_html__( 'Export Orders', 'woo-order-export-lite' ),
 					__( 'Export Orders', 'woo-order-export-lite' ), "manage_woocommerce", 'wc-order-export',
 					array( $this, 'render_menu' ) );
 			} else // add after Sales Report!
 			{
 				$capability = current_user_can(self::$cap_export_orders) ? self::$cap_export_orders : 'view_woocommerce_reports';
-				add_menu_page( __( 'Export Orders', 'woo-order-export-lite' ),
+				add_menu_page( esc_html__( 'Export Orders', 'woo-order-export-lite' ),
 					__( 'Export Orders', 'woo-order-export-lite' ), $capability, 'wc-order-export',
 					array( $this, 'render_menu' ), null, '55.7' );
 			}
@@ -260,8 +269,9 @@ class WC_Order_Export_Admin {
 	}
 
 	public function render_menu() {
-
-		$active_tab = isset( $_REQUEST['tab'] ) && $this->is_tab_exists( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : $this->settings['default_tab'];
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- active tab at our plugin
+		$tab = isset($_REQUEST['tab']) ? sanitize_text_field(wp_unslash($_REQUEST['tab'])) : '';
+		$active_tab = $tab && $this->is_tab_exists( $tab) ? $tab : $this->settings['default_tab'];
 
 		$this->render( 'main', array(
 			'WC_Order_Export' => $this,
@@ -283,57 +293,61 @@ class WC_Order_Export_Admin {
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'jquery-ui-draggable' );
 		wp_enqueue_script( 'jquery-touch-punch' );
-		wp_enqueue_style( 'jquery-style',
-			'//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css' );
+		wp_enqueue_style( 'jquery-style',$this->url_plugin . 'assets/css/jquery-ui.css', array(), WOE_VERSION );
 
-		$active_tab = isset( $_REQUEST['tab'] ) && $this->is_tab_exists( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : $this->settings['default_tab'];
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- active tab at our plugin
+		$tab = isset($_REQUEST['tab']) ? sanitize_text_field(wp_unslash($_REQUEST['tab'])) : '';
+		$active_tab = $tab && $this->is_tab_exists( $tab) ? $tab : $this->settings['default_tab'];
 
 		$this->enqueue_select2_scripts( $active_tab );
 
-		wp_enqueue_script( 'serializejson', $this->url_plugin . 'assets/js/jquery.serializejson.js', array( 'jquery' ), WOE_VERSION );
+		wp_enqueue_script( 'serializejson', $this->url_plugin . 'assets/js/jquery.serializejson.js', array( 'jquery' ), WOE_VERSION, true);
 
 		// kill learn-press
 		// prevent to rewrite $.fn.serializeJSON
 		add_action( 'learn-press/admin/after-enqueue-scripts', function () {
 			wp_scripts()->dequeue( array('learn-press-utils', 'lp-admin-learnpress', 'lp-admin') );
 		},PHP_INT_MAX );
-		
+
 		wp_enqueue_style( 'export', $this->url_plugin . 'assets/css/export.css', array(), WOE_VERSION );
 
-		wp_enqueue_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array() );
+		wp_enqueue_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WOE_VERSION );
 
-		$_REQUEST['tab'] = isset( $_REQUEST['tab'] ) && $this->is_tab_exists( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : $this->settings['default_tab'];
+		$_REQUEST['tab'] = $tab && $this->is_tab_exists( $tab ) ? $tab : $this->settings['default_tab'];
 
-		if ( isset( $_REQUEST['wc_oe'] ) AND ( strpos( $_REQUEST['wc_oe'], 'add_' ) === 0 OR strpos( $_REQUEST['wc_oe'],
-					'edit_' ) === 0 ) OR $_REQUEST['tab'] == 'export' ) {
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- active bulk action for our plugin
+		$oe = isset($_REQUEST['wc_oe']) ? sanitize_text_field(wp_unslash($_REQUEST['wc_oe'])) : '';
+
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- already checked
+		if ( $oe AND ( strpos( $oe, 'add_' ) === 0 OR strpos( $oe,	'edit_' ) === 0 ) OR $_REQUEST['tab'] == 'export' ) {
 
 			$localize_settings_form = array(
-				'add_fields_to_export'      => __( 'Add %s fields', 'woo-order-export-lite' ),
+				/* translators: modes for "Add products" */
 				'repeats'                   => array(
-					'rows'            => __( 'rows', 'woo-order-export-lite' ),
-					'columns'         => __( 'columns', 'woo-order-export-lite' ),
-					'inside_one_cell' => __( 'one row', 'woo-order-export-lite' ),
+					'rows'            => esc_html__( 'rows', 'woo-order-export-lite' ),
+					'columns'         => esc_html__( 'columns', 'woo-order-export-lite' ),
+					'inside_one_cell' => esc_html__( 'one row', 'woo-order-export-lite' ),
 				),
+				/* translators: modes for "Fill order details" */
 				'js_tpl_popup'              => array(
-					'add'                      => __( 'Add', 'woo-order-export-lite' ),
-					'as'                       => __( 'as', 'woo-order-export-lite' ),
-					'split_values_by'          => __( 'Split values by', 'woo-order-export-lite' ),
-					'fill_order_columns_label' => __( 'Fill order columns for', 'woo-order-export-lite' ),
-					'for_all_rows_label'       => __( 'all rows', 'woo-order-export-lite' ),
-					'for_first_row_only_label' => __( '1st row only', 'woo-order-export-lite' ),
+					'add'                      => esc_html__( 'Add', 'woo-order-export-lite' ),
+					'as'                       => esc_html__( 'as', 'woo-order-export-lite' ),
+					'split_values_by'          => esc_html__( 'Split values by', 'woo-order-export-lite' ),
+					'fill_order_columns_label' => esc_html__( 'Fill order columns for', 'woo-order-export-lite' ),
+					'for_all_rows_label'       => esc_html__( 'all rows', 'woo-order-export-lite' ),
+					'for_first_row_only_label' => esc_html__( '1st row only', 'woo-order-export-lite' ),
 					'grouping_by'              => array(
-						'products' => __( 'Grouping by product', 'woo-order-export-lite' ),
-						'coupons'  => __( 'Grouping by coupon', 'woo-order-export-lite' ),
+						'products' => esc_html__( 'Grouping by product', 'woo-order-export-lite' ),
+						'coupons'  => esc_html__( 'Grouping by coupon', 'woo-order-export-lite' ),
 					),
 				),
 				'index'                     => array(
-					'product_pop_up_title' => __( 'Set up product fields', 'woo-order-export-lite' ),
-					'coupon_pop_up_title'  => __( 'Set up coupon fields', 'woo-order-export-lite' ),
-					'products'             => __( 'products', 'woo-order-export-lite' ),
-					'coupons'              => __( 'coupons', 'woo-order-export-lite' ),
+					'products'             => esc_html__( 'products', 'woo-order-export-lite' ),
+					'coupons'              => esc_html__( 'coupons', 'woo-order-export-lite' ),
 				),
-				'remove_all_fields_confirm' => __( 'Remove all fields?', 'woo-order-export-lite' ),
-				'reset_profile_confirm'     => __( 'This action will reset filters, settings and fields to default state. Are you sure?', 'woo-order-export-lite' ),
+				/* translators: confirmations for critical actions */
+				'remove_all_fields_confirm' => esc_html__( 'Remove all fields?', 'woo-order-export-lite' ),
+				'reset_profile_confirm'     => esc_html__( 'This action will reset filters, settings and fields to default state. Are you sure?', 'woo-order-export-lite' ),
 				'sum_symbol_tooltip' => esc_attr__( 'Show total amount for this column', 'woo-order-export-lite' ),
 				'sum_symbol' => esc_attr__( 'Sum', 'woo-order-export-lite' ),
 			);
@@ -374,35 +388,36 @@ class WC_Order_Export_Admin {
 				'settings' => $settings,
 			);
 
-			wp_enqueue_script( 'settings-form', $this->url_plugin . 'assets/js/settings-form.js', array(), WOE_VERSION );
+			wp_enqueue_script( 'settings-form', $this->url_plugin . 'assets/js/settings-form.js', array(), WOE_VERSION, true );
 
 			wp_localize_script( 'settings-form', 'settings_form', $settings_form );
 
 			wp_localize_script( 'settings-form', 'localize_settings_form', $localize_settings_form );
 
 			// Localize the script with new data
+			/* translators: warnings for form inputs */
 			$translation_array = array(
-				'empty_column_name'           => __( 'empty column name', 'woo-order-export-lite' ),
-				'empty_meta_key'              => __( 'empty meta key', 'woo-order-export-lite' ),
-				'empty_meta_key_and_taxonomy' => __( 'select product field or taxonomy',
+				'empty_column_name'           => esc_html__( 'empty column name', 'woo-order-export-lite' ),
+				'empty_meta_key'              => esc_html__( 'empty meta key', 'woo-order-export-lite' ),
+				'empty_meta_key_and_taxonomy' => esc_html__( 'select product field or taxonomy',
 					'woo-order-export-lite' ),
-				'empty_item_field'			  => __( 'select item field', 'woo-order-export-lite' ),
-				'empty_value'                 => __( 'empty value', 'woo-order-export-lite' ),
-				'empty_title'                 => __( 'Title is empty', 'woo-order-export-lite' ),
-				'wrong_date_range'            => __( 'Date From is greater than Date To', 'woo-order-export-lite' ),
-				'no_fields'                   => __( 'Please, set up fields to export', 'woo-order-export-lite' ),
-				'no_results'                  => __( 'Nothing to export. Please, adjust your filters',
+				'empty_item_field'			  => esc_html__( 'select item field', 'woo-order-export-lite' ),
+				'empty_value'                 => esc_html__( 'empty value', 'woo-order-export-lite' ),
+				'empty_title'                 => esc_html__( 'Title is empty', 'woo-order-export-lite' ),
+				'wrong_date_range'            => esc_html__( 'Date From is greater than Date To', 'woo-order-export-lite' ),
+				'no_fields'                   => esc_html__( 'Please, set up fields to export', 'woo-order-export-lite' ),
+				'no_results'                  => esc_html__( 'Nothing to export. Please, adjust your filters',
 					'woo-order-export-lite' ),
-				'empty'                       => __( 'empty', 'woo-order-export-lite' ),
+				'empty'                       => esc_html__( 'empty', 'woo-order-export-lite' ),
 			);
 
 			wp_localize_script( 'settings-form', 'export_messages', $translation_array );
 
-			wp_enqueue_script( 'woe_filters', $this->url_plugin . 'assets/js/filters.js', array(), WOE_VERSION );
+			wp_enqueue_script( 'woe_filters', $this->url_plugin . 'assets/js/filters.js', array(), WOE_VERSION, true );
 
-			wp_enqueue_script( 'woe_buttons', $this->url_plugin . 'assets/js/buttons.js', array(), WOE_VERSION );
+			wp_enqueue_script( 'woe_buttons', $this->url_plugin . 'assets/js/buttons.js', array(), WOE_VERSION, true );
 
-			wp_enqueue_script( 'woe_export_fields', $this->url_plugin . 'assets/js/export-fields.js', array(), WOE_VERSION );
+			wp_enqueue_script( 'woe_export_fields', $this->url_plugin . 'assets/js/export-fields.js', array(), WOE_VERSION, true );
 
 			wp_enqueue_script( 'wp-color-picker' );
 
@@ -433,20 +448,20 @@ class WC_Order_Export_Admin {
 	private function enqueue_select2_scripts( $active_tab ) {
 		$settings = WC_Order_Export_Main_Settings::get_settings();
 		wp_enqueue_script( 'select22', $this->url_plugin . 'assets/js/select2/select2.full.js',
-			array( 'jquery' ), '4.0.3' );
+			array( 'jquery' ), '4.0.3', true );
 
 		if ( $select2_locale = $this->get_select2_locale() ) {
 			// enable by default
 			if ( $select2_locale !== 'en' ) {
 				wp_enqueue_script( "select22-i18n-{$select2_locale}",
-					$this->url_plugin . "assets/js/select2/i18n/{$select2_locale}.js", array( 'jquery', 'select22' ) );
+					$this->url_plugin . "assets/js/select2/i18n/{$select2_locale}.js", array( 'jquery', 'select22' ), WOE_VERSION, true );
 			}
 		}
 
 		wp_enqueue_script( 'select2-i18n', $this->url_plugin . 'assets/js/select2-i18n.js', array(
 			'jquery',
 			'select22',
-		), WOE_VERSION );
+		), WOE_VERSION, true );
 
 		$script_data = array(
 			'locale'                    => get_locale(),
@@ -495,40 +510,46 @@ class WC_Order_Export_Admin {
 	public function ajax_gate() {
 
 		if( !current_user_can('view_woocommerce_reports')  AND !current_user_can(self::$cap_export_orders) ){
-			die( __( 'You can not do it', 'woo-order-export-lite' ) );
+			die( esc_html__( 'You can not do it', 'woo-order-export-lite' ) );
 		}
 
 		if ( ! isset( $_REQUEST['method'] ) ) {
-			die( __( 'Empty method', 'woo-order-export-lite' ) );
+			die( esc_html__( 'Empty method', 'woo-order-export-lite' ) );
 		}
 
-		$method = 'ajax_' . $_REQUEST['method'];
-		$tab = isset( $_REQUEST['tab'] ) && $this->is_tab_exists( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : false;
+		$method = 'ajax_' . sanitize_text_field(wp_unslash($_REQUEST['method']));
+
+		$tab = isset($_REQUEST['tab']) ? sanitize_text_field(wp_unslash($_REQUEST['tab'])) : '';
+		$active_tab = $tab && $this->is_tab_exists( $tab) ? $tab : $this->settings['default_tab'];
+
 
 		do_action( 'woe_order_export_admin_ajax_gate_before');
 
 		if ( ! isset( $this->tabs[ $tab ] ) ) {
 			$ajax_handler = apply_filters( 'woe_global_ajax_handler', new WC_Order_Export_Ajax() );
 			if ( ! method_exists( $ajax_handler, $method ) ) {
-				die( sprintf( __( 'Unknown AJAX method %s', 'woo-order-export-lite' ), esc_html($method)) );
+				/* translators: error message for bad ajax method */
+				die( sprintf( esc_html__( 'Unknown AJAX method %s', 'woo-order-export-lite' ), esc_html($method)) );
 			}
 
 			$ajax_handler->$method();
 			die();
 		}
 
-		if ( ! method_exists( $this->tabs[ $tab ], $method ) ) {
-			die( sprintf( __( 'Unknown tab method %s', 'woo-order-export-lite' ), esc_html($method)) );
+		if ( ! method_exists( $this->tabs[ $active_tab ], $method ) ) {
+			/* translators: error message if current tab doesn't support ajax method */
+			die( sprintf( esc_html__( 'Unknown tab method %s', 'woo-order-export-lite' ), esc_html($method)) );
 		}
 
 		if (! check_admin_referer( 'woe_nonce', 'woe_nonce' ) ) {
-			die( __( 'Wrong nonce', 'woo-order-export-lite' ) );
+			die( esc_html__( 'Wrong nonce', 'woo-order-export-lite' ) );
 		}
 
 		$_POST = stripslashes_deep( $_POST );
 
 		// parse json to arrays?
 		if ( ! empty( $_POST['json'] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			$json = json_decode( $_POST['json'], true );
 			if ( is_array( $json ) ) {
 				// add $_POST['settings'],$_POST['orders'],$_POST['products'],$_POST['coupons']
@@ -550,14 +571,16 @@ class WC_Order_Export_Admin {
 		$new_actions = array();
 		// default
 		if ( ! empty( $settings['format'] ) ) {
-			$new_actions['woe_export_selected_orders'] = sprintf( __( 'Export as %s', 'woo-order-export-lite' ),
+			/* translators: label for export in Bulk Actions (at orders list)  */
+			$new_actions['woe_export_selected_orders'] = sprintf( esc_html__( 'Export as %s', 'woo-order-export-lite' ),
 				$settings['format'] );
 		}
 
 		// mark/unmark
 		if ( $this->settings['show_export_actions_in_bulk'] ) {
-			$new_actions['woe_mark_exported']   = __( 'Mark exported', 'woo-order-export-lite' );
-			$new_actions['woe_unmark_exported'] = __( 'Unmark exported', 'woo-order-export-lite' );
+			/* translators: labels in Bulk Actions (at orders list)  */
+			$new_actions['woe_mark_exported']   = esc_html__( 'Mark exported', 'woo-order-export-lite' );
+			$new_actions['woe_unmark_exported'] = esc_html__( 'Unmark exported', 'woo-order-export-lite' );
 		}
 
 		if( empty($actions) ) $actions = array(); //fix if another plugin damaged $actions
@@ -612,41 +635,50 @@ class WC_Order_Export_Admin {
 
 		global $post_type, $pagenow;
 
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce already checked by WooCommerce
 		if ( $pagenow == 'edit.php' && $post_type == 'shop_order' && isset( $_REQUEST['woe_bulk_mark_exported'] ) ) {
+			//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce already checked by WooCommerce
 			$count = intval( $_REQUEST['woe_bulk_mark_exported'] );
+			/* translators: text when bulk actions completed (at orders list)  */
 			printf(
 				'<div id="message" class="updated fade">' .
-				_n( '%s order marked.', '%s orders marked.', $count, 'woo-order-export-lite' )
+				/* translators: number of orders when bulk action completed (at orders list)  */
+				esc_html(_n( '%s order marked.', '%s orders marked.', $count, 'woo-order-export-lite' ))
 				. '</div>',
-				$count
+				esc_html($count)
 			);
-
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce already checked by WooCommerce
 		} else if ( $pagenow == 'edit.php' && $post_type == 'shop_order' && isset( $_REQUEST['woe_bulk_unmark_exported'] ) ) {
+			//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce already checked by WooCommerce
 			$count = intval( $_REQUEST['woe_bulk_unmark_exported'] );
+			/* translators: text when bulk actions completed (at orders list)  */
 			printf(
 				'<div id="message" class="updated fade">' .
-				_n( '%s order unmarked.', '%s orders unmarked.', $count, 'woo-order-export-lite' )
+				/* translators: number of orders when bulk action completed (at orders list)  */
+				esc_html(_n( '%s order unmarked.', '%s orders unmarked.', $count, 'woo-order-export-lite' ))
 				. '</div>',
-				$count
+				esc_html($count)
 			);
 		} else {
 			$logs = get_transient( WC_Order_Export_Admin::last_bulk_export_results );
 			if ( $logs ) {
 				delete_transient( WC_Order_Export_Admin::last_bulk_export_results );
-				echo "<div id=\"notice-orders\" class=\"notice notice-info is-dismissible\" style=\"padding: 15px\">{$logs}</div>";
+				echo "<div id=\"notice-orders\" class=\"notice notice-info is-dismissible\" style=\"padding: 15px\">". esc_html($logs)."</div>";
 			}
 		}
-		
+
 	}
 
 	function must_run_ajax_methods() {
 		// wait admin ajax!
-		$script_name = ! empty( $_SERVER['SCRIPT_NAME'] ) ? $_SERVER['SCRIPT_NAME'] : $_SERVER['PHP_SELF'];
+		$script_name = ! empty( $_SERVER['SCRIPT_NAME'] ) ? sanitize_url(wp_unslash($_SERVER['SCRIPT_NAME'])) :
+					   (! empty( $_SERVER['PHP_SELF'] ) ? sanitize_url(wp_unslash($_SERVER['PHP_SELF'])) : '');
 		if ( basename( $script_name ) != "admin-ajax.php" ) {
 			return false;
 		}
 
 		// our method MUST BE called
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce will be checked by our plugin later
 		return isset( $_REQUEST['action'] ) AND ( $_REQUEST['action'] == "order_exporter" OR $_REQUEST['action'] == "order_exporter_run" );
 	}
 
