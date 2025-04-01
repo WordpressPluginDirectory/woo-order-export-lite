@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer;
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 interface IWriter
 {

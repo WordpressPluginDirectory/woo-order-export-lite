@@ -1,15 +1,15 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
 
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Style\Border;
-use PhpOffice\PhpSpreadsheet\Style\Borders;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\Font;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Date;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Alignment;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Border;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Borders;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Fill;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Font;
 use SimpleXMLElement;
 
 class Styles

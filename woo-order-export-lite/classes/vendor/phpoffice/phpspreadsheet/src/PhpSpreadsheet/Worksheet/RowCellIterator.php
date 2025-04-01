@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Worksheet;
+namespace WOE\PhpOffice\PhpSpreadsheet\Worksheet;
 
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Cell;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
 
 /**
  * @extends CellIterator<string>

@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+namespace WOE\PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use WOE\PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class PercentageFormatter extends BaseFormatter
 {

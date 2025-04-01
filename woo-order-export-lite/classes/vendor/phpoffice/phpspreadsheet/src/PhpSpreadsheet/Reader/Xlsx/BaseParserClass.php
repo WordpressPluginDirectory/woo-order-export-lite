@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 use Stringable;
 

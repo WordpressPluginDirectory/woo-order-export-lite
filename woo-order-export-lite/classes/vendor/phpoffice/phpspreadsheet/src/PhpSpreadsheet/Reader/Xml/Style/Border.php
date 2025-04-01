@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
 
-use PhpOffice\PhpSpreadsheet\Style\Border as BorderStyle;
-use PhpOffice\PhpSpreadsheet\Style\Borders;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Border as BorderStyle;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Borders;
 use SimpleXMLElement;
 
 class Border extends StyleBase

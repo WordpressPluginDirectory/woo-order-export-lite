@@ -1,18 +1,18 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer;
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
-use PhpOffice\PhpSpreadsheet\Writer\Ods\Content;
-use PhpOffice\PhpSpreadsheet\Writer\Ods\Meta;
-use PhpOffice\PhpSpreadsheet\Writer\Ods\MetaInf;
-use PhpOffice\PhpSpreadsheet\Writer\Ods\Mimetype;
-use PhpOffice\PhpSpreadsheet\Writer\Ods\Settings;
-use PhpOffice\PhpSpreadsheet\Writer\Ods\Styles;
-use PhpOffice\PhpSpreadsheet\Writer\Ods\Thumbnails;
-use ZipStream\Exception\OverflowException;
-use ZipStream\ZipStream;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Ods\Content;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Ods\Meta;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Ods\MetaInf;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Ods\Mimetype;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Ods\Settings;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Ods\Styles;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Ods\Thumbnails;
+use WOE\ZipStream\Exception\OverflowException;
+use WOE\ZipStream\ZipStream;
 
 class Ods extends BaseWriter
 {

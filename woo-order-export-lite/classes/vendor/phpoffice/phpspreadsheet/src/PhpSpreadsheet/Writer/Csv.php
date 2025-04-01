@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Stringable;
 
 class Csv extends BaseWriter

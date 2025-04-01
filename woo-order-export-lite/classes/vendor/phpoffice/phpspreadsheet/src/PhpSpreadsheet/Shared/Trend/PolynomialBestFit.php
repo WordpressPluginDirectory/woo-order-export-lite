@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared\Trend;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared\Trend;
 
-use Matrix\Matrix;
+use WOE\Matrix\Matrix;
 
 // Phpstan and Scrutinizer seem to have legitimate complaints.
 // $this->slope is specified where an array is expected in several places.

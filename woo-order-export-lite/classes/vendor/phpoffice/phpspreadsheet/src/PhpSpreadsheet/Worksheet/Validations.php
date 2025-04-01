@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Worksheet;
+namespace WOE\PhpOffice\PhpSpreadsheet\Worksheet;
 
-use Composer\Pcre\Preg;
-use PhpOffice\PhpSpreadsheet\Cell\AddressRange;
-use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
-use PhpOffice\PhpSpreadsheet\Cell\CellRange;
-use PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
+use WOE\Composer\Pcre\Preg;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\AddressRange;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\CellAddress;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\CellRange;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
 
 class Validations
 {

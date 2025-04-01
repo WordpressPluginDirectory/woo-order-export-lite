@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Pdf;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Pdf;
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use PhpOffice\PhpSpreadsheet\Writer\Pdf;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Pdf;
 
 class Tcpdf extends Pdf
 {

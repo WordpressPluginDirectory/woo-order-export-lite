@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Worksheet;
+namespace WOE\PhpOffice\PhpSpreadsheet\Worksheet;
 
-use PhpOffice\PhpSpreadsheet\Helper\Dimension as CssDimension;
+use WOE\PhpOffice\PhpSpreadsheet\Helper\Dimension as CssDimension;
 
 class RowDimension extends Dimension
 {

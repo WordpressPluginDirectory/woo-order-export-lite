@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Style;
+namespace WOE\PhpOffice\PhpSpreadsheet\Style;
 
 /**
  * Class to handle tint applied to color.

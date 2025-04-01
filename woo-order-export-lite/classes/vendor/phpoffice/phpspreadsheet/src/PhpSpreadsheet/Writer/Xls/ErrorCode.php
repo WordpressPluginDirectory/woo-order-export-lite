@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class ErrorCode
 {

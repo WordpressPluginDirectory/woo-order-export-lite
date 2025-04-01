@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Engine\Operands;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Engine\Operands;
 
 interface Operand
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting;
+namespace WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting;
 
 class ConditionalDataBar
 {

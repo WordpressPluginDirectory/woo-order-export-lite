@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace ZipStream\Exception;
+namespace WOE\ZipStream\Exception;
 
-use ZipStream\Exception;
+use WOE\ZipStream\Exception;
 
 /**
  * This Exception gets invoked if a file wasn't found

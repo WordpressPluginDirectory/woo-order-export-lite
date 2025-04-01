@@ -5,7 +5,7 @@ Tags: order export,export orders,woocommerce,order,export
 Requires PHP: 8.1.0
 Requires at least: 4.7
 Tested up to: 6.7
-Stable tag: 4.0.1
+Stable tag: 4.0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -119,6 +119,10 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 4.0.2 - 2025-04-01 =
+* Fixed critical bug - fatal error on page load (if WooCommerce runs in mode "WordPress posts storage (legacy)")
+* Fixed critical bug - conflict with other plugins used outdated versions of same libraries ("FireBird Pro" and etc)
 
 = 4.0.1 - 2025-03-26 =
 * Requires PHP 8.1+

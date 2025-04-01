@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\MathTrig;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\MathTrig;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Functions;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ErrorValue;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Functions;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ErrorValue;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
 
 class Sum
 {

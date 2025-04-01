@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Chart;
+namespace WOE\PhpOffice\PhpSpreadsheet\Chart;
 
 class TrendLine extends Properties
 {

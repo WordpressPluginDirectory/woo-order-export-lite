@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xls;
 
 class Mappings
 {

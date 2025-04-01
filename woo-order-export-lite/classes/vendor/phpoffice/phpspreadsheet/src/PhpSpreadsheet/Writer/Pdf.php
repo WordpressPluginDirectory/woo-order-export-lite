@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer;
 
-use PhpOffice\PhpSpreadsheet\Shared\File;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\File;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
 
 abstract class Pdf extends Html
 {

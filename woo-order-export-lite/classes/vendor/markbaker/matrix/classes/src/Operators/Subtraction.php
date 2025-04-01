@@ -1,9 +1,9 @@
 <?php
 
-namespace Matrix\Operators;
+namespace WOE\Matrix\Operators;
 
-use Matrix\Matrix;
-use Matrix\Exception;
+use WOE\Matrix\Matrix;
+use WOE\Matrix\Exception;
 
 class Subtraction extends Operator
 {

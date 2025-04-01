@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared;
 
 use SimpleXMLElement;
 
@@ -44,7 +44,7 @@ class Drawing
      *
      * @return float|int Value in cell dimension
      */
-    public static function pixelsToCellDimension(int $pixelValue, \PhpOffice\PhpSpreadsheet\Style\Font $defaultFont): int|float
+    public static function pixelsToCellDimension(int $pixelValue, \WOE\PhpOffice\PhpSpreadsheet\Style\Font $defaultFont): int|float
     {
         // Font name and size
         $name = $defaultFont->getName();
@@ -66,11 +66,11 @@ class Drawing
      * Convert column width from (intrinsic) Excel units to pixels.
      *
      * @param float $cellWidth Value in cell dimension
-     * @param \PhpOffice\PhpSpreadsheet\Style\Font $defaultFont Default font of the workbook
+     * @param \WOE\PhpOffice\PhpSpreadsheet\Style\Font $defaultFont Default font of the workbook
      *
      * @return int Value in pixels
      */
-    public static function cellDimensionToPixels(float $cellWidth, \PhpOffice\PhpSpreadsheet\Style\Font $defaultFont): int
+    public static function cellDimensionToPixels(float $cellWidth, \WOE\PhpOffice\PhpSpreadsheet\Style\Font $defaultFont): int
     {
         // Font name and size
         $name = $defaultFont->getName();

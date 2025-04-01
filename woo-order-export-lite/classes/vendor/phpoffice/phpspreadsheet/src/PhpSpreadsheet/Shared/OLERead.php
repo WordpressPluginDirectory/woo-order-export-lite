@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared;
 
-use PhpOffice\PhpSpreadsheet\Reader\Exception as ReaderException;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Exception as ReaderException;
 
 class OLERead
 {

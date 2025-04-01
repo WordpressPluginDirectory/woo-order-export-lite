@@ -678,7 +678,7 @@ class WC_Order_Export_Data_Extractor {
 				self::$sql_queries[] = $sql;
 			}
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$user_ids                    = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT ID FROM {$wpdb->users} $inner_join_user_meta WHERE $user_meta_where") );
+			$user_ids                    = $wpdb->get_col( "SELECT DISTINCT ID FROM {$wpdb->users} $inner_join_user_meta WHERE $user_meta_where" );
 			$user_ids_ui_filters_applied = true;
 		}
 		$user_ids = apply_filters( "woe_sql_get_customer_ids", $user_ids, $settings );

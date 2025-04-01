@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Ods;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Ods;
 
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
 
 class MetaInf extends WriterPart
 {

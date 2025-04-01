@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Engine\ArrayArgumentHelper;
-use PhpOffice\PhpSpreadsheet\Calculation\Engine\ArrayArgumentProcessor;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Engine\ArrayArgumentHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Engine\ArrayArgumentProcessor;
 
 trait ArrayEnabled
 {

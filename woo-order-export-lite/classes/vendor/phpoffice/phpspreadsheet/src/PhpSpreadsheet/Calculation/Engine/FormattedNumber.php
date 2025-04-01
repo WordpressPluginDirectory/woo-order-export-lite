@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Engine;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Engine;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 
 class FormattedNumber
 {

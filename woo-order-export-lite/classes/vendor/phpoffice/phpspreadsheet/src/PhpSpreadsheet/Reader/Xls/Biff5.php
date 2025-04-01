@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xls;
 
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Reader\Exception as ReaderException;
-use PhpOffice\PhpSpreadsheet\Reader\Xls;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Exception as ReaderException;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xls;
 
 class Biff5 extends Xls
 {

@@ -1,22 +1,22 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Cell;
+namespace WOE\PhpOffice\PhpSpreadsheet\Cell;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Calculation\Exception as CalculationException;
-use PhpOffice\PhpSpreadsheet\Calculation\Functions;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
-use PhpOffice\PhpSpreadsheet\Collection\Cells;
-use PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
-use PhpOffice\PhpSpreadsheet\Shared\Date as SharedDate;
-use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
-use PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\CellStyleAssessor;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use PhpOffice\PhpSpreadsheet\Style\Protection;
-use PhpOffice\PhpSpreadsheet\Style\Style;
-use PhpOffice\PhpSpreadsheet\Worksheet\Table;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception as CalculationException;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Functions;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\PhpOffice\PhpSpreadsheet\Collection\Cells;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\RichText\RichText;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Date as SharedDate;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\CellStyleAssessor;
+use WOE\PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Protection;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Style;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Table;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Stringable;
 
 class Cell implements Stringable

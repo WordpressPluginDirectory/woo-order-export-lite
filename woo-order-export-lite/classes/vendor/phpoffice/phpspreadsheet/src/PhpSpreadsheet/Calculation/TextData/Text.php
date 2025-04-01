@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\TextData;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\TextData;
 
-use Composer\Pcre\Preg;
-use PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Calculation\Exception as CalcExp;
-use PhpOffice\PhpSpreadsheet\Calculation\Functions;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ErrorValue;
+use WOE\Composer\Pcre\Preg;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception as CalcExp;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Functions;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ErrorValue;
 
 class Text
 {

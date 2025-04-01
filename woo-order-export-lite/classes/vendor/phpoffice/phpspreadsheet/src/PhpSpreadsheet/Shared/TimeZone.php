@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared;
 
 use DateTimeZone;
-use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
 
 class TimeZone
 {

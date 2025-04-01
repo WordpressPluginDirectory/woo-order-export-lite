@@ -1,16 +1,16 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared;
 
 use DateTime;
 use DateTimeInterface;
 use DateTimeZone;
-use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
-use PhpOffice\PhpSpreadsheet\Calculation\Functions;
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
-use PhpOffice\PhpSpreadsheet\Exception;
-use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Functions;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Cell;
+use WOE\PhpOffice\PhpSpreadsheet\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class Date
 {

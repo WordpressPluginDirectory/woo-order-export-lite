@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace ZipStream\Zip64;
+namespace WOE\ZipStream\Zip64;
 
-use ZipStream\PackField;
+use WOE\ZipStream\PackField;
 
 /**
  * @internal

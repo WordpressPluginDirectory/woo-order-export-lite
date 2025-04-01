@@ -1,5 +1,54 @@
 {
     "require": {
         "phpoffice/phpspreadsheet": "^4.1"
+    },
+    "scripts": {
+        "prefix-namespaces": [
+            "sh -c 'test -f ./bin/strauss.phar || curl -o bin/strauss.phar -L -C - https://github.com/BrianHenryIE/strauss/releases/latest/download/strauss.phar'",
+            "@php bin/strauss.phar",
+            "@composer dump-autoload"
+        ],
+        "post-install-cmd": [
+            "@prefix-namespaces"
+        ],
+        "post-update-cmd": [
+            "@prefix-namespaces"
+        ],
+        "post-autoload-dump": [
+            "@php bin/strauss.phar include-autoloader"
+        ]
+    },
+    "extra": {
+        "strauss": {
+            "target_directory": "vendor-prefixed",
+            "namespace_prefix": "WOE\\",
+            "classmap_prefix": "WOE_",
+            "constant_prefix": "WOE_",
+            "packages": [
+            ],
+            "update_call_sites": false,
+            "override_autoload": {
+            },
+            "exclude_from_copy": {
+                "packages": [
+                ],
+                "namespaces": [
+                ],
+                "file_patterns": [
+                ]
+            },
+            "exclude_from_prefix": {
+                "packages": [
+                ],
+                "namespaces": [
+                ],
+                "file_patterns": [
+                ]
+            },
+            "namespace_replacement_patterns" : {
+            },
+            "delete_vendor_packages": false,
+            "delete_vendor_files": false
+        }
     }
 }

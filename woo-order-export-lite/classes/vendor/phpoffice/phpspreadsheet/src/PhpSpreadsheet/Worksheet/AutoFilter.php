@@ -1,19 +1,19 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Worksheet;
+namespace WOE\PhpOffice\PhpSpreadsheet\Worksheet;
 
 use DateTime;
 use DateTimeZone;
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Calculation\Functions;
-use PhpOffice\PhpSpreadsheet\Calculation\Internal\WildcardMatch;
-use PhpOffice\PhpSpreadsheet\Cell\AddressRange;
-use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
-use PhpOffice\PhpSpreadsheet\Cell\CellRange;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Exception;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column\Rule;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Functions;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Internal\WildcardMatch;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\AddressRange;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\CellAddress;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\CellRange;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Date;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column\Rule;
 use Stringable;
 
 class AutoFilter implements Stringable

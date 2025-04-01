@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\LookupRef;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\LookupRef;
 
-use PhpOffice\PhpSpreadsheet\Cell\AddressHelper;
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
-use PhpOffice\PhpSpreadsheet\DefinedName;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\AddressHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Cell;
+use WOE\PhpOffice\PhpSpreadsheet\DefinedName;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class Helpers
 {

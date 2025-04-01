@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting;
+namespace WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting;
 
-use PhpOffice\PhpSpreadsheet\Style\Conditional;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Conditional;
 use SimpleXMLElement;
 
 class ConditionalFormattingRuleExtension

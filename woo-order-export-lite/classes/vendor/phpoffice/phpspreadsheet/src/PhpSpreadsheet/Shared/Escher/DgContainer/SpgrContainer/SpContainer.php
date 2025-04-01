@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
 
-use PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
 
 class SpContainer
 {

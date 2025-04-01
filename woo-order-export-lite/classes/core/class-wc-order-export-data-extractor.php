@@ -87,7 +87,7 @@ class WC_Order_Export_Data_Extractor {
 		if ( $metas === false ) {
             $where_posts = self::get_where_last_orders("item.order_id", "WHERE");
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$metas = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta.meta_key FROM {$wpdb->prefix}woocommerce_order_itemmeta meta inner join {$wpdb->prefix}woocommerce_order_items item on item.order_item_id=meta.order_item_id and item.order_item_type = 'line_item' $where_posts") );
+			$metas = $wpdb->get_col( "SELECT DISTINCT meta.meta_key FROM {$wpdb->prefix}woocommerce_order_itemmeta meta inner join {$wpdb->prefix}woocommerce_order_items item on item.order_item_id=meta.order_item_id and item.order_item_type = 'line_item' $where_posts" );
 			sort( $metas );
 			set_transient( $transient_key, $metas, 60 ); //valid for a minute
 		}
@@ -626,7 +626,7 @@ class WC_Order_Export_Data_Extractor {
 				self::$sql_queries[] = $sql;
 			}
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$user_ids                    = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT ID FROM {$wpdb->users} $inner_join_user_meta WHERE $user_meta_where") );
+			$user_ids                    = $wpdb->get_col( "SELECT DISTINCT ID FROM {$wpdb->users} $inner_join_user_meta WHERE $user_meta_where" );
 			$user_ids_ui_filters_applied = true;
 		}
 		$user_ids = apply_filters( "woe_sql_get_customer_ids", $user_ids, $settings );

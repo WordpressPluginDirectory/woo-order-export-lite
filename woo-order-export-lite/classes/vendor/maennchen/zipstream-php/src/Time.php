@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace ZipStream;
+namespace WOE\ZipStream;
 
 use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
-use ZipStream\Exception\DosTimeOverflowException;
+use WOE\ZipStream\Exception\DosTimeOverflowException;
 
 /**
  * @internal

@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
 
-use PhpOffice\PhpSpreadsheet\Style\Fill as FillStyles;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Fill as FillStyles;
 use SimpleXMLElement;
 
 class Fill extends StyleBase

@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Statistical;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Statistical;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Exception as CalcException;
-use PhpOffice\PhpSpreadsheet\Calculation\Functions;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception as CalcException;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Functions;
 
 class Counts extends AggregateBase
 {

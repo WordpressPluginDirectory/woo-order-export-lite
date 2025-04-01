@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Style;
+namespace WOE\PhpOffice\PhpSpreadsheet\Style;
 
-use PhpOffice\PhpSpreadsheet\Chart\ChartColor;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\ChartColor;
 
 class Font extends Supervisor
 {
@@ -153,7 +153,7 @@ class Font extends Supervisor
      *         'name' => 'Arial',
      *         'bold' => TRUE,
      *         'italic' => FALSE,
-     *         'underline' => \PhpOffice\PhpSpreadsheet\Style\Font::UNDERLINE_DOUBLE,
+     *         'underline' => \WOE\PhpOffice\PhpSpreadsheet\Style\Font::UNDERLINE_DOUBLE,
      *         'strikethrough' => FALSE,
      *         'color' => [
      *             'rgb' => '808080'

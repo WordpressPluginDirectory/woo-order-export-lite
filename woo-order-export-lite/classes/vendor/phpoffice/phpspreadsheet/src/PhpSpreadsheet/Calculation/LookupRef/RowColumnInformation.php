@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\LookupRef;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\LookupRef;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Cell;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class RowColumnInformation
 {

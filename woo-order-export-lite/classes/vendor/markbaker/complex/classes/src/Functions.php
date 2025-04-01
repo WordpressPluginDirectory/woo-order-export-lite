@@ -1,6 +1,6 @@
 <?php
 
-namespace Complex;
+namespace WOE\Complex;
 
 use InvalidArgumentException;
 

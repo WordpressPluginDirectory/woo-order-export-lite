@@ -276,7 +276,7 @@ trait WOE_Core_Extractor {
 			//done
 			$product_where        = join( " AND ", $product_where );
 			//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$settings['products'] = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT ID FROM {$wpdb->posts} AS products $left_join_product_meta  WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND $product_where ") );
+			$settings['products'] = $wpdb->get_col( "SELECT DISTINCT ID FROM {$wpdb->posts} AS products $left_join_product_meta  WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND $product_where " );
 			if ( empty( $settings['products'] ) ) // failed condition!
 			{
 				$settings['products'] = array( 0 );

@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet;
+namespace WOE\PhpOffice\PhpSpreadsheet;
 
-use PhpOffice\PhpSpreadsheet\Reader\IReader;
-use PhpOffice\PhpSpreadsheet\Shared\File;
-use PhpOffice\PhpSpreadsheet\Writer\IWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\IReader;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\File;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\IWriter;
 
 /**
  * Factory to create readers and writers easily.

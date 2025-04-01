@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Ods;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Ods;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
 
 class FormulaTranslator
 {

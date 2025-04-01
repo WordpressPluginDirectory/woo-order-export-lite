@@ -1,16 +1,16 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx\Styles as StyleReader;
-use PhpOffice\PhpSpreadsheet\Style\Color;
-use PhpOffice\PhpSpreadsheet\Style\Conditional;
-use PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalColorScale;
-use PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalDataBar;
-use PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalFormattingRuleExtension;
-use PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalFormatValueObject;
-use PhpOffice\PhpSpreadsheet\Style\Style as Style;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xlsx\Styles as StyleReader;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Color;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Conditional;
+use WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalColorScale;
+use WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalDataBar;
+use WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalFormattingRuleExtension;
+use WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalFormatValueObject;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Style as Style;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use SimpleXMLElement;
 use stdClass;
 

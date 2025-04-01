@@ -1,37 +1,37 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Calculation\Functions;
-use PhpOffice\PhpSpreadsheet\HashTable;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\Borders;
-use PhpOffice\PhpSpreadsheet\Style\Conditional;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\Font;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use PhpOffice\PhpSpreadsheet\Worksheet\BaseDrawing;
-use PhpOffice\PhpSpreadsheet\Worksheet\Drawing as WorksheetDrawing;
-use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
-use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Chart;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Comments;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\ContentTypes;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\DocProps;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Drawing;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\RelsRibbon;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\RelsVBA;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\StringTable;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Style;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Table;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Theme;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Workbook;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Functions;
+use WOE\PhpOffice\PhpSpreadsheet\HashTable;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Borders;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Conditional;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Fill;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Font;
+use WOE\PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\BaseDrawing;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Drawing as WorksheetDrawing;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\Chart;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\Comments;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\ContentTypes;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\DocProps;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\Drawing;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\RelsRibbon;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\RelsVBA;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\StringTable;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\Style;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\Table;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\Theme;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\Workbook;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\Worksheet;
 use ZipArchive;
-use ZipStream\Exception\OverflowException;
-use ZipStream\ZipStream;
+use WOE\ZipStream\Exception\OverflowException;
+use WOE\ZipStream\ZipStream;
 
 class Xlsx extends BaseWriter
 {
@@ -62,7 +62,7 @@ class Xlsx extends BaseWriter
     /**
      * Private unique Style HashTable.
      *
-     * @var HashTable<\PhpOffice\PhpSpreadsheet\Style\Style>
+     * @var HashTable<\WOE\PhpOffice\PhpSpreadsheet\Style\Style>
      */
     private HashTable $styleHashTable;
 
@@ -563,7 +563,7 @@ class Xlsx extends BaseWriter
     /**
      * Get Style HashTable.
      *
-     * @return HashTable<\PhpOffice\PhpSpreadsheet\Style\Style>
+     * @return HashTable<\WOE\PhpOffice\PhpSpreadsheet\Style\Style>
      */
     public function getStyleHashTable(): HashTable
     {

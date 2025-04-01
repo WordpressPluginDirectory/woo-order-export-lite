@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Chart;
+namespace WOE\PhpOffice\PhpSpreadsheet\Chart;
 
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\Font;
+use WOE\PhpOffice\PhpSpreadsheet\RichText\RichText;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Font;
 
 class Title
 {

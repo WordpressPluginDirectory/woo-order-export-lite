@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Ods;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Ods;
 
-use Composer\Pcre\Preg;
-use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\Composer\Pcre\Preg;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\CellAddress;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class Settings extends WriterPart
 {

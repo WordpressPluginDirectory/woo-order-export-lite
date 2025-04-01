@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions;
 
-use PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
-use PhpOffice\PhpSpreadsheet\Calculation\Exception;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
-use PhpOffice\PhpSpreadsheet\Calculation\MathTrig;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\MathTrig;
 
 class Poisson
 {

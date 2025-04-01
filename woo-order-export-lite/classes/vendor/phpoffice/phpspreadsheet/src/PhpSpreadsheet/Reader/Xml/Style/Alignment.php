@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
 
-use PhpOffice\PhpSpreadsheet\Style\Alignment as AlignmentStyles;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Alignment as AlignmentStyles;
 use SimpleXMLElement;
 
 class Alignment extends StyleBase

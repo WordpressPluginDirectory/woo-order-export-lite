@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
-use PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column;
-use PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column\Rule;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet as ActualWorksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column\Rule;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet as ActualWorksheet;
 
 class AutoFilter extends WriterPart
 {

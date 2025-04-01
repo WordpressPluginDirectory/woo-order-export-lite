@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Comment;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Comment;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class Comments extends WriterPart
 {
@@ -23,7 +23,7 @@ class Comments extends WriterPart
      *
      * @return string XML Output
      */
-    public function writeComments(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet): string
+    public function writeComments(\WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet): string
     {
         // Create XML writer
         $objWriter = null;
@@ -99,7 +99,7 @@ class Comments extends WriterPart
      *
      * @return string XML Output
      */
-    public function writeVMLComments(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet): string
+    public function writeVMLComments(\WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet): string
     {
         // Create XML writer
         $objWriter = null;

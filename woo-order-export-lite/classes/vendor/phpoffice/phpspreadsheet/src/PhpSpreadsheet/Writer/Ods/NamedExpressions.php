@@ -1,14 +1,14 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Ods;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Ods;
 
-use Composer\Pcre\Preg;
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\DefinedName;
-use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\Composer\Pcre\Preg;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\DefinedName;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class NamedExpressions
 {

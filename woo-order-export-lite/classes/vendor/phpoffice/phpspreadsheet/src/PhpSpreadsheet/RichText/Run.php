@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\RichText;
+namespace WOE\PhpOffice\PhpSpreadsheet\RichText;
 
-use PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
-use PhpOffice\PhpSpreadsheet\Style\Font;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Font;
 
 class Run extends TextElement implements ITextElement
 {

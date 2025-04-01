@@ -1,27 +1,27 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader;
 
 use DOMAttr;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMText;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Cell\DataType;
-use PhpOffice\PhpSpreadsheet\Helper\Dimension as HelperDimension;
-use PhpOffice\PhpSpreadsheet\Reader\Ods\AutoFilter;
-use PhpOffice\PhpSpreadsheet\Reader\Ods\DefinedNames;
-use PhpOffice\PhpSpreadsheet\Reader\Ods\FormulaTranslator;
-use PhpOffice\PhpSpreadsheet\Reader\Ods\PageSettings;
-use PhpOffice\PhpSpreadsheet\Reader\Ods\Properties as DocumentProperties;
-use PhpOffice\PhpSpreadsheet\Reader\Security\XmlScanner;
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use PhpOffice\PhpSpreadsheet\Shared\File;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\DataType;
+use WOE\PhpOffice\PhpSpreadsheet\Helper\Dimension as HelperDimension;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Ods\AutoFilter;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Ods\DefinedNames;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Ods\FormulaTranslator;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Ods\PageSettings;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Ods\Properties as DocumentProperties;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Security\XmlScanner;
+use WOE\PhpOffice\PhpSpreadsheet\RichText\RichText;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Date;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\File;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Throwable;
 use XMLReader;
 use ZipArchive;

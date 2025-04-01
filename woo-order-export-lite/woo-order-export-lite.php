@@ -5,7 +5,7 @@
  * Description: Export WooCommerce orders to Excel/CSV/XML/JSON/PDF/TSV
  * Author: AlgolPlus
  * Author URI: https://algolplus.com/
- * Version: 4.0.1
+ * Version: 4.0.2
  * Text Domain: woo-order-export-lite
  * Domain Path: /i18n/languages/
  * WC requires at least: 4.0.0
@@ -32,8 +32,13 @@ if ( class_exists( 'WC_Order_Export_Admin' ) ) {
 	add_action( 'admin_notices', function () {
 			?>
             <div class="notice notice-warning is-dismissible">
-                <p><?php esc_html_e( 'Please, <a href="plugins.php">deactivate</a> Free version of Advanced Order Export For WooCommerce!',
-						'woo-order-export-lite' ); ?></p>
+                <p><?php
+                    echo sprintf(
+					/* translators: href link to Plugins page */
+                    esc_html__( 'Please, %1$s deactivate %2$s Free version of Advanced Order Export For WooCommerce!','woo-order-export-lite' ),
+					 '<a href="plugins.php">', '</a>' );
+					?>
+				</p>
             </div>
 			<?php
 	});
@@ -41,7 +46,7 @@ if ( class_exists( 'WC_Order_Export_Admin' ) ) {
 }
 
 if ( ! defined( 'WOE_VERSION' ) ) {
-	define( 'WOE_VERSION', '4.0.1' );
+	define( 'WOE_VERSION', '4.0.2' );
 	define( 'WOE_MIN_PHP_VERSION', '8.1' );
 	define( 'WOE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'WOE_PLUGIN_BASEPATH', dirname( __FILE__ ) );

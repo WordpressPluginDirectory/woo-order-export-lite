@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
-use PhpOffice\PhpSpreadsheet\Document\Properties as DocumentProperties;
-use PhpOffice\PhpSpreadsheet\Reader\Security\XmlScanner;
+use WOE\PhpOffice\PhpSpreadsheet\Document\Properties as DocumentProperties;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Security\XmlScanner;
 use SimpleXMLElement;
 
 class Properties

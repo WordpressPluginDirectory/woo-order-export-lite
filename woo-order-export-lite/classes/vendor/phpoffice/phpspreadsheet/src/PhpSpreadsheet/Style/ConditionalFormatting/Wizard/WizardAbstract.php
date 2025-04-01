@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard;
+namespace WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard;
-use PhpOffice\PhpSpreadsheet\Style\Style;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Style;
 
 abstract class WizardAbstract
 {

@@ -1,16 +1,16 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-use Composer\Pcre\Preg;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
-use PhpOffice\PhpSpreadsheet\Shared\Drawing as SharedDrawing;
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\BaseDrawing;
-use PhpOffice\PhpSpreadsheet\Worksheet\HeaderFooterDrawing;
-use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use WOE\Composer\Pcre\Preg;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Drawing as SharedDrawing;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\BaseDrawing;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\HeaderFooterDrawing;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
 
 class Drawing extends WriterPart
 {
@@ -21,7 +21,7 @@ class Drawing extends WriterPart
      *
      * @return string XML Output
      */
-    public function writeDrawings(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet, bool $includeCharts = false): string
+    public function writeDrawings(\WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet, bool $includeCharts = false): string
     {
         // Create XML writer
         $objWriter = null;
@@ -84,7 +84,7 @@ class Drawing extends WriterPart
     /**
      * Write drawings to XML format.
      */
-    public function writeChart(XMLWriter $objWriter, \PhpOffice\PhpSpreadsheet\Chart\Chart $chart, int $relationId = -1): void
+    public function writeChart(XMLWriter $objWriter, \WOE\PhpOffice\PhpSpreadsheet\Chart\Chart $chart, int $relationId = -1): void
     {
         $tl = $chart->getTopLeftPosition();
         $tlColRow = Coordinate::indexesFromString($tl['cell']);
@@ -360,7 +360,7 @@ class Drawing extends WriterPart
      *
      * @return string XML Output
      */
-    public function writeVMLHeaderFooterImages(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet): string
+    public function writeVMLHeaderFooterImages(\WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet): string
     {
         // Create XML writer
         $objWriter = null;

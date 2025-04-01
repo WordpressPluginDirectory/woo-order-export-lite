@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer;
 
-use ZipStream\Option\Archive;
-use ZipStream\ZipStream;
+use WOE\ZipStream\Option\Archive;
+use WOE\ZipStream\ZipStream;
 
 /**
  * Either ZipStream2 or ZipStream3, but not both, may be used.

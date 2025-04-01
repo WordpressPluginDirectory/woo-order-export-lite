@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xls\Style;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xls\Style;
 
-use PhpOffice\PhpSpreadsheet\Style\Border;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Border;
 
 class CellBorder
 {

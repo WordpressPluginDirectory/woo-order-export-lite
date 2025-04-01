@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\DefinedNames as DefinedNamesWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Date;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx\DefinedNames as DefinedNamesWriter;
 
 class Workbook extends WriterPart
 {

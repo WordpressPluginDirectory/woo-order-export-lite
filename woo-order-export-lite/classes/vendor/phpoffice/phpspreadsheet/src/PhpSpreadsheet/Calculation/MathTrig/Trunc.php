@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\MathTrig;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\MathTrig;
 
-use PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
 
 class Trunc
 {

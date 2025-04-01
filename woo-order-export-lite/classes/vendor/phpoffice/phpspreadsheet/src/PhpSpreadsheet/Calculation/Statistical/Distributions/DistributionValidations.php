@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Exception;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
-use PhpOffice\PhpSpreadsheet\Calculation\Statistical\StatisticalValidations;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Statistical\StatisticalValidations;
 
 class DistributionValidations extends StatisticalValidations
 {

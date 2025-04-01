@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xml;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xml;
 
-use PhpOffice\PhpSpreadsheet\Style\Protection;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Protection;
 use SimpleXMLElement;
 
 class Style

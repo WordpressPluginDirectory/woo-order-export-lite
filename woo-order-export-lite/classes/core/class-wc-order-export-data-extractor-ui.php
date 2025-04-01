@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WC_Order_Export_Data_Extractor_UI extends WC_Order_Export_Data_Extractor {
 	use WOE_Core_Extractor_UI;
-	
+
 	static $object_type = 'shop_order';
 
 	// ADD custom fields for export
@@ -86,7 +86,7 @@ class WC_Order_Export_Data_Extractor_UI extends WC_Order_Export_Data_Extractor {
 
 		$list_placeholders = implode(',', array_fill(0, count($order_ids), '%d'));
 		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
-		$results = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_value FROM {$wpdb->postmeta} WHERE meta_key = %s AND post_id IN($list_placeholders)",	array_merge( [$type . strtolower( $key )],$list_placeholders ) ) );
+		$results = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_value FROM {$wpdb->postmeta} WHERE meta_key = %s AND post_id IN($list_placeholders)",	array_merge( [$type . strtolower( $key )],$order_ids ) ) );
 		$data    = array_filter( $results );
 		sort( $data );
 

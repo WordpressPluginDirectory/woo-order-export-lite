@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Ods;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Ods;
 
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class AutoFilters
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xls;
 
-use PhpOffice\PhpSpreadsheet\Reader\Xls;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xls;
 
 class Color
 {

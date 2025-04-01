@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Cell;
+namespace WOE\PhpOffice\PhpSpreadsheet\Cell;
 
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
-use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+use WOE\PhpOffice\PhpSpreadsheet\RichText\RichText;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 use Stringable;
 
 class DataType

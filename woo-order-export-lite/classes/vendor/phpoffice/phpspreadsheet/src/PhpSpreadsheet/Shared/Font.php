@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared;
 
-use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Style\Font as FontStyle;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\RichText\RichText;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Alignment;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Font as FontStyle;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 

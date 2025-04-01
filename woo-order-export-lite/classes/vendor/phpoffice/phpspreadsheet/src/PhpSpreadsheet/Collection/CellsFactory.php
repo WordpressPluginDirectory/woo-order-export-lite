@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Collection;
+namespace WOE\PhpOffice\PhpSpreadsheet\Collection;
 
-use PhpOffice\PhpSpreadsheet\Settings;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Settings;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 abstract class CellsFactory
 {

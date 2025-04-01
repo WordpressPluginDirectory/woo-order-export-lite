@@ -1,25 +1,25 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader;
 
 use DateTime;
 use DateTimeZone;
-use PhpOffice\PhpSpreadsheet\Cell\AddressHelper;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Cell\DataType;
-use PhpOffice\PhpSpreadsheet\DefinedName;
-use PhpOffice\PhpSpreadsheet\Helper\Html as HelperHtml;
-use PhpOffice\PhpSpreadsheet\Reader\Security\XmlScanner;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
-use PhpOffice\PhpSpreadsheet\Reader\Xml\PageSettings;
-use PhpOffice\PhpSpreadsheet\Reader\Xml\Properties;
-use PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use PhpOffice\PhpSpreadsheet\Shared\File;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\SheetView;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\AddressHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\DataType;
+use WOE\PhpOffice\PhpSpreadsheet\DefinedName;
+use WOE\PhpOffice\PhpSpreadsheet\Helper\Html as HelperHtml;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Security\XmlScanner;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xml\PageSettings;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xml\Properties;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
+use WOE\PhpOffice\PhpSpreadsheet\RichText\RichText;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Date;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\File;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\SheetView;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use SimpleXMLElement;
 use Throwable;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Matrix\Operators;
+namespace WOE\Matrix\Operators;
 
-use Matrix\Matrix;
-use \Matrix\Builder;
-use Matrix\Exception;
+use WOE\Matrix\Matrix;
+use \WOE\Matrix\Builder;
+use WOE\Matrix\Exception;
 use Throwable;
 
 class Multiplication extends Operator

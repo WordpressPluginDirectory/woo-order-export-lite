@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace ZipStream;
+namespace WOE\ZipStream;
 
 use Closure;
 use DateTimeInterface;
 use DeflateContext;
 use RuntimeException;
-use ZipStream\Exception\FileSizeIncorrectException;
-use ZipStream\Exception\OverflowException;
-use ZipStream\Exception\ResourceActionException;
-use ZipStream\Exception\SimulationFileUnknownException;
-use ZipStream\Exception\StreamNotReadableException;
-use ZipStream\Exception\StreamNotSeekableException;
+use WOE\ZipStream\Exception\FileSizeIncorrectException;
+use WOE\ZipStream\Exception\OverflowException;
+use WOE\ZipStream\Exception\ResourceActionException;
+use WOE\ZipStream\Exception\SimulationFileUnknownException;
+use WOE\ZipStream\Exception\StreamNotReadableException;
+use WOE\ZipStream\Exception\StreamNotSeekableException;
 
 /**
  * @internal

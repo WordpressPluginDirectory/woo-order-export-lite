@@ -1,14 +1,14 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Helper;
+namespace WOE\PhpOffice\PhpSpreadsheet\Helper;
 
-use PhpOffice\PhpSpreadsheet\Chart\Chart;
-use PhpOffice\PhpSpreadsheet\Chart\Renderer\MtJpGraphRenderer;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Settings;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use PhpOffice\PhpSpreadsheet\Writer\IWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\Chart;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\Renderer\MtJpGraphRenderer;
+use WOE\PhpOffice\PhpSpreadsheet\IOFactory;
+use WOE\PhpOffice\PhpSpreadsheet\Settings;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\IWriter;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveRegexIterator;

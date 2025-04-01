@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer;
 
 class BstoreContainer
 {

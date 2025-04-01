@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xml;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xml;
 
-use PhpOffice\PhpSpreadsheet\Cell\AddressHelper;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\AddressHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\DataValidation;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
 use SimpleXMLElement;
 
 class DataValidations

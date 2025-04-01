@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Internal;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Internal;
 
 class WildcardMatch
 {

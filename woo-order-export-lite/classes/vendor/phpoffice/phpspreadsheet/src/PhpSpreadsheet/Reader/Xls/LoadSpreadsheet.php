@@ -1,19 +1,19 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xls;
 
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Cell\DataType;
-use PhpOffice\PhpSpreadsheet\NamedRange;
-use PhpOffice\PhpSpreadsheet\Reader\Xls;
-use PhpOffice\PhpSpreadsheet\Shared\CodePage;
-use PhpOffice\PhpSpreadsheet\Shared\Escher as SharedEscher;
-use PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer\SpContainer;
-use PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
-use PhpOffice\PhpSpreadsheet\Shared\Xls as SharedXls;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\DataType;
+use WOE\PhpOffice\PhpSpreadsheet\NamedRange;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xls;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\CodePage;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher as SharedEscher;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer\SpContainer;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Xls as SharedXls;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class LoadSpreadsheet extends Xls
 {

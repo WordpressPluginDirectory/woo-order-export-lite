@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xls;
 
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Reader\Xls;
-use PhpOffice\PhpSpreadsheet\Shared\File;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xls;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\File;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ListFunctions extends Xls
 {

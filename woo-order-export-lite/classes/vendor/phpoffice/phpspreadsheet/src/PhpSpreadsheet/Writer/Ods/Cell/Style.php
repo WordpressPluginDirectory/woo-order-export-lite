@@ -1,18 +1,18 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Ods\Cell;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Ods\Cell;
 
-use PhpOffice\PhpSpreadsheet\Helper\Dimension;
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Style\Border;
-use PhpOffice\PhpSpreadsheet\Style\Borders;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\Font;
-use PhpOffice\PhpSpreadsheet\Style\Style as CellStyle;
-use PhpOffice\PhpSpreadsheet\Worksheet\ColumnDimension;
-use PhpOffice\PhpSpreadsheet\Worksheet\RowDimension;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Helper\Dimension;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Alignment;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Border;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Borders;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Fill;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Font;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Style as CellStyle;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\ColumnDimension;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\RowDimension;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class Style
 {

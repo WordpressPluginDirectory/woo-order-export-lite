@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet;
+namespace WOE\PhpOffice\PhpSpreadsheet;
 
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 abstract class DefinedName
 {

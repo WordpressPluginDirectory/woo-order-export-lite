@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared;
 
-use PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
 
 class XMLWriter extends \XMLWriter
 {

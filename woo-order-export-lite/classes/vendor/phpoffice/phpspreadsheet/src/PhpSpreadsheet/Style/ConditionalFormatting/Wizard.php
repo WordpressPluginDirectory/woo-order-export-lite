@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting;
+namespace WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting;
 
-use PhpOffice\PhpSpreadsheet\Exception;
-use PhpOffice\PhpSpreadsheet\Style\Conditional;
-use PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard\WizardInterface;
+use WOE\PhpOffice\PhpSpreadsheet\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Conditional;
+use WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard\WizardInterface;
 
 class Wizard
 {

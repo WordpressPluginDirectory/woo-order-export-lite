@@ -1,15 +1,15 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet;
+namespace WOE\PhpOffice\PhpSpreadsheet;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Cell\AddressRange;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Cell\DataType;
-use PhpOffice\PhpSpreadsheet\Style\Conditional;
-use PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter;
-use PhpOffice\PhpSpreadsheet\Worksheet\Table;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\AddressRange;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\DataType;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Conditional;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Table;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ReferenceHelper
 {

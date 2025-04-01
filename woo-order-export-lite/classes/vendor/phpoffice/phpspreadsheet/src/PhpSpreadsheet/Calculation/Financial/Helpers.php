@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Financial;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Financial;
 
 use DateTimeInterface;
-use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
-use PhpOffice\PhpSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
 
 class Helpers
 {

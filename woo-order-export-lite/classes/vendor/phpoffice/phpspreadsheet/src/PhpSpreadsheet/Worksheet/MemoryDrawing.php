@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Worksheet;
+namespace WOE\PhpOffice\PhpSpreadsheet\Worksheet;
 
 use GdImage;
-use PhpOffice\PhpSpreadsheet\Exception;
-use PhpOffice\PhpSpreadsheet\Shared\File;
+use WOE\PhpOffice\PhpSpreadsheet\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\File;
 
 class MemoryDrawing extends BaseDrawing
 {

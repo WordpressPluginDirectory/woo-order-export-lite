@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Ods;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Ods;
 
 use DOMDocument;
-use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class PageSettings
 {

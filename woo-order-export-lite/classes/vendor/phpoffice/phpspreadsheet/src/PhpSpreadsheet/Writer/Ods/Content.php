@@ -1,20 +1,20 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Ods;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Ods;
 
-use Composer\Pcre\Preg;
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Calculation\Exception as CalculationException;
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Cell\DataType;
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\RowCellIterator;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use PhpOffice\PhpSpreadsheet\Writer\Ods;
-use PhpOffice\PhpSpreadsheet\Writer\Ods\Cell\Comment;
-use PhpOffice\PhpSpreadsheet\Writer\Ods\Cell\Style;
+use WOE\Composer\Pcre\Preg;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception as CalculationException;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Cell;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\DataType;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\RowCellIterator;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Ods;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Ods\Cell\Comment;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Ods\Cell\Style;
 
 /**
  * @author     Alexander Pervakov <frost-nzcr4@jagmort.com>

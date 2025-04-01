@@ -7,7 +7,7 @@
  * @copyright  Copyright (c) 2013-2018 Mark Baker (https://github.com/MarkBaker/PHPComplex)
  * @license    https://opensource.org/licenses/MIT    MIT
  */
-namespace Complex;
+namespace WOE\Complex;
 
 /**
  * Complex Number object.
@@ -22,10 +22,10 @@ namespace Complex;
  * @method Complex acsc()
  * @method Complex acsch()
  * @method float argument()
- * @method Complex asec()
- * @method Complex asech()
- * @method Complex asin()
- * @method Complex asinh()
+ * @method WOE\Complex asec()
+ * @method WOE\Complex asech()
+ * @method WOE\Complex asin()
+ * @method WOE\Complex asinh()
  * @method Complex atan()
  * @method Complex atanh()
  * @method Complex conjugate()

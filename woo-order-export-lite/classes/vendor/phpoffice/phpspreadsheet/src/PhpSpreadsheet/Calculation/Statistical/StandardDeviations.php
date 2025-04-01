@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Statistical;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Statistical;
 
 class StandardDeviations
 {

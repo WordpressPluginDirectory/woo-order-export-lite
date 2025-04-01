@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 include_once 'abstract-class-woe-formatter-plain-format.php';
 
-if ( ! class_exists( 'Spreadsheet' ) ) {
+if ( ! class_exists( 'WOE\PhpOffice\PhpSpreadsheet\Spreadsheet' ) ) {
 	if (version_compare(phpversion(), WOE_MIN_PHP_VERSION, '<')) {
 		/* translators: PHP version requred for Excel format */
 		echo esc_html(sprintf(__( 'PhpSpreadsheet requires PHP version %s or later.', 'woo-order-export-lite' ), WOE_MIN_PHP_VERSION));
@@ -15,13 +15,13 @@ if ( ! class_exists( 'Spreadsheet' ) ) {
 	include_once dirname( __FILE__ ) . '/../vendor/autoload.php';
 }
 
-use PhpOffice\PhpSpreadsheet;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use WOE\PhpOffice\PhpSpreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Alignment;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\IOFactory;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 	const CHUNK_SIZE = 1000;

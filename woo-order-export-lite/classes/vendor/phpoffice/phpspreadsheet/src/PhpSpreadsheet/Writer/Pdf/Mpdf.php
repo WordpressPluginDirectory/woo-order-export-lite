@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Pdf;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Pdf;
 
-use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use PhpOffice\PhpSpreadsheet\Writer\Pdf;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Pdf;
 
 class Mpdf extends Pdf
 {

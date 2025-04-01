@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+namespace WOE\PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 
 abstract class BaseFormatter
 {

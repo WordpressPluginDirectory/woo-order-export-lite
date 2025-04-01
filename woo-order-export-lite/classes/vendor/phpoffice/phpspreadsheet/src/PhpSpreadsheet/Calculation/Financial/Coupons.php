@@ -1,14 +1,14 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Financial;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Financial;
 
 use DateTime;
-use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
-use PhpOffice\PhpSpreadsheet\Calculation\Exception;
-use PhpOffice\PhpSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
-use PhpOffice\PhpSpreadsheet\Calculation\Functions;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Functions;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class Coupons
 {

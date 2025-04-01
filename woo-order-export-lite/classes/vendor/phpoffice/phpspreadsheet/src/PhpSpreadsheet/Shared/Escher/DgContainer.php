@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared\Escher;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared\Escher;
 
-use PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
-use PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
 
 class DgContainer
 {

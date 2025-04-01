@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Style\NumberFormat\Wizard;
+namespace WOE\PhpOffice\PhpSpreadsheet\Style\NumberFormat\Wizard;
 
-use PhpOffice\PhpSpreadsheet\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Exception;
 
 class Number extends NumberBase implements Wizard
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xls;
 
-use Composer\Pcre\Preg;
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet as PhpspreadsheetWorksheet;
-use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use WOE\Composer\Pcre\Preg;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet as PhpspreadsheetWorksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
 
 // Original file header of PEAR::Spreadsheet_Excel_Writer_Parser (used as the base for this class):
 // -----------------------------------------------------------------------------------------

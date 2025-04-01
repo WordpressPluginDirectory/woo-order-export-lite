@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\TextData;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\TextData;
 
-use PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
-use PhpOffice\PhpSpreadsheet\Calculation\Exception as CalcExp;
-use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception as CalcExp;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 
 class CaseConvert
 {

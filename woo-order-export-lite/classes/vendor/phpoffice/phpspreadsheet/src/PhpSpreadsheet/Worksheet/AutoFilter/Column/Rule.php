@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column;
+namespace WOE\PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column;
 
-use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
-use PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column;
 
 class Rule
 {

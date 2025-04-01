@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Engine;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Engine;
 
 class Logger
 {

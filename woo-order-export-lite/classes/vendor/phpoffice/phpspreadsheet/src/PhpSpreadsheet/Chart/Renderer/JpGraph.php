@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Chart\Renderer;
+namespace WOE\PhpOffice\PhpSpreadsheet\Chart\Renderer;
 
 /**
  * Jpgraph is not oficially maintained in Composer, so the version there

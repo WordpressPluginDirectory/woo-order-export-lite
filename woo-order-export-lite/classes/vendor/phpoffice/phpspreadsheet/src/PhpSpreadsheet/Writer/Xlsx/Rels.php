@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\BaseDrawing;
-use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
-use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\BaseDrawing;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
 
 class Rels extends WriterPart
 {
@@ -179,7 +179,7 @@ class Rels extends WriterPart
      *
      * @return string XML Output
      */
-    public function writeWorksheetRelationships(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet, int $worksheetId = 1, bool $includeCharts = false, int $tableRef = 1, array &$zipContent = []): string
+    public function writeWorksheetRelationships(\WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet, int $worksheetId = 1, bool $includeCharts = false, int $tableRef = 1, array &$zipContent = []): string
     {
         // Create XML writer
         $objWriter = null;
@@ -312,7 +312,7 @@ class Rels extends WriterPart
         return $objWriter->getData();
     }
 
-    private function writeUnparsedRelationship(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet, XMLWriter $objWriter, string $relationship, string $type): void
+    private function writeUnparsedRelationship(\WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet, XMLWriter $objWriter, string $relationship, string $type): void
     {
         $unparsedLoadedData = $worksheet->getParentOrThrow()->getUnparsedLoadedData();
         if (!isset($unparsedLoadedData['sheets'][$worksheet->getCodeName()][$relationship])) {
@@ -339,7 +339,7 @@ class Rels extends WriterPart
      *
      * @return string XML Output
      */
-    public function writeDrawingRelationships(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet, int &$chartRef, bool $includeCharts = false): string
+    public function writeDrawingRelationships(\WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet, int &$chartRef, bool $includeCharts = false): string
     {
         // Create XML writer
         $objWriter = null;
@@ -362,7 +362,7 @@ class Rels extends WriterPart
         while ($iterator->valid()) {
             $drawing = $iterator->current();
             if (
-                $drawing instanceof \PhpOffice\PhpSpreadsheet\Worksheet\Drawing
+                $drawing instanceof \WOE\PhpOffice\PhpSpreadsheet\Worksheet\Drawing
                 || $drawing instanceof MemoryDrawing
             ) {
                 // Write relationship for image drawing
@@ -405,7 +405,7 @@ class Rels extends WriterPart
      *
      * @return string XML Output
      */
-    public function writeHeaderFooterDrawingRelationships(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet): string
+    public function writeHeaderFooterDrawingRelationships(\WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet): string
     {
         // Create XML writer
         $objWriter = null;
@@ -438,7 +438,7 @@ class Rels extends WriterPart
         return $objWriter->getData();
     }
 
-    public function writeVMLDrawingRelationships(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet): string
+    public function writeVMLDrawingRelationships(\WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet): string
     {
         // Create XML writer
         $objWriter = null;

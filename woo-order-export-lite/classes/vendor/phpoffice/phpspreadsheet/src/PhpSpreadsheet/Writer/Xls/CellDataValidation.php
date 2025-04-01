@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xls;
 
-use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
 class CellDataValidation
 {

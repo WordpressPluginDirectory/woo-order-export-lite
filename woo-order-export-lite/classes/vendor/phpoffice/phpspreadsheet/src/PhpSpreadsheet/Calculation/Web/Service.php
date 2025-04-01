@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Web;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Web;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
-use PhpOffice\PhpSpreadsheet\Settings;
-use Psr\Http\Client\ClientExceptionInterface;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\PhpOffice\PhpSpreadsheet\Settings;
+use WOE\Psr\Http\Client\ClientExceptionInterface;
 
 class Service
 {

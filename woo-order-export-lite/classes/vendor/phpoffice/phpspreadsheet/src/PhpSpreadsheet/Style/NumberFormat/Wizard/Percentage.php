@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Style\NumberFormat\Wizard;
+namespace WOE\PhpOffice\PhpSpreadsheet\Style\NumberFormat\Wizard;
 
 use NumberFormatter;
-use PhpOffice\PhpSpreadsheet\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Exception;
 
 class Percentage extends NumberBase implements Wizard
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Constant\Periodic;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Constant\Periodic;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
 
 class InterestAndPrincipal
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 abstract class WriterPart
 {

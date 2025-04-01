@@ -1,20 +1,20 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet;
+namespace WOE\PhpOffice\PhpSpreadsheet;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Chart\Renderer\IRenderer;
-use PhpOffice\PhpSpreadsheet\Collection\Memory;
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\SimpleCache\CacheInterface;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\Renderer\IRenderer;
+use WOE\PhpOffice\PhpSpreadsheet\Collection\Memory;
+use WOE\Psr\Http\Client\ClientInterface;
+use WOE\Psr\Http\Message\RequestFactoryInterface;
+use WOE\Psr\SimpleCache\CacheInterface;
 use ReflectionClass;
 
 class Settings
 {
     /**
      * Class name of the chart renderer used for rendering charts
-     * eg: PhpOffice\PhpSpreadsheet\Chart\Renderer\JpGraph.
+     * eg: WOE\PhpOffice\PhpSpreadsheet\Chart\Renderer\JpGraph.
      *
      * @var null|class-string<IRenderer>
      */
@@ -53,7 +53,7 @@ class Settings
      * Identify to PhpSpreadsheet the external library to use for rendering charts.
      *
      * @param class-string<IRenderer> $rendererClassName Class name of the chart renderer
-     *    eg: PhpOffice\PhpSpreadsheet\Chart\Renderer\JpGraph
+     *    eg: WOE\PhpOffice\PhpSpreadsheet\Chart\Renderer\JpGraph
      */
     public static function setChartRenderer(string $rendererClassName): void
     {
@@ -73,7 +73,7 @@ class Settings
      * Return the Chart Rendering Library that PhpSpreadsheet is currently configured to use.
      *
      * @return null|class-string<IRenderer> Class name of the chart renderer
-     *    eg: PhpOffice\PhpSpreadsheet\Chart\Renderer\JpGraph
+     *    eg: WOE\PhpOffice\PhpSpreadsheet\Chart\Renderer\JpGraph
      */
     public static function getChartRenderer(): ?string
     {

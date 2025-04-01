@@ -1,16 +1,16 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xls;
 
-use Composer\Pcre\Preg;
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\DefinedName;
-use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\Style;
+use WOE\Composer\Pcre\Preg;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\DefinedName;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Date;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Style;
 
 // Original file header of PEAR::Spreadsheet_Excel_Writer_Workbook (used as the base for this class):
 // -----------------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ class Workbook extends BIFFwriter
     /**
      * Escher object corresponding to MSODRAWINGGROUP.
      */
-    private ?\PhpOffice\PhpSpreadsheet\Shared\Escher $escher = null;
+    private ?\WOE\PhpOffice\PhpSpreadsheet\Shared\Escher $escher = null;
 
     /**
      * Class constructor.
@@ -259,7 +259,7 @@ class Workbook extends BIFFwriter
      *
      * @return int Index to FONT record
      */
-    public function addFont(\PhpOffice\PhpSpreadsheet\Style\Font $font): int
+    public function addFont(\WOE\PhpOffice\PhpSpreadsheet\Style\Font $font): int
     {
         $fontHashCode = $font->getHashCode();
         if (isset($this->addedFonts[$fontHashCode])) {
@@ -821,14 +821,14 @@ class Workbook extends BIFFwriter
      *
      * @param int $offset Location of worksheet BOF
      */
-    private function writeBoundSheet(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet, int $offset): void
+    private function writeBoundSheet(\WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet, int $offset): void
     {
         $sheetname = $sheet->getTitle();
         $record = 0x0085; // Record identifier
         $ss = match ($sheet->getSheetState()) {
-            \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::SHEETSTATE_VISIBLE => 0x00,
-            \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::SHEETSTATE_HIDDEN => 0x01,
-            \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::SHEETSTATE_VERYHIDDEN => 0x02,
+            \WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::SHEETSTATE_VISIBLE => 0x00,
+            \WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::SHEETSTATE_HIDDEN => 0x01,
+            \WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::SHEETSTATE_VERYHIDDEN => 0x02,
             default => 0x00,
         };
 
@@ -1132,7 +1132,7 @@ class Workbook extends BIFFwriter
     /**
      * Get Escher object.
      */
-    public function getEscher(): ?\PhpOffice\PhpSpreadsheet\Shared\Escher
+    public function getEscher(): ?\WOE\PhpOffice\PhpSpreadsheet\Shared\Escher
     {
         return $this->escher;
     }
@@ -1140,7 +1140,7 @@ class Workbook extends BIFFwriter
     /**
      * Set Escher object.
      */
-    public function setEscher(?\PhpOffice\PhpSpreadsheet\Shared\Escher $escher): void
+    public function setEscher(?\WOE\PhpOffice\PhpSpreadsheet\Shared\Escher $escher): void
     {
         $this->escher = $escher;
     }

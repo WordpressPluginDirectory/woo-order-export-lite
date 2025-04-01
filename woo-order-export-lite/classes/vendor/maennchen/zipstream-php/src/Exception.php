@@ -2,6 +2,6 @@
 
 declare(strict_types=1);
 
-namespace ZipStream;
+namespace WOE\ZipStream;
 
 abstract class Exception extends \Exception {}

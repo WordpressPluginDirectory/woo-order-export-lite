@@ -1,6 +1,6 @@
 <?php
 
-namespace Matrix;
+namespace WOE\Matrix;
 
 class Functions
 {

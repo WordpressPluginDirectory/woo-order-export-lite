@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Composer\Pcre\PHPStan;
+namespace WOE\Composer\Pcre\PHPStan;
 
-use Composer\Pcre\Preg;
-use Composer\Pcre\Regex;
+use WOE\Composer\Pcre\Preg;
+use WOE\Composer\Pcre\Regex;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;

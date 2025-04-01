@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace ZipStream;
+namespace WOE\ZipStream;
 
 use Closure;
 use DateTimeImmutable;
 use DateTimeInterface;
 use GuzzleHttp\Psr7\StreamWrapper;
-use Psr\Http\Message\StreamInterface;
+use WOE\Psr\Http\Message\StreamInterface;
 use RuntimeException;
-use ZipStream\Exception\FileNotFoundException;
-use ZipStream\Exception\FileNotReadableException;
-use ZipStream\Exception\OverflowException;
-use ZipStream\Exception\ResourceActionException;
+use WOE\ZipStream\Exception\FileNotFoundException;
+use WOE\ZipStream\Exception\FileNotReadableException;
+use WOE\ZipStream\Exception\OverflowException;
+use WOE\ZipStream\Exception\ResourceActionException;
 
 /**
  * Streamed, dynamically generated zip archives.
@@ -301,8 +301,8 @@ class ZipStream
      * );
      * ```
      *
-     * @throws \ZipStream\Exception\FileNotFoundException
-     * @throws \ZipStream\Exception\FileNotReadableException
+     * @throws \WOE\ZipStream\Exception\FileNotFoundException
+     * @throws \WOE\ZipStream\Exception\FileNotReadableException
      */
     public function addFileFromPath(
         /**
@@ -498,7 +498,7 @@ class ZipStream
      *   $archive->addFileFromCallback(
      *     fileName: 'streamfile.txt',
      *     exactSize: $size,
-     *     callback: function() use($name): Psr\Http\Message\StreamInterface {
+     *     callback: function() use($name): WOE\Psr\Http\Message\StreamInterface {
      *       $response = download($name);
      *       return $response->getBody();
      *     }

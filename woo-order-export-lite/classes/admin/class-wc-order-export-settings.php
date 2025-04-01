@@ -26,7 +26,7 @@ class WC_Order_Export_Main_Settings {
 			'notify_failed_jobs_email_subject'     => '',
 			'notify_failed_jobs_email_recipients'  => '',
 
-			'zapier_api_key'                       => '12345678',
+			'zapier_api_key'                       => '',
 			'zapier_file_timeout'                  => 60,
 			'show_date_time_picker_for_date_range' => false,
 			'display_profiles_export_date_range'   => false,

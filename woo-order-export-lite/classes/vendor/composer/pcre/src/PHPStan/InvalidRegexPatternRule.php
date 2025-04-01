@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Composer\Pcre\PHPStan;
+namespace WOE\Composer\Pcre\PHPStan;
 
-use Composer\Pcre\Preg;
-use Composer\Pcre\Regex;
-use Composer\Pcre\PcreException;
+use WOE\Composer\Pcre\Preg;
+use WOE\Composer\Pcre\Regex;
+use WOE\Composer\Pcre\PcreException;
 use Nette\Utils\RegexpException;
 use Nette\Utils\Strings;
 use PhpParser\Node;

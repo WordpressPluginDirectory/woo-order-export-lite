@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Engineering;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Engineering;
 
-use Complex\Complex as ComplexObject;
-use Complex\Exception as ComplexException;
-use PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\Complex\Complex as ComplexObject;
+use WOE\Complex\Exception as ComplexException;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
 
 class ComplexFunctions
 {

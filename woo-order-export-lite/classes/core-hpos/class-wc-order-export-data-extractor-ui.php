@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WC_Order_Export_Data_Extractor_UI extends WC_Order_Export_Data_Extractor {
 	use WOE_Core_Extractor_UI;
-	
+
 	static $object_type = 'shop_order';
 
 	// ADD custom fields for export
@@ -78,7 +78,7 @@ class WC_Order_Export_Data_Extractor_UI extends WC_Order_Export_Data_Extractor {
 			$values = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT $field FROM {$wpdb->prefix}wc_orders WHERE id IN ($list_placeholders)",$order_ids) );
 		}elseif( $hpos_addr = self::parse_HPOS_order_address_field($key) ) {
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$values = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT $hpos_addr[field] FROM {$wpdb->prefix}wc_order_addresses WHERE order_id IN ($list_placeholders) AND address_type = %s", array_merge($order_ids, [$hpos_addr[address_type]]) ) );
+			$values = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT $hpos_addr[field] FROM {$wpdb->prefix}wc_order_addresses WHERE order_id IN ($list_placeholders) AND address_type = %s", array_merge($order_ids, [$hpos_addr['address_type']]) ) );
 		} else {
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$values = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_value FROM {$wpdb->prefix}wc_orders_meta WHERE meta_key = %s  AND order_id IN ($list_placeholders)", array_merge( [$key], $order_ids ) ) );

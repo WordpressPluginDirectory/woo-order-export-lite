@@ -1,16 +1,16 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xls;
 
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Reader\Xls;
-use PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer;
-use PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
-use PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer\SpContainer;
-use PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer;
-use PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer\BstoreContainer;
-use PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
-use PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE\Blip;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xls;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer\SpContainer;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer\BstoreContainer;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE\Blip;
 
 class Escher
 {
@@ -51,12 +51,12 @@ class Escher
     /**
      * The object to be returned by the reader. Modified during load.
      */
-    private BSE|BstoreContainer|DgContainer|DggContainer|\PhpOffice\PhpSpreadsheet\Shared\Escher|SpContainer|SpgrContainer $object;
+    private BSE|BstoreContainer|DgContainer|DggContainer|\WOE\PhpOffice\PhpSpreadsheet\Shared\Escher|SpContainer|SpgrContainer $object;
 
     /**
      * Create a new Escher instance.
      */
-    public function __construct(BSE|BstoreContainer|DgContainer|DggContainer|\PhpOffice\PhpSpreadsheet\Shared\Escher|SpContainer|SpgrContainer $object)
+    public function __construct(BSE|BstoreContainer|DgContainer|DggContainer|\WOE\PhpOffice\PhpSpreadsheet\Shared\Escher|SpContainer|SpgrContainer $object)
     {
         $this->object = $object;
     }
@@ -85,7 +85,7 @@ class Escher
     /**
      * Load Escher stream data. May be a partial Escher stream.
      */
-    public function load(string $data): BSE|BstoreContainer|DgContainer|DggContainer|\PhpOffice\PhpSpreadsheet\Shared\Escher|SpContainer|SpgrContainer
+    public function load(string $data): BSE|BstoreContainer|DgContainer|DggContainer|\WOE\PhpOffice\PhpSpreadsheet\Shared\Escher|SpContainer|SpgrContainer
     {
         $this->data = $data;
 

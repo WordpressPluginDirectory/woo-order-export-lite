@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation;
 
 /**
  * PARTLY BASED ON:

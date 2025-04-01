@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Engine;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Engine;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception;
 
 class ArrayArgumentHelper
 {

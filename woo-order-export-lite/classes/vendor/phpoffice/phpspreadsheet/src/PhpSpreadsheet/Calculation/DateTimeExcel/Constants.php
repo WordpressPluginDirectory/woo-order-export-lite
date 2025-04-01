@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
 
 class Constants
 {

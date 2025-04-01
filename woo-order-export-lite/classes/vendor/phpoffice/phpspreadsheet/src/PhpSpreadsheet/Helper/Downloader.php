@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Helper;
+namespace WOE\PhpOffice\PhpSpreadsheet\Helper;
 
-use PhpOffice\PhpSpreadsheet\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Exception;
 
 /**
  * Assist downloading files when samples are run in browser.

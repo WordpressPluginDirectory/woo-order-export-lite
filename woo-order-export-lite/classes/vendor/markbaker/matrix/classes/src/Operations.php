@@ -1,12 +1,12 @@
 <?php
 
-namespace Matrix;
+namespace WOE\Matrix;
 
-use Matrix\Operators\Addition;
-use Matrix\Operators\DirectSum;
-use Matrix\Operators\Division;
-use Matrix\Operators\Multiplication;
-use Matrix\Operators\Subtraction;
+use WOE\Matrix\Operators\Addition;
+use WOE\Matrix\Operators\DirectSum;
+use WOE\Matrix\Operators\Division;
+use WOE\Matrix\Operators\Multiplication;
+use WOE\Matrix\Operators\Subtraction;
 
 class Operations
 {

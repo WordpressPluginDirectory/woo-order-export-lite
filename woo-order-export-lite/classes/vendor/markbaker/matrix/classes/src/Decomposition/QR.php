@@ -1,9 +1,9 @@
 <?php
 
-namespace Matrix\Decomposition;
+namespace WOE\Matrix\Decomposition;
 
-use Matrix\Exception;
-use Matrix\Matrix;
+use WOE\Matrix\Exception;
+use WOE\Matrix\Matrix;
 
 class QR
 {

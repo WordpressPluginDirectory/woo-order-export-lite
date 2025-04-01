@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
 
-use PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
 use SimpleXMLElement;
 
 class Properties

@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Style;
+namespace WOE\PhpOffice\PhpSpreadsheet\Style;
 
-use PhpOffice\PhpSpreadsheet\IComparable;
-use PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalColorScale;
-use PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalDataBar;
+use WOE\PhpOffice\PhpSpreadsheet\IComparable;
+use WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalColorScale;
+use WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\ConditionalDataBar;
 
 class Conditional implements IComparable
 {

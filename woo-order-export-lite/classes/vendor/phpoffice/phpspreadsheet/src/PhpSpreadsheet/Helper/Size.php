@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Helper;
+namespace WOE\PhpOffice\PhpSpreadsheet\Helper;
 
 use Stringable;
 

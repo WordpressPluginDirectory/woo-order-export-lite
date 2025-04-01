@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer;
 
-use ZipStream\ZipStream;
+use WOE\ZipStream\ZipStream;
 
 class ZipStream3
 {

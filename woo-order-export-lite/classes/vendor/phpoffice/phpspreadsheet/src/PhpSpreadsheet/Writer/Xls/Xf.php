@@ -1,14 +1,14 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xls;
 
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Style\Borders;
-use PhpOffice\PhpSpreadsheet\Style\Protection;
-use PhpOffice\PhpSpreadsheet\Style\Style;
-use PhpOffice\PhpSpreadsheet\Writer\Xls\Style\CellAlignment;
-use PhpOffice\PhpSpreadsheet\Writer\Xls\Style\CellBorder;
-use PhpOffice\PhpSpreadsheet\Writer\Xls\Style\CellFill;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Alignment;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Borders;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Protection;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Style;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xls\Style\CellAlignment;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xls\Style\CellBorder;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Xls\Style\CellFill;
 
 // Original file header of PEAR::Spreadsheet_Excel_Writer_Format (used as the base for this class):
 // -----------------------------------------------------------------------------------------

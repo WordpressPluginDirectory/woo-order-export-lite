@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Ods;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Ods;
 
 use DOMElement;
-use PhpOffice\PhpSpreadsheet\DefinedName;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\DefinedName;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class DefinedNames extends BaseLoader
 {

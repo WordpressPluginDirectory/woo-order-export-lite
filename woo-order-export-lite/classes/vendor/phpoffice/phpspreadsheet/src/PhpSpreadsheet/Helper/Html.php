@@ -1,15 +1,15 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Helper;
+namespace WOE\PhpOffice\PhpSpreadsheet\Helper;
 
 use DOMAttr;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMText;
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
-use PhpOffice\PhpSpreadsheet\Style\Color;
-use PhpOffice\PhpSpreadsheet\Style\Font;
+use WOE\PhpOffice\PhpSpreadsheet\RichText\RichText;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Color;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Font;
 
 class Html
 {

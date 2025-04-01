@@ -1,21 +1,21 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-use PhpOffice\PhpSpreadsheet\Chart\Axis;
-use PhpOffice\PhpSpreadsheet\Chart\ChartColor;
-use PhpOffice\PhpSpreadsheet\Chart\DataSeries;
-use PhpOffice\PhpSpreadsheet\Chart\DataSeriesValues;
-use PhpOffice\PhpSpreadsheet\Chart\Layout;
-use PhpOffice\PhpSpreadsheet\Chart\Legend;
-use PhpOffice\PhpSpreadsheet\Chart\PlotArea;
-use PhpOffice\PhpSpreadsheet\Chart\Properties;
-use PhpOffice\PhpSpreadsheet\Chart\Title;
-use PhpOffice\PhpSpreadsheet\Chart\TrendLine;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
-use PhpOffice\PhpSpreadsheet\Style\Font;
-use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\Axis;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\ChartColor;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\DataSeries;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\DataSeriesValues;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\Layout;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\Legend;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\PlotArea;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\Properties;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\Title;
+use WOE\PhpOffice\PhpSpreadsheet\Chart\TrendLine;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Xlsx\Namespaces;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Font;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
 
 class Chart extends WriterPart
 {
@@ -26,7 +26,7 @@ class Chart extends WriterPart
      *
      * @return string XML Output
      */
-    public function writeChart(\PhpOffice\PhpSpreadsheet\Chart\Chart $chart, bool $calculateCellValues = true): string
+    public function writeChart(\WOE\PhpOffice\PhpSpreadsheet\Chart\Chart $chart, bool $calculateCellValues = true): string
     {
         // Create XML writer
         $objWriter = null;

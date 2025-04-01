@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
 
 use DateTime;
 use DateTimeImmutable;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
 
 class Current
 {

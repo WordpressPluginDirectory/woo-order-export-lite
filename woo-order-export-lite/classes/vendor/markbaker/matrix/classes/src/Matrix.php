@@ -8,11 +8,11 @@
  * @license    https://opensource.org/licenses/MIT    MIT
  */
 
-namespace Matrix;
+namespace WOE\Matrix;
 
 use Generator;
-use Matrix\Decomposition\LU;
-use Matrix\Decomposition\QR;
+use WOE\Matrix\Decomposition\LU;
+use WOE\Matrix\Decomposition\QR;
 
 /**
  * Matrix object.

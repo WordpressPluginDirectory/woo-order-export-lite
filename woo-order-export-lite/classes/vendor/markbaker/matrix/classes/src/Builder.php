@@ -8,7 +8,7 @@
  * @license    https://opensource.org/licenses/MIT    MIT
  */
 
-namespace Matrix;
+namespace WOE\Matrix;
 
 /**
  * Matrix Builder class.

@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Financial\Securities;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Financial\Securities;
 
-use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\YearFrac;
-use PhpOffice\PhpSpreadsheet\Calculation\Exception;
-use PhpOffice\PhpSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
-use PhpOffice\PhpSpreadsheet\Calculation\Functions;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\YearFrac;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Functions;
 
 class AccruedInterest
 {

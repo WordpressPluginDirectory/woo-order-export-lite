@@ -1,24 +1,24 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Xls;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Xls;
 
-use Composer\Pcre\Preg;
+use WOE\Composer\Pcre\Preg;
 use GdImage;
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Cell\DataType;
-use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
-use PhpOffice\PhpSpreadsheet\RichText\Run;
-use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
-use PhpOffice\PhpSpreadsheet\Shared\Xls;
-use PhpOffice\PhpSpreadsheet\Style\Border;
-use PhpOffice\PhpSpreadsheet\Style\Borders;
-use PhpOffice\PhpSpreadsheet\Style\Conditional;
-use PhpOffice\PhpSpreadsheet\Style\Protection;
-use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use PhpOffice\PhpSpreadsheet\Worksheet\SheetView;
-use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Cell;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\DataType;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\RichText\RichText;
+use WOE\PhpOffice\PhpSpreadsheet\RichText\Run;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Xls;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Border;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Borders;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Conditional;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Protection;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\SheetView;
+use WOE\PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
 
 // Original file header of PEAR::Spreadsheet_Excel_Writer_Worksheet (used as the base for this class):
 // -----------------------------------------------------------------------------------------
@@ -140,12 +140,12 @@ class Worksheet extends BIFFwriter
     /**
      * Sheet object.
      */
-    public \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $phpSheet;
+    public \WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $phpSheet;
 
     /**
      * Escher object corresponding to MSODRAWING.
      */
-    private ?\PhpOffice\PhpSpreadsheet\Shared\Escher $escher = null;
+    private ?\WOE\PhpOffice\PhpSpreadsheet\Shared\Escher $escher = null;
 
     /**
      * Array of font hashes associated to FONT records index.
@@ -167,9 +167,9 @@ class Worksheet extends BIFFwriter
      * @param array $colors Colour Table
      * @param Parser $parser The formula parser created for the Workbook
      * @param bool $preCalculateFormulas Flag indicating whether formulas should be calculated or just written
-     * @param \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $phpSheet The worksheet to write
+     * @param \WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $phpSheet The worksheet to write
      */
-    public function __construct(int &$str_total, int &$str_unique, array &$str_table, array &$colors, Parser $parser, bool $preCalculateFormulas, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $phpSheet, ?Workbook $writerWorkbook = null)
+    public function __construct(int &$str_total, int &$str_unique, array &$str_table, array &$colors, Parser $parser, bool $preCalculateFormulas, \WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $phpSheet, ?Workbook $writerWorkbook = null)
     {
         // It needs to call its parent's constructor explicitly
         parent::__construct();
@@ -246,7 +246,7 @@ class Worksheet extends BIFFwriter
 
         // Column dimensions
         if (($defaultWidth = $phpSheet->getDefaultColumnDimension()->getWidth()) < 0) {
-            $defaultWidth = \PhpOffice\PhpSpreadsheet\Shared\Font::getDefaultColumnWidthByFont($phpSheet->getParentOrThrow()->getDefaultStyle()->getFont());
+            $defaultWidth = \WOE\PhpOffice\PhpSpreadsheet\Shared\Font::getDefaultColumnWidthByFont($phpSheet->getParentOrThrow()->getDefaultStyle()->getFont());
         }
 
         $columnDimensions = $phpSheet->getColumnDimensions();
@@ -2508,7 +2508,7 @@ class Worksheet extends BIFFwriter
     /**
      * Get Escher object.
      */
-    public function getEscher(): ?\PhpOffice\PhpSpreadsheet\Shared\Escher
+    public function getEscher(): ?\WOE\PhpOffice\PhpSpreadsheet\Shared\Escher
     {
         return $this->escher;
     }
@@ -2516,7 +2516,7 @@ class Worksheet extends BIFFwriter
     /**
      * Set Escher object.
      */
-    public function setEscher(?\PhpOffice\PhpSpreadsheet\Shared\Escher $escher): void
+    public function setEscher(?\WOE\PhpOffice\PhpSpreadsheet\Shared\Escher $escher): void
     {
         $this->escher = $escher;
     }

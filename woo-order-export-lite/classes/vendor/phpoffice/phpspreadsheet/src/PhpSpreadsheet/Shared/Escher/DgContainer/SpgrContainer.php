@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer;
 
 class SpgrContainer
 {

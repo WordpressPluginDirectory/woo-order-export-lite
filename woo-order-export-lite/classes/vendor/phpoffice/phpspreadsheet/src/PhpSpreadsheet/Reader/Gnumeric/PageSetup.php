@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
 
-use PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\PageMargins;
-use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup as WorksheetPageSetup;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\PageMargins;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup as WorksheetPageSetup;
 use SimpleXMLElement;
 
 class PageSetup

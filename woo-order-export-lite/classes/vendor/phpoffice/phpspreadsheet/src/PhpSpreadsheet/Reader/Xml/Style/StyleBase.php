@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
 
 use SimpleXMLElement;
 

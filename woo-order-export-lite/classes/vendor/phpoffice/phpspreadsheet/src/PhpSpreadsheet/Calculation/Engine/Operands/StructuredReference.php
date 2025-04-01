@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\Engine\Operands;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Engine\Operands;
 
-use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
-use PhpOffice\PhpSpreadsheet\Calculation\Exception;
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Worksheet\Table;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Calculation;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Cell;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Table;
 use Stringable;
 
 final class StructuredReference implements Operand, Stringable
@@ -80,7 +80,7 @@ final class StructuredReference implements Operand, Stringable
 
     /**
      * @throws Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \WOE\PhpOffice\PhpSpreadsheet\Exception
      */
     public function parse(Cell $cell): string
     {
@@ -103,7 +103,7 @@ final class StructuredReference implements Operand, Stringable
 
     /**
      * @throws Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \WOE\PhpOffice\PhpSpreadsheet\Exception
      */
     private function getTableStructure(Cell $cell): void
     {
@@ -131,7 +131,7 @@ final class StructuredReference implements Operand, Stringable
 
     /**
      * @throws Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \WOE\PhpOffice\PhpSpreadsheet\Exception
      */
     private function getTableForCell(Cell $cell): Table
     {
@@ -151,7 +151,7 @@ final class StructuredReference implements Operand, Stringable
 
     /**
      * @throws Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \WOE\PhpOffice\PhpSpreadsheet\Exception
      */
     private function getTableByName(Cell $cell): Table
     {
@@ -222,7 +222,7 @@ final class StructuredReference implements Operand, Stringable
 
     /**
      * @throws Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \WOE\PhpOffice\PhpSpreadsheet\Exception
      */
     private function getColumnReference(): string
     {
@@ -246,7 +246,7 @@ final class StructuredReference implements Operand, Stringable
 
     /**
      * @throws Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \WOE\PhpOffice\PhpSpreadsheet\Exception
      */
     private function validateParsedReference(string $reference): string
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Cell;
+namespace WOE\PhpOffice\PhpSpreadsheet\Cell;
 
 /**
  * @template T

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Composer\Pcre\PHPStan;
+namespace WOE\Composer\Pcre\PHPStan;
 
 use PHPStan\Analyser\Scope;
 use PHPStan\Type\ArrayType;

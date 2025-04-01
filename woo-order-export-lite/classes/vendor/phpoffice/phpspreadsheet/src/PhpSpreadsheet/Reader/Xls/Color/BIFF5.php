@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xls\Color;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xls\Color;
 
 class BIFF5
 {

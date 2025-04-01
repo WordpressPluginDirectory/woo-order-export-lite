@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Shared\Trend;
+namespace WOE\PhpOffice\PhpSpreadsheet\Shared\Trend;
 
 class PowerBestFit extends BestFit
 {

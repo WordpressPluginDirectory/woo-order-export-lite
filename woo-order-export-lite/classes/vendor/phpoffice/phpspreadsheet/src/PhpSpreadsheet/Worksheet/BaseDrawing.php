@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Worksheet;
+namespace WOE\PhpOffice\PhpSpreadsheet\Worksheet;
 
-use PhpOffice\PhpSpreadsheet\Cell\Hyperlink;
-use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
-use PhpOffice\PhpSpreadsheet\IComparable;
-use PhpOffice\PhpSpreadsheet\Worksheet\Drawing\Shadow;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Hyperlink;
+use WOE\PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use WOE\PhpOffice\PhpSpreadsheet\IComparable;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Drawing\Shadow;
 use SimpleXMLElement;
 
 class BaseDrawing implements IComparable

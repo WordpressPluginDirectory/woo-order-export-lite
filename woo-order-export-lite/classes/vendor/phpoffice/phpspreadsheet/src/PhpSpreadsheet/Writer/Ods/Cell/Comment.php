@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Writer\Ods\Cell;
+namespace WOE\PhpOffice\PhpSpreadsheet\Writer\Ods\Cell;
 
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
-use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Cell;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
 
 /**
  * @author     Alexander Pervakov <frost-nzcr4@jagmort.com>

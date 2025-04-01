@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\MathTrig;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\MathTrig;
 
-use Matrix\Builder;
-use Matrix\Div0Exception as MatrixDiv0Exception;
-use Matrix\Exception as MatrixException;
-use Matrix\Matrix;
-use PhpOffice\PhpSpreadsheet\Calculation\Exception;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\Matrix\Builder;
+use WOE\Matrix\Div0Exception as MatrixDiv0Exception;
+use WOE\Matrix\Exception as MatrixException;
+use WOE\Matrix\Matrix;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
 
 class MatrixFunctions
 {

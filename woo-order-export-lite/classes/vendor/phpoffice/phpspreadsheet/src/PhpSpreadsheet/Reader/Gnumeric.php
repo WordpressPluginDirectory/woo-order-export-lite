@@ -1,19 +1,19 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader;
 
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Cell\DataType;
-use PhpOffice\PhpSpreadsheet\DefinedName;
-use PhpOffice\PhpSpreadsheet\Reader\Gnumeric\PageSetup;
-use PhpOffice\PhpSpreadsheet\Reader\Gnumeric\Properties;
-use PhpOffice\PhpSpreadsheet\Reader\Gnumeric\Styles;
-use PhpOffice\PhpSpreadsheet\Reader\Security\XmlScanner;
-use PhpOffice\PhpSpreadsheet\ReferenceHelper;
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
-use PhpOffice\PhpSpreadsheet\Shared\File;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\DataType;
+use WOE\PhpOffice\PhpSpreadsheet\DefinedName;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Gnumeric\PageSetup;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Gnumeric\Properties;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Gnumeric\Styles;
+use WOE\PhpOffice\PhpSpreadsheet\Reader\Security\XmlScanner;
+use WOE\PhpOffice\PhpSpreadsheet\ReferenceHelper;
+use WOE\PhpOffice\PhpSpreadsheet\RichText\RichText;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\File;
+use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use SimpleXMLElement;
 use XMLReader;
 

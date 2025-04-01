@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xml\Style;
 
-use PhpOffice\PhpSpreadsheet\Style\Font as FontUnderline;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Font as FontUnderline;
 use SimpleXMLElement;
 
 class Font extends StyleBase

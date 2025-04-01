@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
+namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
 
 use DateTime;
 use DateTimeImmutable;
-use PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
-use PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
-use PhpOffice\PhpSpreadsheet\Shared\Date as SharedDateHelper;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
+use WOE\PhpOffice\PhpSpreadsheet\Shared\Date as SharedDateHelper;
 
 class DateValue
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Reader\Xls\Style;
+namespace WOE\PhpOffice\PhpSpreadsheet\Reader\Xls\Style;
 
-use PhpOffice\PhpSpreadsheet\Style\Fill;
+use WOE\PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class FillPattern
 {

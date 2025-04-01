@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpOffice\PhpSpreadsheet\Worksheet\Table;
+namespace WOE\PhpOffice\PhpSpreadsheet\Worksheet\Table;
 
-use PhpOffice\PhpSpreadsheet\Worksheet\Table;
+use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Table;
 
 class TableStyle
 {
