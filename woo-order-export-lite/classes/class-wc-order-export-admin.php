@@ -1,7 +1,4 @@
 <?php
-
-use Automattic\WooCommerce\Utilities\FeaturesUtil;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -27,12 +24,6 @@ class WC_Order_Export_Admin {
 		$this->path_views_default = dirname( plugin_dir_path( __FILE__ ) ) . "/view/";
 
 		add_action( 'init', array( $this, 'load_textdomain' ) );
-
-        add_action( 'before_woocommerce_init', function() {
-            if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-                FeaturesUtil::declare_compatibility( 'custom_order_tables', WOE_PLUGIN_PATH, true );
-            }
-        } );
 
 		if ( is_admin() ) { // admin actions
 			add_action( 'admin_menu', array( $this, 'add_menu' ) );

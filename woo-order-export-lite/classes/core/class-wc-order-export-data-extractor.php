@@ -216,8 +216,8 @@ class WC_Order_Export_Data_Extractor {
 			}// operators
 		}
 
-		$orders_where = array();
-		self::apply_order_filters_to_sql( $orders_where, $settings );
+		$orders_where = $where_refund_subsql = array();
+		self::apply_order_filters_to_sql( $orders_where, $where_refund_subsql, $settings );
 		if ( $orders_where ) {
 			$left_join_order_items_meta[] = "LEFT JOIN {$wpdb->posts}  AS `orders` ON `orders`.ID  = order_items.order_id";
 			$order_items_meta_where[]     = "( " . join( " AND ", $orders_where ) . " )";
@@ -687,15 +687,23 @@ class WC_Order_Export_Data_Extractor {
 		$order_types = join( ",", apply_filters( "woe_sql_order_types", $order_types ) );
 
 		//top_level
-		$where = array( "orders.post_type in ( $order_types)" );
-		self::apply_order_filters_to_sql( $where, $settings );
+		$where = array( "orders.post_type in ($order_types)" );
+		$where_refund_subsql = array();
+		self::apply_order_filters_to_sql( $where, $where_refund_subsql, $settings );
 		$where     = apply_filters( 'woe_sql_get_order_ids_where', $where, $settings );
 		$order_sql = apply_filters( 'woe_sql_get_order_ids_where_AND', join( " AND ", $where ), $settings );
 
 		$final_where = "$order_sql $order_meta_where $order_items_where";
 		//final for refunds
 		if ( $settings['export_refunds'] ) {
-			$refund_sql = self::build_refund_sql($settings);
+			if ( self::main_filter_empty($where_refund_subsql) AND  empty($order_meta_where) ) {
+				$refund_parent_sql = '';
+			} else {
+				$refund_parent_where = join( " AND ", $where_refund_subsql);
+				$final_where_refund_parent = "$refund_parent_where $order_meta_where";
+				$refund_parent_sql = "SELECT orders.ID AS parent_order_id FROM {$wpdb->posts} AS orders	{$left_join_order_meta}	WHERE $final_where_refund_parent";
+			}
+			$refund_sql = self::build_refund_sql($settings,$refund_parent_sql) . $order_items_where;
 			$final_where = "($final_where)  OR ($refund_sql)";
 		}
 
@@ -711,7 +719,14 @@ class WC_Order_Export_Data_Extractor {
 		return $sql;
 	}
 
-	private static function build_refund_sql($settings) {
+	 private static function main_filter_empty($where){
+		 return count($where) ==2 AND
+			$where[0] == "orders.post_type in ('shop_order')" AND
+			$where[1] == "orders.post_status NOT in ('auto-draft','trash')";
+
+	}
+
+	private static function build_refund_sql($settings,$refund_parent_sql) {
 		$date_field = 'date'; //date created
 		$use_timestamps = false;
 		$where_meta = [];// unused
@@ -721,6 +736,8 @@ class WC_Order_Export_Data_Extractor {
 		}
 		if ( $settings['export_unmarked_orders'] )
 			$where[] = "ordermeta_cf_export_unmarked_orders.meta_value IS NULL";
+		if( $refund_parent_sql )
+			$where[] = "orders.post_parent in ($refund_parent_sql)";
 		return join(" AND ", $where);
 	}
 
@@ -736,7 +753,7 @@ class WC_Order_Export_Data_Extractor {
 		}
 	}
 
-	private static function apply_order_filters_to_sql( &$where, $settings ) {
+	private static function apply_order_filters_to_sql( &$where, &$where_refund_subsql, $settings ) {
 		global $wpdb;
 
 		if ( ! empty( $settings['order_ids'] ) ) {
@@ -773,12 +790,21 @@ class WC_Order_Export_Data_Extractor {
 				$date_field = 'completed_date';
 			}
 		}
-		$where_meta = array();
+
+		// Skip drafts and deleted
+		$where[] = "orders.post_status NOT in ('auto-draft','trash')";
+		$where_refund_subsql = $where;
 
 		// export and date rule
+		$where_meta = array();
 
 		foreach ( self::get_date_range( $settings, true, $use_timestamps ) as $date ) {
 			self::add_date_filter( $where, $where_meta, $date_field, $date );
+		}
+		//for date_paid or date_completed
+		if ( $where_meta ) {
+			$where_meta = join( " AND ", $where_meta );
+			$where[]    = "orders.ID  IN ( SELECT post_id FROM {$wpdb->postmeta} AS order_$date_field WHERE order_$date_field.meta_key ='_$date_field' AND $where_meta)";
 		}
 
 		// end export and date rule
@@ -790,19 +816,12 @@ class WC_Order_Export_Data_Extractor {
 			}
 		}
 
-		//for date_paid or date_completed
-		if ( $where_meta ) {
-			$where_meta = join( " AND ", $where_meta );
-			$where[]    = "orders.ID  IN ( SELECT post_id FROM {$wpdb->postmeta} AS order_$date_field WHERE order_$date_field.meta_key ='_$date_field' AND $where_meta)";
-		}
 
 		// skip child orders?
 		if ( $settings['skip_suborders']  ) {
 			$where[] = "orders.post_parent=0";
 		}
 
-		// Skip drafts and deleted
-		$where[] = "orders.post_status NOT in ('auto-draft','trash')";
 	}
 
 

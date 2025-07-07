@@ -9,25 +9,22 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 
 	public function ajax_preview() {
         $this->check_nonce();
-		global $wp_filter;
-		
+
 		$settings = WC_Order_Export_Manage::use_ready_or_prepare_settings( $_POST ); //phpcs:ignore WordPress.Security.NonceVerification.Missing
 		// use unsaved settings
 
 		$id = isset($_POST['id']) ? sanitize_text_field(wp_unslash($_POST['id'])) : ''; //phpcs:ignore WordPress.Security.NonceVerification.Missing
 		do_action( 'woe_start_preview_job', $id, $settings );
-		
+
 		WC_Order_Export_Engine::kill_buffers();
-		
+
 		ob_start(); // we need html for preview , even empty!
-		
-		$currrent_wp_filter = $wp_filter;
+
 		$total = WC_Order_Export_Engine::build_file( $settings, 'estimate_preview', 'file', 0, 0, 'test');
-		$wp_filter = $currrent_wp_filter;//revert all hooks/fiilters added by build_file
 
 		$limit = isset($_POST['limit']) ? sanitize_text_field(wp_unslash($_POST['limit'])) : ''; //phpcs:ignore WordPress.Security.NonceVerification.Missing
 		WC_Order_Export_Engine::build_file( $settings, 'preview', 'browser', 0, $limit );
-		
+
 		$html = ob_get_contents();
 		ob_end_clean();
 
@@ -72,8 +69,8 @@ trait WC_Order_Export_Admin_Tab_Abstract_Ajax_Export {
 		$file_id = current_time( 'timestamp' );
 		set_transient( $this->tempfile_prefix . $file_id, $filename, 5 * MINUTE_IN_SECONDS );
 		$this->stop_prevent_object_cache();
-		echo json_encode( array( 
-			'total' => $result['total'], 
+		echo json_encode( array(
+			'total' => $result['total'],
 			'file_id' => $file_id,
 			'max_line_items' => $result['max_line_items'],
 			'max_coupons' => $result['max_coupons'],

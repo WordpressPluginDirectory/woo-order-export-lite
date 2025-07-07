@@ -235,8 +235,8 @@ class WC_Order_Export_Data_Extractor {
 			}// operators
 		}
 
-		$orders_where = array();
-		self::apply_order_filters_to_sql( $orders_where, $settings );
+		$orders_where = $where_refund_subsql = array();
+		self::apply_order_filters_to_sql( $orders_where, $where_refund_subsql,$settings );
 		if ( $orders_where ) {
 			$left_join_order_items_meta[] = "LEFT JOIN {$wpdb->prefix}wc_orders  AS `orders` ON `orders`.id  = order_items.order_id";
 			$order_items_meta_where[]     = "( " . join( " AND ", $orders_where ) . " )";
@@ -513,7 +513,7 @@ class WC_Order_Export_Data_Extractor {
 		if ( $settings['sort'] ) {
 			$sort_field = $settings['sort'];
 
-			if ( ! in_array( $settings['sort'], WC_Order_Export_Engine::get_wc_orders_fields() ) ) {
+			if ( ! in_array( $settings['sort'], WC_Order_Export_Engine::get_wp_posts_fields() ) ) {// we get legacy fields from UI
 				$pos = "sort";
 				$left_join_order_meta[] = "LEFT JOIN {$wpdb->prefix}wc_orders_meta AS ordermeta_cf_{$pos} " .
 				                          "ON ordermeta_cf_{$pos}.order_id = orders.id AND ordermeta_cf_{$pos}.meta_key='{$sort_field}'";
@@ -741,14 +741,22 @@ class WC_Order_Export_Data_Extractor {
 
 		$where = array( "orders.type in ($order_types)" );
 		$where = array_merge ($where, $HPOS_order_fields_where);
-		self::apply_order_filters_to_sql( $where, $settings );
+		$where_refund_subsql = array();
+		self::apply_order_filters_to_sql( $where, $where_refund_subsql,$settings );
 		$where     = apply_filters( 'woe_sql_get_order_ids_where', $where, $settings );
 		$order_sql = join( " AND ", $where );
 
 		$final_where = "$order_sql $order_meta_where $order_items_where";
 		//final for refunds
 		if ( $settings['export_refunds'] ) {
-			$refund_sql = self::build_refund_sql($settings);
+			if ( self::main_filter_empty($where_refund_subsql) AND  empty($order_meta_where) ) {
+				$refund_parent_sql = '';
+			} else {
+				$refund_parent_where = join( " AND ", $where_refund_subsql);
+				$final_where_refund_parent = "$refund_parent_where $order_meta_where";
+				$refund_parent_sql = "SELECT orders.id AS parent_order_id FROM {$wpdb->prefix}wc_orders AS orders	{$left_join_order_meta}	WHERE $final_where_refund_parent";
+			}
+			$refund_sql = self::build_refund_sql($settings,$refund_parent_sql) . $order_items_where;
 			$final_where = "($final_where)  OR ($refund_sql)";
 		}
 
@@ -764,7 +772,15 @@ class WC_Order_Export_Data_Extractor {
 		return $sql;
 	}
 
-	private static function build_refund_sql($settings) {
+	 private static function main_filter_empty($where){
+		 return count($where) ==2 AND
+			$where[0] == "orders.type in ('shop_order')" AND
+			$where[1] == "orders.status NOT in ('auto-draft','trash')";
+
+	}
+
+
+	private static function build_refund_sql($settings,$refund_parent_sql) {
 		$date_field = 'date'; //date created
 		$use_timestamps = false;
 		$where_meta = [];// unused
@@ -774,6 +790,8 @@ class WC_Order_Export_Data_Extractor {
 		}
 		if ( $settings['export_unmarked_orders'] )
 			$where[] = "ordermeta_cf_export_unmarked_orders.meta_value IS NULL";
+		if( $refund_parent_sql )
+			$where[] = "orders.parent_order_id in ($refund_parent_sql)";
 		return join(" AND ", $where);
 	}
 
@@ -790,7 +808,7 @@ class WC_Order_Export_Data_Extractor {
 		}
 	}
 
-	private static function apply_order_filters_to_sql( &$where, $settings ) {
+	private static function apply_order_filters_to_sql( &$where, &$where_refund_subsql, $settings ) {
 		global $wpdb;
 
 		if ( ! empty( $settings['order_ids'] ) ) {
@@ -829,15 +847,10 @@ class WC_Order_Export_Data_Extractor {
 //				$date_field = 'completed_date';
 //			}
 //		}
-		$where_meta = array();
+		// Skip drafts and deleted
+		$where[] = "orders.status NOT in ('auto-draft','trash')";
 
-		// export and date rule
-
-		foreach ( self::get_date_range( $settings, true, $use_timestamps, true ) as $date ) {
-			self::add_date_filter( $where, $where_meta, $date_field, $date );
-		}
-
-		// end export and date rule
+		$where_refund_subsql = $where;
 
 		if ( $settings['statuses'] ) {
 			$values = self::sql_subset( $settings['statuses'] );
@@ -845,20 +858,24 @@ class WC_Order_Export_Data_Extractor {
 				$where[] = "orders.status in ($values)";
 			}
 		}
-
-		//for date_paid or date_completed
-		if ( $where_meta ) {
-			$where_meta = join( " AND ", $where_meta );
-			$where[]    = "orders.id  IN ( SELECT order_id FROM {$wpdb->prefix}wc_order_operational_data AS order_$date_field WHERE $where_meta)";
-		}
-
 		// skip child orders?
 		if ( $settings['skip_suborders'] ) {
 			$where[] = "orders.parent_order_id=0";
 		}
 
-		// Skip drafts and deleted
-		$where[] = "orders.status NOT in ('auto-draft','trash')";
+
+		// export and date rule
+		$where_meta = array();
+
+		foreach ( self::get_date_range( $settings, true, $use_timestamps, true ) as $date ) {
+			self::add_date_filter( $where, $where_meta, $date_field, $date );
+		}
+		//for date_paid or date_completed
+		if ( $where_meta ) {
+			$where_meta = join( " AND ", $where_meta );
+			$where[]    = "orders.id  IN ( SELECT order_id FROM {$wpdb->prefix}wc_order_operational_data AS order_$date_field WHERE $where_meta)";
+		}
+		// end export and date rule
 	}
 
 	public static function get_order_shipping_tax_refunded( $order_id ) {

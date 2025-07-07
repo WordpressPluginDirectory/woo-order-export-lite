@@ -363,14 +363,14 @@ class WC_Order_Export_Engine {
 				return 0;
 			});
 		}
-		
+
 		$options['strip_tags_product_fields'] = ! empty( $settings['strip_tags_product_fields'] );
         $options['strip_html_tags'] = ! empty( $settings['strip_html_tags'] );
 
 		return $options;
 	}
 
-	protected static function validate_defaults( $settings ) {
+	protected static function validate_defaults( $settings, $allow_custom_code=true ) {
 		if ( empty( $settings['sort'] ) ) {
 			$settings['sort'] = 'order_id';
 		}
@@ -380,8 +380,8 @@ class WC_Order_Export_Engine {
 		if ( ! isset( $settings['skip_empty_file'] ) ) {
 			$settings['skip_empty_file'] = true;
 		}
-		//  
-		if ( $settings['custom_php'] ) {  
+		//
+		if ( $settings['custom_php'] AND $allow_custom_code) {
 			ob_start( array( 'WC_Order_Export_Engine', 'code_error_callback' ) );
 			// phpcs:ignore Generic.PHP.ForbiddenFunctions.Found
 			$result = eval( $settings['custom_php_code'] );
@@ -468,7 +468,7 @@ class WC_Order_Export_Engine {
 		if($make_mode != 'preview' AND $make_mode != 'estimate_preview') { // caller  uses kill_buffers() already
 			self::kill_buffers();
 		}
-		$settings                     = self::validate_defaults( $settings );
+		$settings                     = self::validate_defaults( $settings, $make_mode != 'preview' );
 
 		self::$current_job_settings   = $settings;
 		self::$date_format            = trim( $settings['date_format'] . ' ' . $settings['time_format'] );
@@ -555,7 +555,7 @@ class WC_Order_Export_Engine {
 		self::$orders_exported = 0;// incorrect value
 		foreach ( $order_ids as $order_id ) {
 			$order_id = apply_filters( "woe_order_export_started", $order_id );
-			if ( ! $order_id ) {
+			if ( ! $order_id OR self::skip_order_if_has_excluded_products($order_id)) {
 				continue;
 			}
 			self::$order_id = $order_id;
@@ -611,7 +611,7 @@ class WC_Order_Export_Engine {
 		self::$current_job_build_mode = 'full';
 		self::$date_format            = trim( $settings['date_format'] . ' ' . $settings['time_format'] );
 		self::$extractor_options      = self::_install_options( $settings, $order_ids );
-		
+
 		$main_settings = WC_Order_Export_Main_Settings::get_settings();
 
 		$filename = self::get_filename($settings['format'], $filename);
@@ -667,7 +667,7 @@ class WC_Order_Export_Engine {
 		self::$orders_exported = 0;
 		foreach ( $order_ids as $order_id ) {
 			$order_id = apply_filters( "woe_order_export_started", $order_id );
-			if ( ! $order_id ) {
+			if ( ! $order_id OR self::skip_order_if_has_excluded_products($order_id)) {
 				continue;
 			}
 			self::$order_id = $order_id;
@@ -716,6 +716,13 @@ class WC_Order_Export_Engine {
             $isHPOSEnabled ? self::get_wc_orders_fields() : self::get_wp_posts_fields() ) ?
             'ordermeta_cf_sort.meta_value' : $settings['sort'];
 		$settings['sort'] = apply_filters("woe_adjust_sort_field", $settings['sort'], $settings);
+		//fix for DATE fields only!
+		if( in_array($settings['sort'], ['post_date','post_modified','date_created_gmt','date_updated_gmt']) ) {
+			remove_all_filters('woe_sql_get_order_ids_order_by', 0);
+			add_filter('woe_sql_get_order_ids_order_by', function($order_by) {
+				return $order_by. ", order_id ASC";
+			}, 0);
+		}
 		return $settings;
 	}
 
@@ -749,4 +756,17 @@ class WC_Order_Export_Engine {
         }
         return $isHPOSEnabled;
     }
+
+    public static function skip_order_if_has_excluded_products($order_id) {
+		$skip_products = self::$current_job_settings['exclude_products'];
+		if(!self::$current_job_settings['skip_order_having_excluded_products'] OR empty($skip_products) )
+			return false;
+
+		$order = wc_get_order($order_id);
+		foreach($order->get_items() as $item) {
+			if( in_array($item->get_product_id(),$skip_products))
+				return true;
+		}
+		return  false;
+	}
 }

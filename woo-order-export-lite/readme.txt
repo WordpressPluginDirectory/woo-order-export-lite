@@ -4,8 +4,8 @@ Donate link:
 Tags: order export,export orders,woocommerce,order,export
 Requires PHP: 8.1.0
 Requires at least: 4.7
-Tested up to: 6.7
-Stable tag: 4.0.2
+Tested up to: 6.8
+Stable tag: 4.0.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -100,9 +100,6 @@ You  should open tab "CSV" and set up ISO-8859-1 as codepage.
 = Preview shows wrong values,  I use Summary mode =
 This button processes only first 5 orders by default, so you should run the export to see correct values.
 
-= Is it compatible with "WooCommerce Custom Orders Table" plugin (by Liquid Web) ? =
-No, as we provide a lot of filters which can not be implemented using WooCommerce classes. So we use direct access to database/tables.
-
 = Where does free version save files? = 
 Free version doesn't save generated file on your webserver, you can only download it using browser.
 
@@ -120,9 +117,18 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 
 == Changelog ==
 
+= 4.0.3 - 2025-07-07 =
+* Mode "Export refunds" supports product filters
+* New option "Skip order having any excluded products" (>Filter by product)
+* New fields "Brand", "Cost of goods" (>Setup Fields>Products)
+* Fixed bug - field "Coupon description" was empty
+* Fixed bug - duplicates in export if many orders have same dates
+* Fixed bug - PHP functions (added to section "Misc Settings") shown error "Cannot redeclare function"
+* Fixed bug - incorrectly declared HPOS compatibility
+
 = 4.0.2 - 2025-04-01 =
 * Fixed critical bug - fatal error on page load (if WooCommerce runs in mode "WordPress posts storage (legacy)")
-* Fixed critical bug - conflict with other plugins used outdated versions of same libraries ("FireBird Pro" and etc)
+* Fixed critical bug - conflict with other plugins used outdated versions of same libraries ("FileBird Pro" and etc)
 
 = 4.0.1 - 2025-03-26 =
 * Requires PHP 8.1+

@@ -9,6 +9,7 @@ class WC_Order_Export_Order_Fields {
      */
 	var $order;
 	var $order_type;
+	var $is_refund;
 	var $order_id;
 	var $parent_order;
 	var $main_order;
@@ -36,6 +37,16 @@ class WC_Order_Export_Order_Fields {
 
 		$order_data_store = WC_Data_Store::load( 'order' );
 		$this->order_type = $order_data_store->get_order_type( $this->order_id );
+		$this->is_refund = ( $this->order_type == 'shop_order_refund' );
+
+        //for refunds
+		$parent_order_id = method_exists( $this->order,
+			'get_parent_id' ) ? $this->order->get_parent_id() : $this->order->post->post_parent;
+		$this->parent_order    = $parent_order_id ? new WC_Order( $parent_order_id ) : false;
+		$this->post            = method_exists( $this->order, 'get_id' ) ? get_post( $this->order->get_id() ) : $this->order->post;
+
+		//address details from this order
+		$this->main_order  = $this->parent_order ? $this->parent_order : $this->order;
 
 		// get order meta
 		$this->order_meta = array();
@@ -45,7 +56,7 @@ class WC_Order_Export_Order_Fields {
                 $meta_value = $meta_data->value;
                 if ( is_array($meta_value) OR is_object($meta_value) )
 					$meta_value = json_encode($meta_value);
-				if( !isset($this->order_meta[$meta_key]) )	
+				if( !isset($this->order_meta[$meta_key]) )
 					$this->order_meta[$meta_key] = $meta_value;
 				elseif (!apply_filters('woe_use_first_order_meta', false))
                      $this->order_meta[$meta_key] .= WC_Order_Export_Data_Extractor::$export_custom_fields_separator . $meta_value;
@@ -61,22 +72,13 @@ class WC_Order_Export_Order_Fields {
 
         // get billing email via wc method that needed for other fields, if it isn't in meta
 		if (!isset($this->order_meta['_billing_email'])) {
-            $this->order_meta['_billing_email'] = $this->order->get_billing_email();
+            $this->order_meta['_billing_email'] =  $this->is_refund ? $this->parent_order->get_billing_email() : $this->order->get_billing_email();
         }
-        //for refunds
-		$parent_order_id = method_exists( $this->order,
-			'get_parent_id' ) ? $this->order->get_parent_id() : $this->order->post->post_parent;
-		$this->parent_order    = $parent_order_id ? new WC_Order( $parent_order_id ) : false;
-		$this->post            = method_exists( $this->order, 'get_id' ) ? get_post( $this->order->get_id() ) : $this->order->post;
-
-		//address details from this order
-		$this->main_order  = $this->parent_order ? $this->parent_order : $this->order;
 
 		// correct meta for child orders
 		if ( $parent_order_id ) {
 			// overwrite child values for refunds
-			$is_refund                  = ( $this->order_type == 'shop_order_refund' );
-			$overwrite_child_order_meta = apply_filters( 'woe_overwrite_child_order_meta', $is_refund );
+			$overwrite_child_order_meta = apply_filters( 'woe_overwrite_child_order_meta', $this->is_refund );
 
 			if ( !$legacy_mode ) { //HPOS
 				//reformat $parent_order_meta
@@ -84,7 +86,7 @@ class WC_Order_Export_Order_Fields {
 				foreach( $this->parent_order->get_meta_data() as $parent_meta) {
 					$key = $parent_meta->key;
 					$value = $parent_meta->value;
-					if( !is_string($value)) 
+					if( !is_string($value))
 						$value = json_encode($value);
 					if( !isset($formatted_order_meta[$key]) )
 						$formatted_order_meta[$key] = array($value);
@@ -105,7 +107,7 @@ class WC_Order_Export_Order_Fields {
 			}
 
 			//refund status
-			if ( $is_refund ) {
+			if ( $this->is_refund ) {
 				$this->order_status = 'refunded';
 			}
 		}
@@ -176,7 +178,7 @@ class WC_Order_Export_Order_Fields {
 	public function get_parent_order() {
 		return $this->parent_order;
 	}
-	
+
 	public function get_one_field($field) {
 		$row = array( $field=>'');
 		$row = $this->get($row, $field);
@@ -290,34 +292,34 @@ class WC_Order_Export_Order_Fields {
 			$row[$field] = wc_round_tax_total( $this->order->get_subtotal() + floatval($this->order->get_cart_tax()) );
 		} elseif ( $field == 'order_subtotal_minus_discount' ) {
 			$row[$field] = $this->order->get_subtotal() - $this->order->get_total_discount();
-		} elseif ( $field == 'order_subtotal_refunded' ) {
+		} elseif ( $field == 'order_subtotal_refunded' AND !$this->is_refund ) {
 			$row[$field] = wc_round_tax_total( WC_Order_Export_Data_Extractor::get_order_subtotal_refunded( $this->order ) );
-		} elseif ( $field == 'order_subtotal_minus_refund' ) {
+		} elseif ( $field == 'order_subtotal_minus_refund' AND !$this->is_refund ) {
 			$row[$field] = wc_round_tax_total( $this->order->get_subtotal() - WC_Order_Export_Data_Extractor::get_order_subtotal_refunded( $this->order ) );
 			//order total
 		} elseif ( $field == 'order_total' ) {
 			$row[$field] = $this->order->get_total();
 		} elseif ( $field == 'order_total_no_tax' ) {
 			$row[$field] = $this->order->get_total() - $this->order->get_total_tax();
-		} elseif ( $field == 'order_refund' ) {
+		} elseif ( $field == 'order_refund'  AND !$this->is_refund) {
 			$row[$field] = $this->order->get_total_refunded();
-		} elseif ( $field == 'order_total_inc_refund' ) {
+		} elseif ( $field == 'order_total_inc_refund'  AND !$this->is_refund) {
 			$row[$field] = $this->order->get_total() - $this->order->get_total_refunded();
 			//shipping
 		} elseif ( $field == 'order_shipping' ) {
 			$row[$field] = method_exists($this->order,"get_shipping_total") ? $this->order->get_shipping_total() : $this->order->get_total_shipping();
 		} elseif ( $field == 'order_shipping_plus_tax' ) {
 			$row[$field] = ( method_exists($this->order,"get_shipping_total") ? floatval($this->order->get_shipping_total()) : floatval( $this->order->get_total_shipping() ) ) + floatval( $this->order->get_shipping_tax() );
-		} elseif ( $field == 'order_shipping_refunded' ) {
+		} elseif ( $field == 'order_shipping_refunded' AND !$this->is_refund ) {
 			$row[$field] = $this->order->get_total_shipping_refunded();
-		} elseif ( $field == 'order_shipping_minus_refund' ) {
+		} elseif ( $field == 'order_shipping_minus_refund'  AND !$this->is_refund ) {
 			$row[$field] = floatval( method_exists($this->order,"get_shipping_total") ? $this->order->get_shipping_total() : $this->order->get_total_shipping() ) - $this->order->get_total_shipping_refunded();
 			//shipping tax
 		} elseif ($field == 'order_shipping_tax') {
             $row[$field] = $this->order->get_shipping_tax();
-        } elseif ( $field == 'order_shipping_tax_refunded' ) {
+        } elseif ( $field == 'order_shipping_tax_refunded'  AND !$this->is_refund ) {
 			$row[$field] = WC_Order_Export_Data_Extractor::get_order_shipping_tax_refunded( $this->order_id );
-		} elseif ( $field == 'order_shipping_tax_minus_refund' ) {
+		} elseif ( $field == 'order_shipping_tax_minus_refund' AND !$this->is_refund ) {
 			$row[$field] = floatval($this->order->get_shipping_tax()) - WC_Order_Export_Data_Extractor::get_order_shipping_tax_refunded( $this->order_id );
 			//order tax
 		} elseif ( $field == 'order_tax' ) {
@@ -328,9 +330,9 @@ class WC_Order_Export_Order_Fields {
 			}, $this->order->get_fees() ) );
 		} elseif ( $field == 'order_total_tax' ) {
 			$row[$field] = wc_round_tax_total( $this->order->get_total_tax() );
-		} elseif ( $field == 'order_total_tax_refunded' ) {
+		} elseif ( $field == 'order_total_tax_refunded' AND !$this->is_refund ) {
 			$row[$field] = wc_round_tax_total( $this->order->get_total_tax_refunded() );
-		} elseif ( $field == 'order_total_tax_minus_refund' ) {
+		} elseif ( $field == 'order_total_tax_minus_refund' AND !$this->is_refund ) {
 			$row[$field] = wc_round_tax_total( $this->order->get_total_tax() - $this->order->get_total_tax_refunded() );
 		} elseif ( $field == 'order_status' ) {
 			$status        = empty( $this->order_status ) ? $this->order->get_status() : $this->order_status;
@@ -342,7 +344,7 @@ class WC_Order_Export_Order_Fields {
 			$roles         = $wp_roles->roles;
 			if( $this->user ) {
 				$role = reset($this->user->roles); // take first role Name
-				$row[$field] =  isset( $roles[ $role ] ) ? $roles[ $role ]['name'] : $role; 
+				$row[$field] =  isset( $roles[ $role ] ) ? $roles[ $role ]['name'] : $role;
 				$row[$field] =  translate_user_role( $row[$field] );
 			}
 			else
@@ -439,7 +441,7 @@ class WC_Order_Export_Order_Fields {
                 $value +=  $item->get_quantity() * floatval($product->get_width()) * floatval($product->get_height()) * floatval($product->get_length());
             }
             $row[$field] = $value;
-		} elseif ( $field == 'customer_note' ) {
+		} elseif ( $field == 'customer_note' AND !$this->is_refund) {
 			$notes = array( $this->order->get_customer_note() );
 			if ( $this->options['export_refund_notes'] ) {
 				$refunds = $this->order->get_refunds();
@@ -450,9 +452,10 @@ class WC_Order_Export_Order_Fields {
 				}
 			}
 			$row[$field] = implode( "\n", array_filter( $notes ) );
-		} elseif ( $field == 'first_refund_date' ) {
+		} elseif ( $field == 'first_refund_date' AND !$this->is_refund) {
 			$value = '';
 			foreach ( $this->order->get_refunds() as $refund ) {
+				if(!$refund) continue;//bug -- we get null object?
 				$value = ! method_exists( $refund,
 					"get_date_created" ) ? $refund->date : ( $refund->get_date_created() ? gmdate( 'Y-m-d H:i:s',
 					$refund->get_date_created()->getOffsetTimestamp() ) : '' );
@@ -515,7 +518,7 @@ class WC_Order_Export_Order_Fields {
 				if ( $this->order_type == 'shop_order_refund' AND $this->parent_order )
 					$row[$field] = $this->parent_order->{'get_' . $field}(); //use main order details for refund
 				else
-					$row[$field] = $this->order->{'get_' . $field}();			
+					$row[$field] = $this->order->{'get_' . $field}();
 		} elseif ( isset( $this->order_meta[ $field ] ) ) {
 			$field_data = array();
 			do_action( 'woocommerce_order_export_add_field_data', $field_data, $this->order_meta[ $field ], $field );
@@ -529,7 +532,7 @@ class WC_Order_Export_Order_Fields {
             $row[$field] = $this->order->get_meta('_' . $field);
 		}
 		return $row;
-		
+
 	}
 
 	function get_woocommerce_currency_symbol( $currency = '' ) {

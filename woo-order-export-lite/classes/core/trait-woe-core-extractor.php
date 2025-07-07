@@ -275,8 +275,11 @@ trait WOE_Core_Extractor {
 			}
 			//done
 			$product_where        = join( " AND ", $product_where );
-			//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$settings['products'] = $wpdb->get_col( "SELECT DISTINCT ID FROM {$wpdb->posts} AS products $left_join_product_meta  WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND $product_where " );
+			$sql = "SELECT DISTINCT ID FROM {$wpdb->posts} AS products $left_join_product_meta  WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND $product_where ";
+			if ( self::$track_sql_queries )
+				self::$sql_queries[] = $sql;
+			//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$settings['products'] = $wpdb->get_col( $sql );
 			if ( empty( $settings['products'] ) ) // failed condition!
 			{
 				$settings['products'] = array( 0 );
@@ -288,14 +291,15 @@ trait WOE_Core_Extractor {
 			$values               = $settings['products'] ;
 			$list_placeholders = implode(',', array_fill(0, count($values), '%d'));
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
-			$settings['products'] = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT ID FROM {$wpdb->posts} AS products WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND post_parent<>0 AND post_parent IN ($list_placeholders)",$values) );
+			$sql = $wpdb->prepare( "SELECT DISTINCT ID FROM {$wpdb->posts} AS products WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND post_parent<>0 AND post_parent IN ($list_placeholders)",$values);
+			if ( self::$track_sql_queries )
+				self::$sql_queries[] = $sql;
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$settings['products'] = $wpdb->get_col( $sql );
 			if ( empty( $settings['products'] ) ) // failed condition!
 			{
 				$settings['products'] = array( 0 );
 			}
-		}
-		if ( ! empty( $sql ) AND self::$track_sql_queries ) {
-			self::$sql_queries[] = $sql;
 		}
 
 		return apply_filters( 'woe_sql_adjust_products', $settings['products'], $settings );
@@ -941,8 +945,7 @@ trait WOE_Core_Extractor {
 //		$extra_rows = array();
 		$row = array();
 		// take order
-		$class = apply_filters( 'woe_get_class_name', 'WC_Order' );
-		$object = new $class( $order_id );
+		$object = wc_get_order( $order_id );
 		self::$current_order = $order = apply_filters( "woe_get_order_by_object", $object, $order_id );
 
 		$woe_order = new WC_Order_Export_Order_Fields( $order, $static_vals, $options, $export );

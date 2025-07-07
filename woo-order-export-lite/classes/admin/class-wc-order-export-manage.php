@@ -46,7 +46,7 @@ class WC_Order_Export_Manage {
 	// arrays
 	static function get_export_settings_collection( $mode ) {
 		$name = self::get_settings_name_for_mode( $mode );
-		
+
 		return get_option( $name, array() );
 	}
 
@@ -148,7 +148,7 @@ class WC_Order_Export_Manage {
 		return self::apply_defaults( $in['mode'], $settings );
 	}
 
-	static function get( $mode, $id = false ) {
+	static function get( $mode, $id = false, $raw_output = false ) {
 
 		$all_jobs = self::get_export_settings_collection( $mode );
 
@@ -178,8 +178,8 @@ class WC_Order_Export_Manage {
 		if ( ! isset( $settings['version'] ) ) {
 			$settings = self::convert_settings_to_version_2( $mode, $settings );
 		}
-		
-		return self::apply_defaults( $mode, $settings );
+
+		return $raw_output  ? $settings  : self::apply_defaults( $mode, $settings );
 	}
 
 
@@ -258,7 +258,7 @@ class WC_Order_Export_Manage {
 			'product_attributes'                       => array(),
 			'product_itemmeta'                         => array(),
 			'format'                                   => 'XLS',
-			
+
 			'format_xls_use_xls_format'                => 0,
 			'format_xls_sheet_name'                    => __( 'Orders', 'woo-order-export-lite' ),
 			'format_xls_display_column_names'          => 1,
@@ -269,7 +269,7 @@ class WC_Order_Export_Manage {
             'format_xls_remove_emojis'                 => 0,
 			'format_xls_row_images_width'              => 50,
 			'format_xls_row_images_height'             => 50,
-			
+
 			'format_csv_enclosure'                     => '"',
 			'format_csv_delimiter'                     => ',',
 			'format_csv_linebreak'                     => '\r\n',
@@ -280,13 +280,13 @@ class WC_Order_Export_Manage {
 			'format_csv_delete_linebreaks'             => 0,
             'format_csv_remove_linebreaks'             => 0,
 			'format_csv_force_quotes'                  => 0,
-			
+
 			'format_tsv_linebreak'                     => '\r\n',
 			'format_tsv_display_column_names'          => 1,
 			'format_tsv_add_utf8_bom'                  => 0,
 			'format_tsv_item_rows_start_from_new_line' => 0,
 			'format_tsv_encoding'                      => 'UTF-8',
-			
+
 			'format_xml_root_tag'                      => 'Orders',
 			'format_xml_order_tag'                     => 'Order',
 			'format_xml_product_tag'                   => 'Product',
@@ -295,7 +295,7 @@ class WC_Order_Export_Manage {
 			'format_xml_append_raw_xml'                => '',
 			'format_xml_self_closing_tags'             => 1,
 			'format_xml_preview_format'				   => 0,
-			
+
 			'format_json_start_tag'     => '[',
 			'format_json_end_tag'       => ']',
 			'format_json_unescaped_slashes' => 0,
@@ -349,6 +349,7 @@ class WC_Order_Export_Manage {
 			'format_html_custom_css'			 => $settings['default_html_css'],
 
 			'all_products_from_order'      => 1,
+			'skip_order_having_excluded_products'      => 0,
 			'skip_refunded_items'          => 0,
 			'skip_suborders'               => 0,
 			'export_refunds'               => 0,
@@ -410,7 +411,7 @@ class WC_Order_Export_Manage {
 		if ( ! isset( $settings['export_rule_field'] ) AND $mode == WC_Order_Export_Manage::EXPORT_SCHEDULE ) {
 			$settings['export_rule_field'] = 'modified';
 		}
-		
+
 
 		foreach ( array( 'order_fields', 'order_product_fields', 'order_coupon_fields' ) as $index ) {
 			if ( ! isset( $settings[ $index ] ) ) {
@@ -437,7 +438,7 @@ class WC_Order_Export_Manage {
 
 		// add parent fields if not exists
 		foreach ( array( 'products', 'coupons' ) as $main_field ) {
-		
+
 			if ( in_array( $main_field, wp_list_pluck( $settings['order_fields'], 'key' ) ) ) {
 				continue;
 			}
@@ -645,7 +646,7 @@ class WC_Order_Export_Manage {
 			unset( $data['export_rule'] );
 			unset( $data['schedule'] );
 		}
-		// don't allow to import PHP code if user has no permissions to add this code 
+		// don't allow to import PHP code if user has no permissions to add this code
 		if ( ! WC_Order_Export_Admin::user_can_add_custom_php() ) {
 			$data['custom_php']  = 0;
 			$data['custom_php_code']  = "";

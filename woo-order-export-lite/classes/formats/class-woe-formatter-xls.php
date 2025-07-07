@@ -329,7 +329,7 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 
 			//more memory for XLS?
 			// phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
-			ini_set( 'memory_limit', '512M' );
+			ini_set( 'memory_limit', '1024M' );
 
 			$this->objPHPExcel = new Spreadsheet();
 
@@ -435,7 +435,7 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 					foreach($this->settings['global_job_settings']['order_fields'] as $order_field) {
 						if (isset($order_field['key'])  && ($column === $order_field['key']  || $order_field['key'] === 'plain_orders_'. $column)) {
 							if (isset($order_field['sum'])) {
-								$summary_row[$column] = (isset($summary_row[$column]) ? $summary_row[$column] : 0) + apply_filters("woe_summary_row_prepare_value", floatval(str_replace(',', '.', $cell)), $cell);
+								$summary_row[$column] = (isset($summary_row[$column]) ? floatval($summary_row[$column]) : 0) + apply_filters("woe_summary_row_prepare_value", floatval(str_replace(',', '.', $cell)), $cell);
 							} else {
 								$summary_row[$column] = '';
 							}

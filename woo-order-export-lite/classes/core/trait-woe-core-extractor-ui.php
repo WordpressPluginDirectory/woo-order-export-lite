@@ -320,6 +320,11 @@ trait WOE_Core_Extractor_UI {
 				'checked' => 0,
 				'format'  => 'money',
 			),
+			'cogs'                       => array(
+				'label'   => __( 'Cost of goods', 'woo-order-export-lite' ),
+				'checked' => 0,
+				'format'  => 'money',
+			),
 			'type'                        => array(
 				'label'   => __( 'Type', 'woo-order-export-lite' ),
 				'checked' => 0,
@@ -327,6 +332,11 @@ trait WOE_Core_Extractor_UI {
 			),
 			'category'                    => array(
 				'label'   => __( 'Category', 'woo-order-export-lite' ),
+				'checked' => 0,
+				'format'  => 'string',
+			),
+			'brand'                    => array(
+				'label'   => __( 'Brand', 'woo-order-export-lite' ),
 				'checked' => 0,
 				'format'  => 'string',
 			),
@@ -644,7 +654,7 @@ trait WOE_Core_Extractor_UI {
 				'checked' => 0,
 				'format'  => 'string',
 			);
-		}	
+		}
 		return $keys;
 	}
 
@@ -1420,5 +1430,5 @@ trait WOE_Core_Extractor_UI {
 		}
 		return $email_titles;
 	}
-	
+
 }

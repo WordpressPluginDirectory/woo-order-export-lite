@@ -12,6 +12,8 @@ class WC_Order_Export_Order_Product_Fields {
 	var $variation_id;
 	var $product_fields_with_tags;
 	var $order;
+	var $order_type;
+	var $is_refund;
 	var $post;
 	var $line_id;
 	var $static_vals;
@@ -24,11 +26,14 @@ class WC_Order_Export_Order_Product_Fields {
 	public $parent_product_id;
 	public $parent_product;
 
-	public function __construct($item, $item_meta, $product, 
+	public function __construct($item, $item_meta, $product,
 	$order, $post, $line_id, $static_vals, $options, $woe_order) {
 		$this->item = $item;
 		$this->product = $product;
 		$this->order = $order;
+		$order_data_store = WC_Data_Store::load( 'order' );
+		$this->order_type = $order_data_store->get_order_type( $order->get_id() );
+		$this->is_refund =  ($this->order_type =='shop_order_refund');
 		$this->post = $post;
 		$this->line_id = $line_id;
 		$this->static_vals = $static_vals;
@@ -89,7 +94,7 @@ class WC_Order_Export_Order_Product_Fields {
 			if ( ! $taxonomies ) {
 				$taxonomies = wc_get_product_terms( $this->item['product_id'], $field, array( 'fields' => 'names' ) );
 			}
-			//done	
+			//done
 			$field_value = implode( ', ', $taxonomies );
 		} elseif ( $field == 'line_total_plus_tax' ) {
 			$field_value = $this->item_meta["_line_total"][0] + $this->item_meta["_line_tax"][0];
@@ -173,26 +178,37 @@ class WC_Order_Export_Order_Product_Fields {
 				}
 			}
 			$field_value = join( ",", $arr );// hierarhy ???
+		} elseif ( $field == 'brand' ) {
+			$terms         = get_the_terms( $this->product_id, 'product_brand' );
+			$arr = array();
+			if ( $terms ) {
+				foreach ( $terms as $term ) {
+					$arr[] = $term->name;
+				}
+			}
+			$field_value = join( ",", $arr );
 		} elseif ( $field == 'line_no_tax' ) {
 			$field_value = $this->item_meta["_line_total"][0];
 			//item refund
-		} elseif ( $field == 'line_total_refunded' ) {
+		} elseif ( $field == 'line_total_refunded'  AND !$this->is_refund ) {
 			$field_value = $this->order->get_total_refunded_for_item( $this->item_id );
-		} elseif ( $field == 'line_total_minus_refund' ) {
+		} elseif ( $field == 'line_total_minus_refund'  AND !$this->is_refund ) {
 			$field_value = $this->item_meta["_line_total"][0] - $this->order->get_total_refunded_for_item( $this->item_id );
-		} elseif ( $field == 'qty_refunded' ) {
+		} elseif ( $field == 'qty_refunded' AND !$this->is_refund ) {
 			$field_value = - $this->order->get_qty_refunded_for_item( $this->item_id ); // Yes we add negative! qty
-		} elseif ( $field == 'qty_minus_refund' ) {
+		} elseif ( $field == 'qty_minus_refund'  AND !$this->is_refund ) {
 			$field_value = $this->item_meta["_qty"][0] + $this->order->get_qty_refunded_for_item( $this->item_id ); // Yes we add negative! qty
 			//tax refund
-		} elseif ( $field == 'line_tax_refunded' ) {
+		} elseif ( $field == 'line_tax_refunded' AND !$this->is_refund ) {
 			$field_value = WC_Order_Export_Data_Extractor::get_order_item_taxes_refund( $this->order, $this->item_id );
-		} elseif ( $field == 'line_tax_minus_refund' ) {
+		} elseif ( $field == 'line_tax_minus_refund' AND !$this->is_refund ) {
 			$field_value = $this->item_meta["_line_tax"][0] - WC_Order_Export_Data_Extractor::get_order_item_taxes_refund( $this->order, $this->item_id );
 		} elseif ( $field == 'line_id' ) {
 			$field_value = $this->line_id;
 		} elseif ( $field == 'item_id' ) {
 			$field_value = $this->item_id;
+		} elseif ( $field == 'cogs' ) {
+			$field_value = ( $this->product AND method_exists($this->product, "get_cogs_total_value")) ? $this->product->get_cogs_total_value() : 0;
 		} elseif ( $field == 'item_price' ) {
 			$field_value = $this->order->get_item_total( $this->item, false, true ); // YES we have to calc item price
 		} elseif ( $field == 'item_price_inc_tax' ) {
@@ -265,8 +281,8 @@ class WC_Order_Export_Order_Product_Fields {
 			$field_value   = $item_discount * ( 1 + $item_tax_rate / 100 );
 		} elseif ( $field == 'item_download_url' ) {
 			$field_value = '';
-			if ( $this->product AND $this->product->is_downloadable() ) {
-				$files = $this->item->get_item_downloads();
+			if ( $this->product AND $this->product->is_downloadable() AND !$this->is_refund ) {
+				$files = $this->item->get_item_downloads();//thrown error for refunded items !
 				$links = array();
 				if ( $files ) {
 					foreach ( $files as $file ) {
@@ -289,7 +305,7 @@ class WC_Order_Export_Order_Product_Fields {
 				$product_attributes = $this->parent_product ? $this->parent_product->get_attributes() : $this->product->get_attributes();
 				foreach ($product_attributes  as $attribute ) {
 					/** @var WC_Product_Attribute $attribute */
-					// attribute is not marked"used fro varation" OR it's simple product 
+					// attribute is not marked"used fro varation" OR it's simple product
 					if ( $attribute instanceof WC_Product_Attribute && (! $attribute->get_variation()  OR !$this->parent_product_id)  ) {
 						if ( $attribute->get_taxonomy() ) {
 							$taxObject = $attribute->get_taxonomy_object();
@@ -337,12 +353,12 @@ class WC_Order_Export_Order_Product_Fields {
 			$field_value = $this->product->get_price();
 		}
 		else {
-		
+
 			$field_value = '';
-			if ( ! empty( $this->item['variation_id'] ) ) {  //1. read from variation 
+			if ( ! empty( $this->item['variation_id'] ) ) {  //1. read from variation
 				$field_value = get_post_meta( $this->variation_id, $field, true );
 			}
-			if ( $field_value == '' ) {  //2. read from product 
+			if ( $field_value == '' ) {  //2. read from product
 				$field_value = get_post_meta( $this->product_id, $field, true );
 			}
 			if ( $field_value === '' AND is_object( $this->product ) && method_exists( $this->product,'get_' . $field )  )  //3. try method
@@ -398,6 +414,6 @@ class WC_Order_Export_Order_Product_Fields {
 			$subtotal_amount = $this->item['line_subtotal'];
 			$subtotal_tax    = $this->item['line_subtotal_tax'];
 		}
-		return ( $subtotal_amount <> 0 ) ? round( 100 * $subtotal_tax / $subtotal_amount, apply_filters('woe_tax_rate_rounding_precision', 2) ) : 0; 
+		return ( $subtotal_amount <> 0 ) ? round( 100 * $subtotal_tax / $subtotal_amount, apply_filters('woe_tax_rate_rounding_precision', 2) ) : 0;
 	}
 }
