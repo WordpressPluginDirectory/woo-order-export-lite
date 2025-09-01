@@ -45,6 +45,12 @@ class WC_Order_Export_Order_Fields {
 		$this->parent_order    = $parent_order_id ? new WC_Order( $parent_order_id ) : false;
 		$this->post            = method_exists( $this->order, 'get_id' ) ? get_post( $this->order->get_id() ) : $this->order->post;
 
+		//fix if refund has NO parent!
+		//we need it as main_order calls functions from class WC_Order
+		if( $this->is_refund AND !$this->parent_order) {
+			$this->order = new WC_Order($this->order_id);
+		}
+
 		//address details from this order
 		$this->main_order  = $this->parent_order ? $this->parent_order : $this->order;
 
@@ -72,7 +78,10 @@ class WC_Order_Export_Order_Fields {
 
         // get billing email via wc method that needed for other fields, if it isn't in meta
 		if (!isset($this->order_meta['_billing_email'])) {
-            $this->order_meta['_billing_email'] =  $this->is_refund ? $this->parent_order->get_billing_email() : $this->order->get_billing_email();
+			if( $this->is_refund )
+				$this->order_meta['_billing_email'] =  $this->parent_order ? $this->parent_order->get_billing_email() : '';
+			else
+				$this->order_meta['_billing_email'] =  $this->order->get_billing_email();
         }
 
 		// correct meta for child orders

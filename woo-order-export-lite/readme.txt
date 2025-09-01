@@ -5,7 +5,7 @@ Tags: order export,export orders,woocommerce,order,export
 Requires PHP: 8.1.0
 Requires at least: 4.7
 Tested up to: 6.8
-Stable tag: 4.0.3
+Stable tag: 4.0.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -116,6 +116,10 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 4.0.4 - 2025-09-01 =
+* Fixed bug - option "Skip fully refunded items" conflicted with mode "Export refunds"
+* Fixed bug - fatal error when exporting refunds (if main order is missing)
 
 = 4.0.3 - 2025-07-07 =
 * Mode "Export refunds" supports product filters

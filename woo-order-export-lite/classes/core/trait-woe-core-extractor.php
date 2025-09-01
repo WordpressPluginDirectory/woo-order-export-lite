@@ -403,11 +403,12 @@ trait WOE_Core_Extractor {
 		$value = esc_sql($value);
 		if ( $operator == "LIKE" OR $operator == "NOT LIKE") {
 			$value = (substr($value,0,1)=="^") ? substr($value,1)."%" : "%$value%";
+			$field_casted = $field;
 		} else { // compare numbers!
 			$type = apply_filters( "woe_compare_field_cast_to_type", "signed", $field, $operator, $value, $public_fieldname);
-			$field = "cast($field as $type)";
+			$field_casted = "cast($field as $type)";
 		}
-		return " $field $operator '$value' ";
+		return apply_filters("woe_compare_field_and_value", " $field_casted $operator '$value' ", $field, $operator, $value, $public_fieldname);
 	}
 
     private static function get_date_meta_for_subscription_filters( $field, $date_from, $date_to ) {
@@ -887,7 +888,8 @@ trait WOE_Core_Extractor {
 				continue;
 			}
 
-			if ( $options['skip_refunded_items'] ) {
+			//apply option only to orders
+			if ( $options['skip_refunded_items'] AND $order->get_type() == 'shop_order') {
 				$qty_minus_refund = $item_meta["_qty"][0] + $order->get_qty_refunded_for_item( $item_id ); // Yes we add negative! qty
 				if ( $qty_minus_refund <= 0 ) {
 					continue;

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Order Export For WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 11:18+0000\n"
+"POT-Creation-Date: 2025-08-30 16:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -57,7 +57,7 @@ msgstr ""
 msgid "1st row only"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor.php:1182
+#: classes/core/trait-woe-core-extractor.php:1184
 msgid "[Rest of the World]"
 msgstr ""
 
@@ -536,7 +536,7 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor.php:1259
+#: classes/core/trait-woe-core-extractor.php:1261
 msgid "Direct"
 msgstr ""
 
@@ -600,7 +600,7 @@ msgstr ""
 msgid "Drag rows to reorder exported fields"
 msgstr ""
 
-#: classes/core/class-wc-order-export-order-fields.php:493
+#: classes/core/class-wc-order-export-order-fields.php:502
 msgid "Edit order"
 msgstr ""
 
@@ -1125,7 +1125,7 @@ msgstr ""
 msgid "Misc settings"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor.php:1265
+#: classes/core/trait-woe-core-extractor.php:1267
 msgid "Mobile app"
 msgstr ""
 
@@ -1153,7 +1153,7 @@ msgstr ""
 msgid "Need help? Create ticket in %s ."
 msgstr ""
 
-#: classes/core/class-wc-order-export-order-fields.php:722
+#: classes/core/class-wc-order-export-order-fields.php:731
 msgid "New"
 msgstr ""
 
@@ -1394,7 +1394,7 @@ msgid "Orders range"
 msgstr ""
 
 #. %s is the source value
-#: classes/core/trait-woe-core-extractor.php:1247
+#: classes/core/trait-woe-core-extractor.php:1249
 #, php-format
 msgid "Organic: %s"
 msgstr ""
@@ -1461,7 +1461,7 @@ msgstr ""
 msgid "Paid Date"
 msgstr ""
 
-#: classes/core/class-wc-order-export-order-fields.php:503
+#: classes/core/class-wc-order-export-order-fields.php:512
 msgid "Parent Order"
 msgstr ""
 
@@ -1508,7 +1508,7 @@ msgid ""
 msgstr ""
 
 #. href link to Plugins page
-#: woo-order-export-lite.php:38
+#: woo-order-export-lite.php:47
 #, php-format
 msgid ""
 "Please, %1$s deactivate %2$s Free version of Advanced Order Export For "
@@ -1681,7 +1681,7 @@ msgid "Read how to fix it"
 msgstr ""
 
 #. %s is the source value
-#: classes/core/trait-woe-core-extractor.php:1253
+#: classes/core/trait-woe-core-extractor.php:1255
 #, php-format
 msgid "Referral: %s"
 msgstr ""
@@ -1707,7 +1707,7 @@ msgstr ""
 msgid "Remove logo"
 msgstr ""
 
-#: classes/core/class-wc-order-export-order-fields.php:499
+#: classes/core/class-wc-order-export-order-fields.php:508
 msgid "Renewal Order"
 msgstr ""
 
@@ -1723,11 +1723,11 @@ msgstr ""
 msgid "Reset settings"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor.php:1192
+#: classes/core/trait-woe-core-extractor.php:1194
 msgid "Rest of the World"
 msgstr ""
 
-#: classes/core/class-wc-order-export-order-fields.php:501
+#: classes/core/class-wc-order-export-order-fields.php:510
 msgid "Resubscribe Order"
 msgstr ""
 
@@ -1736,7 +1736,7 @@ msgstr ""
 msgid "Result: %s"
 msgstr ""
 
-#: classes/core/class-wc-order-export-order-fields.php:720
+#: classes/core/class-wc-order-export-order-fields.php:729
 msgid "Returning"
 msgstr ""
 
@@ -1880,7 +1880,7 @@ msgid "Sort orders by "
 msgstr ""
 
 #. %s is the source value
-#: classes/core/trait-woe-core-extractor.php:1241
+#: classes/core/trait-woe-core-extractor.php:1243
 #, php-format
 msgid "Source: %s"
 msgstr ""
@@ -2205,9 +2205,9 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor.php:1220
-#: classes/core/trait-woe-core-extractor.php:1278
-#: classes/core/class-wc-order-export-order-fields.php:724
+#: classes/core/trait-woe-core-extractor.php:1222
+#: classes/core/trait-woe-core-extractor.php:1280
+#: classes/core/class-wc-order-export-order-fields.php:733
 msgid "Unknown"
 msgstr ""
 
@@ -2280,7 +2280,7 @@ msgstr ""
 msgid "Vendors/creators"
 msgstr ""
 
-#: classes/core/trait-woe-core-extractor.php:1271
+#: classes/core/trait-woe-core-extractor.php:1273
 msgid "Web admin"
 msgstr ""
 
@@ -2296,7 +2296,7 @@ msgstr ""
 msgid "Width"
 msgstr ""
 
-#: classes/core/class-wc-order-export-order-fields.php:479
+#: classes/core/class-wc-order-export-order-fields.php:488
 msgid "WooCommerce"
 msgstr ""
 
