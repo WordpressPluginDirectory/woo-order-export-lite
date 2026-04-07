@@ -9,23 +9,21 @@ class BstoreContainer
      *
      * @var BstoreContainer\BSE[]
      */
-    private array $BSECollection = [];
-
+    private $BSECollection = [];
     /**
      * Add a BLIP Store Entry.
      */
-    public function addBSE(BstoreContainer\BSE $BSE): void
+    public function addBSE(\WOE\PhpOffice\PhpSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE $BSE): void
     {
         $this->BSECollection[] = $BSE;
         $BSE->setParent($this);
     }
-
     /**
      * Get the collection of BLIP Store Entries.
      *
      * @return BstoreContainer\BSE[]
      */
-    public function getBSECollection(): array
+    public function getBSECollection()
     {
         return $this->BSECollection;
     }

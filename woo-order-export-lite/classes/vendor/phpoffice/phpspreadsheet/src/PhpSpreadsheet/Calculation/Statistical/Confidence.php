@@ -6,11 +6,9 @@ use WOE\PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
 use WOE\PhpOffice\PhpSpreadsheet\Calculation\Exception;
 use WOE\PhpOffice\PhpSpreadsheet\Calculation\Functions;
 use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
-
 class Confidence
 {
     use ArrayEnabled;
-
     /**
      * CONFIDENCE.
      *
@@ -23,15 +21,15 @@ class Confidence
      * @param mixed $size As an integer
      *                      Or can be an array of values
      *
-     * @return array|float|string If an array of numbers is passed as an argument, then the returned result will also be an array
+     * @return array|float|string
+     *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function CONFIDENCE(mixed $alpha, mixed $stdDev, mixed $size)
+    public static function CONFIDENCE($alpha, $stdDev, $size)
     {
         if (is_array($alpha) || is_array($stdDev) || is_array($size)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $alpha, $stdDev, $size);
         }
-
         try {
             $alpha = StatisticalValidations::validateFloat($alpha);
             $stdDev = StatisticalValidations::validateFloat($stdDev);
@@ -39,13 +37,11 @@ class Confidence
         } catch (Exception $e) {
             return $e->getMessage();
         }
-
-        if (($alpha <= 0) || ($alpha >= 1) || ($stdDev <= 0) || ($size < 1)) {
+        if ($alpha <= 0 || $alpha >= 1 || $stdDev <= 0 || $size < 1) {
             return ExcelError::NAN();
         }
-        /** @var float $temp */
-        $temp = Distributions\StandardNormal::inverse(1 - $alpha / 2);
-
+        /** @var float */
+        $temp = \WOE\PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\StandardNormal::inverse(1 - $alpha / 2);
         return Functions::scalar($temp * $stdDev / sqrt($size));
     }
 }

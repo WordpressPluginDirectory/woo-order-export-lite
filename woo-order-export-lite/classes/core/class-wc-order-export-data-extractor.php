@@ -70,7 +70,7 @@ class WC_Order_Export_Data_Extractor {
 		$fields = get_transient( $transient_key );
 		if ( $fields === false ) {
             $where_posts = self::get_where_last_orders("ID");
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
             $fields = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->posts} INNER JOIN {$wpdb->postmeta} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id WHERE post_type = %s $where_posts", self::$object_type) );
 			sort( $fields );
 			set_transient( $transient_key, $fields, 60 ); //valid for a minute
@@ -86,7 +86,7 @@ class WC_Order_Export_Data_Extractor {
 		$metas = get_transient( $transient_key );
 		if ( $metas === false ) {
             $where_posts = self::get_where_last_orders("item.order_id", "WHERE");
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$metas = $wpdb->get_col( "SELECT DISTINCT meta.meta_key FROM {$wpdb->prefix}woocommerce_order_itemmeta meta inner join {$wpdb->prefix}woocommerce_order_items item on item.order_item_id=meta.order_item_id and item.order_item_type = 'line_item' $where_posts" );
 			sort( $metas );
 			set_transient( $transient_key, $metas, 60 ); //valid for a minute
@@ -102,7 +102,7 @@ class WC_Order_Export_Data_Extractor {
 		$metas = false; //get_transient( $transient_key );
 		if ( $metas === false ) {
             $where_posts = self::get_where_last_orders("order_id");
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
             $metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'shipping' $where_posts AND order_item_name <> '' " );
 			sort( $metas );
 			set_transient( $transient_key, $metas, 60 ); //valid for a minute
@@ -118,7 +118,7 @@ class WC_Order_Export_Data_Extractor {
 		$metas = get_transient( $transient_key );
 		if ( $metas === false ) {
             $where_posts = self::get_where_last_orders("order_id");
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
             $metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'fee' $where_posts AND order_item_name <> '' " );
 			sort( $metas );
 			set_transient( $transient_key, $metas, 60 ); //valid for a minute
@@ -134,7 +134,7 @@ class WC_Order_Export_Data_Extractor {
 		$metas = get_transient( $transient_key );
 		if ( $metas === false ) {
             $where_posts = self::get_where_last_orders("order_id");
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
             $metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'tax' $where_posts AND order_item_name <> '' " );
 			sort( $metas );
 			set_transient( $transient_key, $metas, 60 ); //valid for a minute
@@ -503,7 +503,7 @@ class WC_Order_Export_Data_Extractor {
 
 		if ( $settings['export_unmarked_orders'] ) {
 			$pos                    = "export_unmarked_orders";
-			$field                  = "woe_order_exported" . apply_filters("woe_exported_postfix",'');
+			$field                  = "woe_order_exported" . apply_filters("woe_exported_postfix", WC_Order_Export_Engine::get_default_exported_postfix($settings) );
 			$left_join_order_meta[] = "LEFT JOIN {$wpdb->postmeta} AS ordermeta_cf_{$pos} ON ordermeta_cf_{$pos}.post_id = orders.ID AND ordermeta_cf_{$pos}.meta_key='$field'";
 			$order_meta_where []    = " ( ordermeta_cf_{$pos}.meta_value IS NULL ) ";
 		}
@@ -604,7 +604,7 @@ class WC_Order_Export_Data_Extractor {
 		if ( ! empty( $settings['user_names'] ) ) {
 			$user_ids          = array_filter( array_map( "intval", $settings['user_names'] ) );
 			$list_placeholders = implode(',', array_fill(0, count($user_ids), '%d'));
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 			$user_meta_where[] = $wpdb->prepare( "( {$wpdb->users}.ID IN ($list_placeholders) )",$user_ids );
 		}
 		//roles
@@ -625,7 +625,7 @@ class WC_Order_Export_Data_Extractor {
 			if ( self::$track_sql_queries ) {
 				self::$sql_queries[] = $sql;
 			}
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$user_ids                    = $wpdb->get_col( "SELECT DISTINCT ID FROM {$wpdb->users} $inner_join_user_meta WHERE $user_meta_where" );
 			$user_ids_ui_filters_applied = true;
 		}
@@ -748,9 +748,11 @@ class WC_Order_Export_Data_Extractor {
 		} elseif ( $date_field == 'paid_date' OR $date_field == 'completed_date' ) // previous versions use mysql datetime
 		{
 			$where_meta[] = "(order_$date_field.meta_value<>'' AND order_$date_field.meta_value " . $value . ")";
-		} else {
+		} elseif( $date_field == 'date' OR $date_field == 'modified') {
 			$where[] = "orders.post_" . $date_field . $value;
 		}
+
+		$where = apply_filters("woe_add_date_filter", $where, $date_field, $value);
 	}
 
 	private static function apply_order_filters_to_sql( &$where, &$where_refund_subsql, $settings ) {
@@ -901,7 +903,7 @@ class WC_Order_Export_Data_Extractor {
 		//SLOW way
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$list_placeholders = implode(',', array_fill(0, count($statuses), '%s'));
-		//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+		//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 		$count = $wpdb->get_var( $wpdb->prepare(
             //phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             "SELECT COUNT(*)
@@ -938,7 +940,7 @@ class WC_Order_Export_Data_Extractor {
 		//SLOW way
 		$list_placeholders = implode(',', array_fill(0, count($statuses), '%s'));
 		//phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+		//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 		$spent    = $wpdb->get_var($wpdb->prepare(
             //phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             "SELECT SUM(meta2.meta_value)
@@ -991,7 +993,7 @@ class WC_Order_Export_Data_Extractor {
 
 		$list_placeholders = implode(',', array_fill(0, count($statuses), '%s'));
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare,WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber	 -- Ignored for allowing interpolation in the IN statement.
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare,WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, PluginCheck.Security.DirectDB.UnescapedDBParameter	 -- Ignored for allowing interpolation in the IN statement.
 		return $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*)
 				FROM $wpdb->posts as posts
 				LEFT JOIN {$wpdb->postmeta} AS meta ON posts.ID = meta.post_id

@@ -2,9 +2,9 @@
 
 namespace WOE\PhpOffice\PhpSpreadsheet\Calculation\Web;
 
+use WOE\PhpOffice\PhpSpreadsheet\Calculation\Functions;
 use WOE\PhpOffice\PhpSpreadsheet\Calculation\Information\ExcelError;
-use WOE\PhpOffice\PhpSpreadsheet\Settings;
-use WOE\Psr\Http\Client\ClientExceptionInterface;
+use WOE\PhpOffice\PhpSpreadsheet\Cell\Cell;
 
 class Service
 {
@@ -16,36 +16,51 @@ class Service
      * Excel Function:
      *        Webservice(url)
      *
-     * @return string the output resulting from a call to the webservice
+     * @param mixed $url
+     *
+     * @return ?string the output resulting from a call to the webservice
      */
-    public static function webService(string $url): string
+    public static function webService($url, ?Cell $cell = null)
     {
-        $url = trim($url);
-        if (strlen($url) > 2048) {
+        if (is_array($url)) {
+            $url = Functions::flattenSingleValue($url);
+        }
+        if (!is_string($url)) {
             return ExcelError::VALUE(); // Invalid URL length
         }
-
-        if (!preg_match('/^http[s]?:\/\//', $url)) {
+        $url = trim($url);
+        if (mb_strlen($url) > 2048) {
+            return ExcelError::VALUE(); // Invalid URL length
+        }
+        $parsed = parse_url($url);
+        $scheme = $parsed['scheme'] ?? '';
+        if ($scheme !== 'http' && $scheme !== 'https') {
             return ExcelError::VALUE(); // Invalid protocol
+        }
+        $domainWhiteList = [];
+        if ($cell !== null) {
+            $parent = $cell->getWorksheet()->getParent();
+            if ($parent !== null) {
+                $domainWhiteList = $parent->getDomainWhiteList();
+            }
+        }
+        $host = $parsed['host'] ?? '';
+        if (!in_array($host, $domainWhiteList, true)) {
+            return ($cell === null) ? null : '#Not Yet Implemented'; // will be converted to oldCalculatedValue or null
         }
 
         // Get results from the webservice
-        $client = Settings::getHttpClient();
-        $requestFactory = Settings::getRequestFactory();
-        $request = $requestFactory->createRequest('GET', $url);
-
-        try {
-            $response = $client->sendRequest($request);
-        } catch (ClientExceptionInterface) {
-            return ExcelError::VALUE(); // cURL error
+        $ctxArray = [
+            'http' => [
+                'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            ],
+        ];
+        if ($scheme === 'https') {
+            $ctxArray['ssl'] = ['crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT];
         }
-
-        if ($response->getStatusCode() != 200) {
-            return ExcelError::VALUE(); // cURL error
-        }
-
-        $output = $response->getBody()->getContents();
-        if (strlen($output) > 32767) {
+        $ctx = stream_context_create($ctxArray);
+        $output = @file_get_contents($url, false, $ctx);
+        if ($output === false || mb_strlen($output) > 32767) {
             return ExcelError::VALUE(); // Output not a string or too long
         }
 
@@ -60,9 +75,11 @@ class Service
      * Excel Function:
      *        urlEncode(text)
      *
+     * @param mixed $text
+     *
      * @return string the url encoded output
      */
-    public static function urlEncode(mixed $text): string
+    public static function urlEncode($text)
     {
         if (!is_string($text)) {
             return ExcelError::VALUE();

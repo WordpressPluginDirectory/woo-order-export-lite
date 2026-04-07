@@ -30,18 +30,18 @@ class WC_Order_Export_Data_Extractor_UI extends WC_Order_Export_Data_Extractor {
 				if ( $total_users >= self::HUGE_SHOP_CUSTOMERS ) {
 					$user_ids    = $wpdb->get_col( "SELECT  ID FROM {$wpdb->users} ORDER BY ID DESC LIMIT 1000" ); // take last 1000
 					$list_placeholders = implode(',', array_fill(0, count($user_ids), '%d'));
-					// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+					// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 					$where_users = $wpdb->prepare("WHERE user_id IN ($list_placeholders)",$user_ids);
 				} else {
 					$where_users = '';
 				}
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				$user_fields = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->usermeta} $where_users" );
 				$order_fields      = self::get_order_custom_fields();
 			} else {
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				$user_fields = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders INNER JOIN {$wpdb->usermeta} ON {$wpdb->prefix}wc_orders.customer_id = {$wpdb->usermeta}.user_id WHERE type = %s {$sql_in_orders}",self::$object_type) );
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				$order_fields      = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders INNER JOIN {$wpdb->prefix}wc_orders_meta ON {$wpdb->prefix}wc_orders.ID = {$wpdb->prefix}wc_orders.order_id WHERE type = %s {$sql_in_orders}",self::$object_type) );
 			}
 
@@ -74,13 +74,13 @@ class WC_Order_Export_Data_Extractor_UI extends WC_Order_Export_Data_Extractor {
 
 		if( self::is_HPOS_orders_field($key) ) {
 			$field = substr($key,1) ;// ignore leading _
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 			$values = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT $field FROM {$wpdb->prefix}wc_orders WHERE id IN ($list_placeholders)",$order_ids) );
 		}elseif( $hpos_addr = self::parse_HPOS_order_address_field($key) ) {
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$values = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT $hpos_addr[field] FROM {$wpdb->prefix}wc_order_addresses WHERE order_id IN ($list_placeholders) AND address_type = %s", array_merge($order_ids, [$hpos_addr['address_type']]) ) );
 		} else {
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$values = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_value FROM {$wpdb->prefix}wc_orders_meta WHERE meta_key = %s  AND order_id IN ($list_placeholders)", array_merge( [$key], $order_ids ) ) );
 		}
 		sort( $values );
@@ -100,7 +100,7 @@ class WC_Order_Export_Data_Extractor_UI extends WC_Order_Export_Data_Extractor {
 			return array();
 
 		$list_placeholders = implode(',', array_fill(0, count($order_ids), '%d'));
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$results = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT $key FROM {$wpdb->prefix}wc_order_addresses WHERE address_type = %s AND order_id IN($list_placeholders)",array_merge( [trim($type,"_")],$order_ids ) ) );
 		$data    = array_filter( $results );
 		sort( $data );

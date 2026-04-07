@@ -78,7 +78,7 @@ class WC_Order_Export_Labels {
 	}
 
 	public function is_not_empty() {
-		return (boolean) $this->labels;
+		return (bool) $this->labels;
 	}
 
 	public function to_Array() {

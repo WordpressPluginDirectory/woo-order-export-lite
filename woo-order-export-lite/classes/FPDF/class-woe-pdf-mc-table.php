@@ -202,12 +202,11 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 
 	public function addRow( $data, $widths = null, $h = null, $style = null ) {
 		$this->changeBrushToDraw( 'table_row' );
-		
+
 		$this->Row( $data, $widths, $h, $style );
 	}
 
 	public function isEnoughSpace( $data, $heights ) {
-		$image_height = floatval( $this->table_row_props['image_height'] );
 		$height       = floatval( 0 );
 
 		foreach ( $data as $index => $row ) {
@@ -215,6 +214,10 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
             $baseHeight   = $this->getRowHeight( $widths, $row );
 
 			$h = $baseHeight;
+
+			$image_height = floatval( $this->table_row_props['image_height'] );
+			if(!$image_height)
+				$image_height = $this->getMaxImageHeight($row, $widths);
 
 			if ( $image_height && $this->isRowWithImage( $row ) && $h < $image_height ) {
 				$h = $image_height;
@@ -244,8 +247,11 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 
 		$widths = ! $widths ? $this->getRowWidths( $data ) : $widths;
 		$h      = ! $h ? $this->getRowHeight( $widths, $data ) : $h;
-		
+
 		$image_height = floatval( $this->table_row_props['image_height'] );
+		if(!$image_height)
+			$image_height = $this->getMaxImageHeight($data, $widths);
+
 		if ( $image_height && $this->isRowWithImage( $data ) && $h < $image_height ) {
 			$h = $image_height;
 		}
@@ -287,6 +293,10 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 
 				/** move image to center if cell height larger than image height */
 				$y_offset = floatval( 0 );
+				if( !$image_height ) {
+					list( $real_width, $real_height, $type, $attr ) = getimagesize( $data[ $i ]['value'] );
+					$image_height = $w * $real_width/$real_height;
+				}
 				if ( $image_height && $image_height < $h ) {
 					$y_offset += ( $h - $image_height ) / 2;
 				} else {
@@ -314,7 +324,7 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 			} elseif ( ! is_array( $data[ $i ] ) ) {
 				if( apply_filters("woe_pdf_make_cell_bold", false,$i, $data[ $i ]) )
 					$this->changeBrushToDraw( 'table_header' );
-				//Print the text as it 
+				//Print the text as it
 				$this->MultiCell( $w, $h, $data[ $i ], 0, $horizontal_align, $vertical_align );
 				if( apply_filters("woe_pdf_make_cell_bold", false,$i, $data[ $i ]) )
 					$this->changeBrushToDraw( 'table_row' );
@@ -340,6 +350,23 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param array $data
+	 *
+	 * @return bool
+	 */
+	protected function getMaxImageHeight( $data, $widths) {
+		$image_height_max = 0;
+		foreach ( $data as $pos=>$cell) {
+			if ( $this->isImageCell( $cell) ) {
+				list( $real_width, $real_height, $type, $attr ) = getimagesize( $cell['value'] );
+				$img_height = round($widths[$pos]* $real_height/$real_width);
+				$image_height_max = max($img_height,$image_height_max);
+			}
+		}
+		return $image_height_max;
 	}
 
 	/**
@@ -466,7 +493,6 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 
 			$nb    = max( $nb, $this->NbLines( $widths[ $i ], $value ) );
 		}
-
 		return 5 * $nb;
 	}
 
@@ -522,8 +548,8 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 					header( 'Cache-Control: private, max-age=0, must-revalidate' );
 					header( 'Pragma: public' );
 				}
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped	
-				echo $output;//ignore 
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo $output;//ignore
 				break;
 			case 'D':
 				// Download file
@@ -531,7 +557,7 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 				header( 'Content-Disposition: attachment; ' . $this->_httpencode( 'filename', $name, $isUTF8 ) );
 				header( 'Cache-Control: private, max-age=0, must-revalidate' );
 				header( 'Pragma: public' );
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped	
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $output;
 				break;
 			case 'F':
@@ -556,7 +582,7 @@ class WOE_PDF_MC_Table extends WOE_FPDF {
 			return $param . '="' . $value . '"';
 		}
 		if ( ! $isUTF8 ) {
-			$value = utf8_encode( $value );
+			$value = mb_convert_encoding($value, 'UTF-8', 'ISO-8859-1');
 		}
 		if ( isset($_SERVER['HTTP_USER_AGENT']) AND strpos( sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT'])), 'MSIE' ) !== false ) {
 			return $param . '="' . rawurlencode( $value ) . '"';

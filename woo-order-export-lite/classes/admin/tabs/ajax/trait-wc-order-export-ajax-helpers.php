@@ -95,7 +95,7 @@ trait WC_Order_Export_Ajax_Helpers {
 				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile
 				readfile( $filename );
 			} else {
-				// fallback, emulate readfile 
+				// fallback, emulate readfile
 				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 				$file = fopen($filename, 'rb');
 				if ( $file !== false ) {
@@ -115,7 +115,7 @@ trait WC_Order_Export_Ajax_Helpers {
             }
 		}
 	}
-	
+
 	function function_disabled($function) {
 		$disabled_functions = explode(',', ini_get('disable_functions'));
 		return in_array($function, $disabled_functions);
@@ -175,7 +175,7 @@ trait WC_Order_Export_Ajax_Helpers {
 		$this->stop_prevent_object_cache();
 	}
 
-	protected function build_and_send_file( $settings, $export = false, $browser_output = true ) {
+	public function build_and_send_file( $settings, $export = false, $browser_output = true ) {
 		$result = [];
 		$ids = isset($_REQUEST['ids']) ? sanitize_text_field(wp_unslash($_REQUEST['ids'])) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$filename = WC_Order_Export_Engine::build_file_full( $settings, '', 0, explode( ",", $ids ) );

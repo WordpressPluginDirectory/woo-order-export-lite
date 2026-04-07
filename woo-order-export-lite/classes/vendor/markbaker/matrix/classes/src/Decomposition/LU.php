@@ -4,33 +4,27 @@ namespace WOE\Matrix\Decomposition;
 
 use WOE\Matrix\Exception;
 use WOE\Matrix\Matrix;
-
 class LU
 {
     private $luMatrix;
     private $rows;
     private $columns;
-
     private $pivot = [];
-
     public function __construct(Matrix $matrix)
     {
         $this->luMatrix = $matrix->toArray();
         $this->rows = $matrix->rows;
         $this->columns = $matrix->columns;
-
         $this->buildPivot();
     }
-
     /**
      * Get lower triangular factor.
      *
-     * @return Matrix Lower triangular factor
+     * @return \Matrix Lower triangular factor
      */
-    public function getL(): Matrix
+    public function getL(): WOE\Matrix
     {
         $lower = [];
-
         $columns = min($this->rows, $this->columns);
         for ($row = 0; $row < $this->rows; ++$row) {
             for ($column = 0; $column < $columns; ++$column) {
@@ -43,19 +37,16 @@ class LU
                 }
             }
         }
-
         return new Matrix($lower);
     }
-
     /**
      * Get upper triangular factor.
      *
-     * @return Matrix Upper triangular factor
+     * @return \Matrix Upper triangular factor
      */
-    public function getU(): Matrix
+    public function getU(): WOE\Matrix
     {
         $upper = [];
-
         $rows = min($this->rows, $this->columns);
         for ($row = 0; $row < $rows; ++$row) {
             for ($column = 0; $column < $this->columns; ++$column) {
@@ -66,29 +57,24 @@ class LU
                 }
             }
         }
-
         return new Matrix($upper);
     }
-
     /**
      * Return pivot permutation vector.
      *
-     * @return Matrix Pivot matrix
+     * @return \Matrix Pivot matrix
      */
-    public function getP(): Matrix
+    public function getP(): WOE\Matrix
     {
         $pMatrix = [];
-
         $pivots = $this->pivot;
         $pivotCount = count($pivots);
         foreach ($pivots as $row => $pivot) {
             $pMatrix[$row] = array_fill(0, $pivotCount, 0);
             $pMatrix[$row][$pivot] = 1;
         }
-
         return new Matrix($pMatrix);
     }
-
     /**
      * Return pivot permutation vector.
      *
@@ -98,7 +84,6 @@ class LU
     {
         return $this->pivot;
     }
-
     /**
      *    Is the matrix nonsingular?
      *
@@ -111,43 +96,32 @@ class LU
                 return false;
             }
         }
-
         return true;
     }
-
     private function buildPivot(): void
     {
         for ($row = 0; $row < $this->rows; ++$row) {
             $this->pivot[$row] = $row;
         }
-
         for ($column = 0; $column < $this->columns; ++$column) {
             $luColumn = $this->localisedReferenceColumn($column);
-
             $this->applyTransformations($column, $luColumn);
-
             $pivot = $this->findPivot($column, $luColumn);
             if ($pivot !== $column) {
                 $this->pivotExchange($pivot, $column);
             }
-
             $this->computeMultipliers($column);
-
             unset($luColumn);
         }
     }
-
     private function localisedReferenceColumn($column): array
     {
         $luColumn = [];
-
         for ($row = 0; $row < $this->rows; ++$row) {
-            $luColumn[$row] = &$this->luMatrix[$row][$column];
+            $luColumn[$row] =& $this->luMatrix[$row][$column];
         }
-
         return $luColumn;
     }
-
     private function applyTransformations($column, array $luColumn): void
     {
         for ($row = 0; $row < $this->rows; ++$row) {
@@ -161,7 +135,6 @@ class LU
             $luRow[$column] = $luColumn[$row] -= $sValue;
         }
     }
-
     private function findPivot($column, array $luColumn): int
     {
         $pivot = $column;
@@ -170,10 +143,8 @@ class LU
                 $pivot = $row;
             }
         }
-
         return $pivot;
     }
-
     private function pivotExchange($pivot, $column): void
     {
         for ($kValue = 0; $kValue < $this->columns; ++$kValue) {
@@ -181,21 +152,18 @@ class LU
             $this->luMatrix[$pivot][$kValue] = $this->luMatrix[$column][$kValue];
             $this->luMatrix[$column][$kValue] = $tValue;
         }
-
         $lValue = $this->pivot[$pivot];
         $this->pivot[$pivot] = $this->pivot[$column];
         $this->pivot[$column] = $lValue;
     }
-
     private function computeMultipliers($diagonal): void
     {
-        if (($diagonal < $this->rows) && ($this->luMatrix[$diagonal][$diagonal] != 0.0)) {
+        if ($diagonal < $this->rows && $this->luMatrix[$diagonal][$diagonal] != 0.0) {
             for ($row = $diagonal + 1; $row < $this->rows; ++$row) {
                 $this->luMatrix[$row][$diagonal] /= $this->luMatrix[$diagonal][$diagonal];
             }
         }
     }
-
     private function pivotB(Matrix $B): array
     {
         $X = [];
@@ -203,37 +171,31 @@ class LU
             $row = $B->getRows($rowId + 1)->toArray();
             $X[] = array_pop($row);
         }
-
         return $X;
     }
-
     /**
      * Solve A*X = B.
      *
-     * @param Matrix $B a Matrix with as many rows as A and any number of columns
+     * @param \Matrix $B a Matrix with as many rows as A and any number of columns
      *
      * @throws Exception
      *
      * @return Matrix X so that L*U*X = B(piv,:)
      */
-    public function solve(Matrix $B): Matrix
+    public function solve(Matrix $B): WOE\Matrix
     {
         if ($B->rows !== $this->rows) {
             throw new Exception('Matrix row dimensions are not equal');
         }
-
         if ($this->rows !== $this->columns) {
             throw new Exception('LU solve() only works on square matrices');
         }
-
         if (!$this->isNonsingular()) {
             throw new Exception('Can only perform operation on singular matrix');
         }
-
         // Copy right hand side with pivoting
         $nx = $B->columns;
         $X = $this->pivotB($B);
-
         // Solve L*Y = B(piv,:)
         for ($k = 0; $k < $this->columns; ++$k) {
             for ($i = $k + 1; $i < $this->columns; ++$i) {
@@ -242,7 +204,6 @@ class LU
                 }
             }
         }
-
         // Solve U*X = Y;
         for ($k = $this->columns - 1; $k >= 0; --$k) {
             for ($j = 0; $j < $nx; ++$j) {
@@ -254,7 +215,6 @@ class LU
                 }
             }
         }
-
         return new Matrix($X);
     }
 }

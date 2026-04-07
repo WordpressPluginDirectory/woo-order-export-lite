@@ -132,43 +132,44 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
         <input type="hidden" name="settings[version]"
                value="<?php echo esc_attr(isset( $settings['version'] ) ? $settings['version'] : '2.0') ?>">
 
-
 		<?php if ( $show['date_filter'] ) : ?>
             <div id="my-export-date-field" class="my-block">
                 <div class="wc-oe-header">
-					<?php esc_html_e( 'Filter orders by', 'woo-order-export-lite' ) ?>:
+                    <?php esc_html_e( 'Filter orders by', 'woo-order-export-lite' ) ?>:
                 </div>
                 <label>
                     <input type="radio" name="settings[export_rule_field]"
                            class="width-100" <?php echo ( ! isset( $settings['export_rule_field'] ) || ( $settings['export_rule_field'] == 'date' ) ) ? 'checked' : '' ?>
                            value="date">
-					<?php esc_html_e( 'Order Date', 'woo-order-export-lite' ) ?>
+                    <?php esc_html_e( 'Order Date', 'woo-order-export-lite' ) ?>
                 </label>
                 &#09;&#09;
                 <label>
                     <input type="radio" name="settings[export_rule_field]"
                            class="width-100" <?php echo ( isset( $settings['export_rule_field'] ) && ( $settings['export_rule_field'] == 'modified' ) ) ? 'checked' : '' ?>
                            value="modified">
-					<?php esc_html_e( 'Modification Date', 'woo-order-export-lite' ) ?>
+                    <?php esc_html_e( 'Modification Date', 'woo-order-export-lite' ) ?>
                 </label>
-                 <?php if ( $woe_order_post_type && $woe_order_post_type !== 'shop_order_refund' ) { ?>
-                &#09;&#09;
-                <label title="<?php esc_html_e( 'You will export only paid orders', 'woo-order-export-lite' ) ?>" >
-                    <input type="radio" name="settings[export_rule_field]"
-                           class="width-100" <?php echo ( isset( $settings['export_rule_field'] ) && ( $settings['export_rule_field'] == 'date_paid' ) ) ? 'checked' : '' ?>
-                           value="date_paid">
-					<?php esc_html_e( 'Paid Date', 'woo-order-export-lite' ) ?>
-                </label>
-                &#09;&#09;
-                <label title="<?php esc_html_e( 'You will export only completed orders', 'woo-order-export-lite' ) ?>" >
-                    <input type="radio" name="settings[export_rule_field]"
-                           class="width-100" <?php echo ( isset( $settings['export_rule_field'] ) && ( $settings['export_rule_field'] == 'date_completed' ) ) ? 'checked' : '' ?>
-                           value="date_completed">
-					<?php esc_html_e( 'Completed Date', 'woo-order-export-lite' ) ?>
-                </label>
-                 <?php }/*hide Paid/Completed if export Refunds*/ ?>
+                <?php if ( $woe_order_post_type && $woe_order_post_type !== 'shop_order_refund' ) { ?>
+                    &#09;&#09;
+                    <label title="<?php esc_html_e( 'You will export only paid orders', 'woo-order-export-lite' ) ?>" >
+                        <input type="radio" name="settings[export_rule_field]"
+                               class="width-100" <?php echo ( isset( $settings['export_rule_field'] ) && ( $settings['export_rule_field'] == 'date_paid' ) ) ? 'checked' : '' ?>
+                               value="date_paid">
+                        <?php esc_html_e( 'Paid Date', 'woo-order-export-lite' ) ?>
+                    </label>
+                    &#09;&#09;
+                    <label title="<?php esc_html_e( 'You will export only completed orders', 'woo-order-export-lite' ) ?>" >
+                        <input type="radio" name="settings[export_rule_field]"
+                               class="width-100" <?php echo ( isset( $settings['export_rule_field'] ) && ( $settings['export_rule_field'] == 'date_completed' ) ) ? 'checked' : '' ?>
+                               value="date_completed">
+                        <?php esc_html_e( 'Completed Date', 'woo-order-export-lite' ) ?>
+                    </label>
+                <?php }/*hide Paid/Completed if export Refunds*/ ?>
+                <?php do_action( 'woe_settings_form_date_types', $settings ); ?>
             </div>
             <br>
+
             <div id="my-date-filter" class="my-block"
                  title="<?php esc_html_e( 'This date range should not be saved in the scheduled task',
 				     'woo-order-export-lite' ) ?>">
@@ -179,6 +180,9 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
 					<?php esc_html_e( 'to', 'woo-order-export-lite' ) ?>
                     <input type=text class='date' name="settings[to_date]" id="to_date"
                            value='<?php echo esc_attr(! empty($options['show_date_time_picker_for_date_range']) ? $settings['to_date']: remove_time_from_date($settings['to_date']))?>'>
+
+                    <button id="my-quick-export-btn" class="button-primary"><?php esc_html_e( 'Express export',
+                            'woo-order-export-lite' ) ?></button>
                 </div>
                 <br>
 						<br>
@@ -187,27 +191,23 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                     <input class='width-15' type=text name="settings[from_order_id]" id="from_order_id" value='<?php echo esc_attr( $settings['from_order_id'] ) ?>'>
 					<?php esc_html_e( 'to', 'woo-order-export-lite' ) ?>
                     <input class='width-15' type=text name="settings[to_order_id]" id="to_order_id" value='<?php echo  esc_attr( $settings['to_order_id'] ) ?>'>
-                <button id="my-quick-export-btn" class="button-primary"><?php esc_html_e( 'Express export',
-						'woo-order-export-lite' ) ?></button>
-						<?php do_action( "woe_settings_below_orders_range", $settings ); ?>
-                </div>
+                    <div id="go-to-setup-fields-section" class="button-secondary" style="vertical-align:middle; margin-left: 6.7rem;"><?php esc_html_e( 'Setup Fields', 'woo-order-export-lite' ) ?></div>
 
-						<br>
-                <div id="summary_report_by_products" style="display:block"><input type="hidden"
-                                                                                         name="settings[summary_report_by_products]"
-                                                                                         value="0"/><label><input
-                                type="checkbox" id=summary_report_by_products_checkbox
-                                name="settings[summary_report_by_products]"
-                                value="1" <?php checked( $settings['summary_report_by_products'] ) ?> /> <?php esc_html_e( "Summary Report By Products",
-							'woo-order-export-lite' ) ?></label>
+					<?php do_action( "woe_settings_below_orders_range", $settings ); ?>
                 </div>
-                <div id="summary_report_by_customers" style="display:block"><input type="hidden"
-                                                                                         name="settings[summary_report_by_customers]"
-                                                                                         value="0"/><label><input
-                                type="checkbox" id=summary_report_by_customers_checkbox
-                                name="settings[summary_report_by_customers]"
-                                value="1" <?php checked( $settings['summary_report_by_customers'] ) ?> /> <?php esc_html_e( "Summary Report By Customers",
-							'woo-order-export-lite' ) ?></label>
+                <br>
+                <div class="export-section-top-block">
+                    <div id="summary_report_by_products" style="display:block">
+                        <input type="hidden" name="settings[summary_report_by_products]" value="0"/>
+                        <label>
+                            <input type="checkbox" id=summary_report_by_products_checkbox  name="settings[summary_report_by_products]" value="1" <?php checked( $settings['summary_report_by_products'] ) ?> /> <?php esc_html_e( "Summary Report By Products", 'woo-order-export-lite' ) ?>
+                        </label>
+                    </div>
+                    <div id="summary_report_by_customers" style="display:block"><input type="hidden" name="settings[summary_report_by_customers]" value="0"/>
+                        <label>
+                            <input type="checkbox" id=summary_report_by_customers_checkbox name="settings[summary_report_by_customers]" value="1" <?php checked( $settings['summary_report_by_customers'] ) ?> /> <?php esc_html_e( "Summary Report By Customers", 'woo-order-export-lite' ) ?>
+                        </label>
+                    </div>
                 </div>
             </div>
             <br>
@@ -216,7 +216,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
         <div id="my-export-file" class="my-block">
             <div class="wc-oe-header">
 				<?php esc_html_e( 'Export filename', 'woo-order-export-lite' ) ?> :
-				<a style="float:right;font-weight:normal" target="_blank" href="https://docs.algolplus.com/algol_order_export/free-version-algol_order_export/export-now/export-filename/">
+				<a style="float:right;font-weight:normal" target="_blank" href="https://docs.algolplus.com/algol_order_export/export-now/export-filename/">
                 <?php esc_html_e('supported tags', 'woo-order-export-lite' ) ?></a>
             </div>
             <label id="export_filename" class="width-100">
@@ -393,6 +393,10 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
             </div>
             <div id='JSON_options' style='display:none'><strong><?php esc_html_e( 'JSON options',
 						'woo-order-export-lite' ) ?></strong><br>
+                <input type=hidden name="settings[format_json_unescaped_slashes]" value=0>
+                <input type=hidden name="settings[format_json_numeric_check]" value=0>
+                <input type=hidden name="settings[format_json_encode_unicode]" value=0>
+
                 <span class="xml-title"><?php esc_html_e( 'Start tag', 'woo-order-export-lite' ) ?></span><input type=text
                                                                                                             name="settings[format_json_start_tag]"
                                                                                                             value='<?php echo esc_attr(@$settings['format_json_start_tag']) ?>'><br>
@@ -626,6 +630,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
 
 	            <div class="pdf_two_col_block">
 		            <?php esc_html_e( 'Images height', 'woo-order-export-lite' ) ?>
+                    ( <?php esc_html_e( '0 - auto scale', 'woo-order-export-lite' ) ?> )
 		            <br>
 		            <input type="number" name="settings[format_pdf_row_images_height]"
 		                   value='<?php echo esc_attr($settings['format_pdf_row_images_height']) ?>' min="0">
@@ -873,7 +878,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
             <?php } ?>
         <?php } ?>
 
-        <div class="my-block">
+        <div class="my-block" id='misc-settings-block'>
 			<span class="my-hide-next "><?php esc_html_e( 'Misc settings', 'woo-order-export-lite' ) ?>
                 <span class="ui-icon ui-icon-triangle-1-s my-icon-triangle"></span></span>
             <div id="my-misc" class="hide">
@@ -1599,7 +1604,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
 
     <div class="weo_clearfix"></div>
     <br>
-    <div class="my-block">
+    <div class="my-block" id='setup-fields-block'>
 		<span id='adjust-fields-btn' class="my-hide-next "><?php esc_html_e( 'Set up fields to export',
 				'woo-order-export-lite' ) ?>
             <span class="ui-icon ui-icon-triangle-1-s my-icon-triangle"></span></span>
@@ -1657,10 +1662,10 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                     <ul class="subsubsub" style="float: none">
                         <?php $segments = WC_Order_Export_Data_Extractor_UI::get_unselected_fields_segments(); ?>
                         <?php $segment_hints = WC_Order_Export_Data_Extractor_UI::get_segment_hints(); ?>
-						<?php foreach ( $segments as $id => $segment_title ): ?>
-			<li class="block-segment-choice" data-segment="<?php echo esc_attr($id); ?>">
+						<?php foreach ( $segments as $segment_id => $segment_title ): ?>
+			<li class="block-segment-choice" data-segment="<?php echo esc_attr($segment_id); ?>">
                                 <a class="segment_choice"
-                                   data-segment="<?php echo esc_attr($id); ?>" href="#segment=<?php echo esc_attr($id); ?>">
+                                   data-segment="<?php echo esc_attr($segment_id); ?>" href="#segment=<?php echo esc_attr($segment_id); ?>">
 									<?php echo esc_html($segment_title); ?>
                                 </a>
 				    <span class="divider"><?php echo( end( $segments ) == $segment_title ? '' : ' | ' ); ?></span>
@@ -2160,12 +2165,13 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
     <div id=JS_error_onload
          style='color:red;font-size: 120%;'><?php
 		/* translators: error message if external js broken our UI loader */
-         echo sprintf( esc_html__( "If you see this message after page load, user interface won't work correctly!<br>There is a JS error (<a target=blank href='%s'>read here</a> how to view it). Probably, it's a conflict with another plugin or active theme.",
+        //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.I18n.MissingTranslatorsComment
+         echo sprintf( __( "If you see this message after page load, user interface won't work correctly!<br>There is a JS error (<a target=blank href='%s'>read here</a> how to view it). Probably, it's a conflict with another plugin or active theme.",
 			'woo-order-export-lite' ),
 			"https://wordpress.org/support/article/using-your-browser-to-diagnose-javascript-errors/#step-3-diagnosis" ); ?></div>
     <p class="submit">
         <input type="submit" id='preview-btn' class="button-secondary preview-btn"
-               data-limit="<?php echo( $mode === WC_Order_Export_Manage::EXPORT_ORDER_ACTION ? 1 : apply_filters('woe_default_preview_size', 5) ); ?>"
+               data-limit="<?php echo esc_attr( $mode === WC_Order_Export_Manage::EXPORT_ORDER_ACTION ? 1 : apply_filters('woe_default_preview_size', 5) ); ?>"
                value="<?php esc_html_e( 'Preview', 'woo-order-export-lite' ) ?>"
                title="<?php esc_html_e( 'Might be different from actual export!', 'woo-order-export-lite' ) ?>"/>
 		<?php if ( $mode == WC_Order_Export_Manage::EXPORT_NOW ): ?>

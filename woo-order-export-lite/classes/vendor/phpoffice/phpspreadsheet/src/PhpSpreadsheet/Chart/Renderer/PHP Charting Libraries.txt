@@ -7,8 +7,8 @@ GraPHPite
 JpGraph
 	https://jpgraph.net/
 	Used composer packages:
-        https://packagist.org/packages/jpgraph/jpgraph (\WOE\PhpOffice\PhpSpreadsheet\Chart\Renderer\JpGraph)
-        https://packagist.org/packages/mitoteam/jpgraph (\WOE\PhpOffice\PhpSpreadsheet\Chart\Renderer\MtJpGraphRenderer)
+        https://packagist.org/packages/jpgraph/jpgraph (\PhpOffice\PhpSpreadsheet\Chart\Renderer\JpGraph)
+        https://packagist.org/packages/mitoteam/jpgraph (\PhpOffice\PhpSpreadsheet\Chart\Renderer\MtJpGraphRenderer)
 
 LibChart
 	https://naku.dohcrew.com/libchart/pages/introduction/

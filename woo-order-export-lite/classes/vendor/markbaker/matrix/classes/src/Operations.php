@@ -10,7 +10,7 @@ use WOE\Matrix\Operators\Subtraction;
 
 class Operations
 {
-    public static function add(...$matrixValues): Matrix
+    public static function add(...$matrixValues): WOE\Matrix
     {
         if (count($matrixValues) < 2) {
             throw new Exception('Addition operation requires at least 2 arguments');
@@ -34,7 +34,7 @@ class Operations
         return $result->result();
     }
 
-    public static function directsum(...$matrixValues): Matrix
+    public static function directsum(...$matrixValues): WOE\Matrix
     {
         if (count($matrixValues) < 2) {
             throw new Exception('DirectSum operation requires at least 2 arguments');
@@ -58,7 +58,7 @@ class Operations
         return $result->result();
     }
 
-    public static function divideby(...$matrixValues): Matrix
+    public static function divideby(...$matrixValues): WOE\Matrix
     {
         if (count($matrixValues) < 2) {
             throw new Exception('Division operation requires at least 2 arguments');
@@ -82,7 +82,7 @@ class Operations
         return $result->result();
     }
 
-    public static function divideinto(...$matrixValues): Matrix
+    public static function divideinto(...$matrixValues): WOE\Matrix
     {
         if (count($matrixValues) < 2) {
             throw new Exception('Division operation requires at least 2 arguments');
@@ -107,7 +107,7 @@ class Operations
         return $result->result();
     }
 
-    public static function multiply(...$matrixValues): Matrix
+    public static function multiply(...$matrixValues): WOE\Matrix
     {
         if (count($matrixValues) < 2) {
             throw new Exception('Multiplication operation requires at least 2 arguments');
@@ -131,7 +131,7 @@ class Operations
         return $result->result();
     }
 
-    public static function subtract(...$matrixValues): Matrix
+    public static function subtract(...$matrixValues): WOE\Matrix
     {
         if (count($matrixValues) < 2) {
             throw new Exception('Subtraction operation requires at least 2 arguments');

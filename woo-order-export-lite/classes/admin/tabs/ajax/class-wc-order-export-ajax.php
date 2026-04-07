@@ -54,7 +54,7 @@ class WC_Order_Export_Ajax {
 			set_transient( WC_Order_Export_Admin::last_bulk_export_results, $output, 5 * MINUTE_IN_SECONDS  );
 		if ( !$browser_output  ) { // we don't send file to user, so we must redirect to previous page!
 			if( isset( $_SERVER['HTTP_REFERER'] ) ) {
-				wp_redirect( wp_unslash($_SERVER['HTTP_REFERER']) );
+				wp_safe_redirect( wp_unslash($_SERVER['HTTP_REFERER']) );
 				exit();
 			} else { // if we don't know the referer - just show the message
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

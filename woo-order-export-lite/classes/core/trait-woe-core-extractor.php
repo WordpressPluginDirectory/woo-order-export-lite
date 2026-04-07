@@ -27,7 +27,7 @@ trait WOE_Core_Extractor {
 			} else { // we have a lot of users, so take last users, upto 1000
 				$user_ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->users} ORDER BY ID DESC LIMIT 1000" );
 			    $list_placeholders = implode(',', array_fill(0, count($user_ids), '%d'));
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 				$fields   = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->usermeta}  WHERE user_id IN ($list_placeholders)",$user_ids) );
 			}
 			sort( $fields );
@@ -106,7 +106,7 @@ trait WOE_Core_Extractor {
 				$product_ids   = $wpdb->get_col( "SELECT  ID FROM {$wpdb->posts} WHERE post_type IN('product','product_variation')  ORDER BY post_date DESC LIMIT 1000" );
 				$product_ids[] = 0; // add fake zero
 				$list_placeholders = implode(',', array_fill(0, count($product_ids), '%d'));
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 				$fields        = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->postmeta}  WHERE post_id IN ($list_placeholders)",$product_ids) );
 			}
 			sort( $fields );
@@ -278,7 +278,7 @@ trait WOE_Core_Extractor {
 			$sql = "SELECT DISTINCT ID FROM {$wpdb->posts} AS products $left_join_product_meta  WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND $product_where ";
 			if ( self::$track_sql_queries )
 				self::$sql_queries[] = $sql;
-			//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$settings['products'] = $wpdb->get_col( $sql );
 			if ( empty( $settings['products'] ) ) // failed condition!
 			{
@@ -290,11 +290,11 @@ trait WOE_Core_Extractor {
 		if ( $settings['products'] AND $settings['product_attributes'] ) {
 			$values               = $settings['products'] ;
 			$list_placeholders = implode(',', array_fill(0, count($values), '%d'));
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 			$sql = $wpdb->prepare( "SELECT DISTINCT ID FROM {$wpdb->posts} AS products WHERE products.post_type in ('product','product_variation') AND products.post_status<>'trash' AND post_parent<>0 AND post_parent IN ($list_placeholders)",$values);
 			if ( self::$track_sql_queries )
 				self::$sql_queries[] = $sql;
-			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$settings['products'] = $wpdb->get_col( $sql );
 			if ( empty( $settings['products'] ) ) // failed condition!
 			{
@@ -843,6 +843,8 @@ trait WOE_Core_Extractor {
 			$product   = apply_filters( "woe_get_order_product", $product );
 
 			$item_meta = get_metadata( 'order_item', $item_id );
+			if( !$item_meta )
+				$item_meta = array(); //fix for broken order items
 			foreach ( $item_meta as $key => $value ) {
 				$clear_key = wc_sanitize_taxonomy_name( $key );
 				if ( taxonomy_exists( $clear_key ) ) {
@@ -977,7 +979,8 @@ trait WOE_Core_Extractor {
 				$options,
 				$woe_order
 			);
-			if ( $options['include_products'] AND empty( $data['products'] ) AND apply_filters( "woe_skip_order_without_products", false ) ) {
+			$skip_order_without_products = ( $options['exclude_free_items'] OR $options['skip_refunded_items'] );
+			if ( empty( $data['products'] ) AND apply_filters( "woe_skip_order_without_products",  $skip_order_without_products) ) {
 				return array();
 			}
 		} else {
@@ -1388,7 +1391,7 @@ trait WOE_Core_Extractor {
 		if( !$customer_id) return 0;
 
 		$list_placeholders = implode(',', array_fill(0, count($statuses), '%s'));
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 		$result = $wpdb->get_var( $wpdb->prepare("SELECT $operation FROM {$wpdb->prefix}wc_order_stats WHERE customer_id = %d  AND status IN ($list_placeholders)",array_merge([$customer_id],$statuses)) );
 		if(!$result) $result  = 0; // NULL for SUM!
 		return $result;

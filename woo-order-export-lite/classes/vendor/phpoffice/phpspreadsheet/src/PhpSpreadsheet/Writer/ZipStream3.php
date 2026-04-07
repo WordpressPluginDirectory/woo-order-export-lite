@@ -2,6 +2,7 @@
 
 namespace WOE\PhpOffice\PhpSpreadsheet\Writer;
 
+use WOE\ZipStream\Option\Archive;
 use WOE\ZipStream\ZipStream;
 
 class ZipStream3

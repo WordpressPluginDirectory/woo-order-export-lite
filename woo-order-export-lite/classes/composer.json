@@ -1,6 +1,11 @@
 {
-    "require": {
-        "phpoffice/phpspreadsheet": "^4.1"
+	"config": {
+        "platform": {
+            "php": "7.4.0" 
+        }
+    },
+	"require": {
+        "phpoffice/phpspreadsheet": "^1.30"
     },
     "scripts": {
         "prefix-namespaces": [
@@ -23,7 +28,7 @@
             "target_directory": "vendor-prefixed",
             "namespace_prefix": "WOE\\",
             "classmap_prefix": "WOE_",
-            "constant_prefix": "WOE_",
+            "constant_prefix": "",
             "packages": [
             ],
             "update_call_sites": false,

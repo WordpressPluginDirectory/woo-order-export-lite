@@ -5,7 +5,6 @@ namespace WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting;
 use WOE\PhpOffice\PhpSpreadsheet\Exception;
 use WOE\PhpOffice\PhpSpreadsheet\Style\Conditional;
 use WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard\WizardInterface;
-
 class Wizard
 {
     public const CELL_VALUE = 'cellValue';
@@ -19,48 +18,71 @@ class Wizard
     public const DATES_OCCURRING = 'DateValue';
     public const DUPLICATES = Conditional::CONDITION_DUPLICATES;
     public const UNIQUE = Conditional::CONDITION_UNIQUE;
-
     public const VALUE_TYPE_LITERAL = 'value';
     public const VALUE_TYPE_CELL = 'cell';
     public const VALUE_TYPE_FORMULA = 'formula';
-
-    protected string $cellRange;
-
+    /**
+     * @var string
+     */
+    protected $cellRange;
     public function __construct(string $cellRange)
     {
         $this->cellRange = $cellRange;
     }
-
     public function newRule(string $ruleType): WizardInterface
     {
-        return match ($ruleType) {
-            self::CELL_VALUE => new Wizard\CellValue($this->cellRange),
-            self::TEXT_VALUE => new Wizard\TextValue($this->cellRange),
-            self::BLANKS => new Wizard\Blanks($this->cellRange, true),
-            self::NOT_BLANKS => new Wizard\Blanks($this->cellRange, false),
-            self::ERRORS => new Wizard\Errors($this->cellRange, true),
-            self::NOT_ERRORS => new Wizard\Errors($this->cellRange, false),
-            self::EXPRESSION, self::FORMULA => new Wizard\Expression($this->cellRange),
-            self::DATES_OCCURRING => new Wizard\DateValue($this->cellRange),
-            self::DUPLICATES => new Wizard\Duplicates($this->cellRange, false),
-            self::UNIQUE => new Wizard\Duplicates($this->cellRange, true),
-            default => throw new Exception('No wizard exists for this CF rule type'),
-        };
+        switch ($ruleType) {
+            case self::CELL_VALUE:
+                return new Wizard\CellValue($this->cellRange);
+            case self::TEXT_VALUE:
+                return new Wizard\TextValue($this->cellRange);
+            case self::BLANKS:
+                return new Wizard\Blanks($this->cellRange, true);
+            case self::NOT_BLANKS:
+                return new Wizard\Blanks($this->cellRange, false);
+            case self::ERRORS:
+                return new Wizard\Errors($this->cellRange, true);
+            case self::NOT_ERRORS:
+                return new Wizard\Errors($this->cellRange, false);
+            case self::EXPRESSION:
+            case self::FORMULA:
+                return new Wizard\Expression($this->cellRange);
+            case self::DATES_OCCURRING:
+                return new Wizard\DateValue($this->cellRange);
+            case self::DUPLICATES:
+                return new Wizard\Duplicates($this->cellRange, false);
+            case self::UNIQUE:
+                return new Wizard\Duplicates($this->cellRange, true);
+            default:
+                throw new Exception('No wizard exists for this CF rule type');
+        }
     }
-
     public static function fromConditional(Conditional $conditional, string $cellRange = 'A1'): WizardInterface
     {
         $conditionalType = $conditional->getConditionType();
-
-        return match ($conditionalType) {
-            Conditional::CONDITION_CELLIS => Wizard\CellValue::fromConditional($conditional, $cellRange),
-            Conditional::CONDITION_CONTAINSTEXT, Conditional::CONDITION_NOTCONTAINSTEXT, Conditional::CONDITION_BEGINSWITH, Conditional::CONDITION_ENDSWITH => Wizard\TextValue::fromConditional($conditional, $cellRange),
-            Conditional::CONDITION_CONTAINSBLANKS, Conditional::CONDITION_NOTCONTAINSBLANKS => Wizard\Blanks::fromConditional($conditional, $cellRange),
-            Conditional::CONDITION_CONTAINSERRORS, Conditional::CONDITION_NOTCONTAINSERRORS => Wizard\Errors::fromConditional($conditional, $cellRange),
-            Conditional::CONDITION_TIMEPERIOD => Wizard\DateValue::fromConditional($conditional, $cellRange),
-            Conditional::CONDITION_EXPRESSION => Wizard\Expression::fromConditional($conditional, $cellRange),
-            Conditional::CONDITION_DUPLICATES, Conditional::CONDITION_UNIQUE => Wizard\Duplicates::fromConditional($conditional, $cellRange),
-            default => throw new Exception('No wizard exists for this CF rule type'),
-        };
+        switch ($conditionalType) {
+            case Conditional::CONDITION_CELLIS:
+                return \WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard\CellValue::fromConditional($conditional, $cellRange);
+            case Conditional::CONDITION_CONTAINSTEXT:
+            case Conditional::CONDITION_NOTCONTAINSTEXT:
+            case Conditional::CONDITION_BEGINSWITH:
+            case Conditional::CONDITION_ENDSWITH:
+                return \WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard\TextValue::fromConditional($conditional, $cellRange);
+            case Conditional::CONDITION_CONTAINSBLANKS:
+            case Conditional::CONDITION_NOTCONTAINSBLANKS:
+                return \WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard\Blanks::fromConditional($conditional, $cellRange);
+            case Conditional::CONDITION_CONTAINSERRORS:
+            case Conditional::CONDITION_NOTCONTAINSERRORS:
+                return \WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard\Errors::fromConditional($conditional, $cellRange);
+            case Conditional::CONDITION_TIMEPERIOD:
+                return \WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard\DateValue::fromConditional($conditional, $cellRange);
+            case Conditional::CONDITION_EXPRESSION:
+                return \WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard\Expression::fromConditional($conditional, $cellRange);
+            case Conditional::CONDITION_DUPLICATES:
+            case Conditional::CONDITION_UNIQUE:
+                return \WOE\PhpOffice\PhpSpreadsheet\Style\ConditionalFormatting\Wizard\Duplicates::fromConditional($conditional, $cellRange);
+            default:
+                throw new Exception('No wizard exists for this CF rule type');
+        }
     }
 }

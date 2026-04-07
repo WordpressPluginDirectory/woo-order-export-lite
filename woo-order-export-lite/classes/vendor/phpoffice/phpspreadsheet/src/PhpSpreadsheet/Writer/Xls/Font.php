@@ -8,13 +8,17 @@ class Font
 {
     /**
      * Color index.
+     *
+     * @var int
      */
-    private int $colorIndex;
+    private $colorIndex;
 
     /**
      * Font.
+     *
+     * @var \WOE\PhpOffice\PhpSpreadsheet\Style\Font
      */
-    private \WOE\PhpOffice\PhpSpreadsheet\Style\Font $font;
+    private $font;
 
     /**
      * Constructor.
@@ -27,18 +31,23 @@ class Font
 
     /**
      * Set the color index.
+     *
+     * @param int $colorIndex
      */
-    public function setColorIndex(int $colorIndex): void
+    public function setColorIndex($colorIndex): void
     {
         $this->colorIndex = $colorIndex;
     }
 
-    private static int $notImplemented = 0;
+    /** @var int */
+    private static $notImplemented = 0;
 
     /**
      * Get font record data.
+     *
+     * @return string
      */
-    public function writeFont(): string
+    public function writeFont()
     {
         $font_outline = self::$notImplemented;
         $font_shadow = self::$notImplemented;
@@ -111,7 +120,7 @@ class Font
      *
      * @var int[]
      */
-    private static array $mapUnderline = [
+    private static $mapUnderline = [
         \WOE\PhpOffice\PhpSpreadsheet\Style\Font::UNDERLINE_NONE => 0x00,
         \WOE\PhpOffice\PhpSpreadsheet\Style\Font::UNDERLINE_SINGLE => 0x01,
         \WOE\PhpOffice\PhpSpreadsheet\Style\Font::UNDERLINE_DOUBLE => 0x02,
@@ -121,8 +130,12 @@ class Font
 
     /**
      * Map underline.
+     *
+     * @param string $underline
+     *
+     * @return int
      */
-    private static function mapUnderline(string $underline): int
+    private static function mapUnderline($underline)
     {
         if (isset(self::$mapUnderline[$underline])) {
             return self::$mapUnderline[$underline];

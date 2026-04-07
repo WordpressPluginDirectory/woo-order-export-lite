@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 <hr>
 <?php
 /* translators: purchase Pro link  */
-echo sprintf( esc_html__( 'Buy %s to get access to this section', 'woo-order-export-lite' ), 
-	sprintf( '<a href="https://algolplus.com/plugins/downloads/advanced-order-export-for-woocommerce-pro/?currency=USD" target=_blank>%s</a>', esc_html__( 'Pro version', 'woo-order-export-lite' ) )
+echo sprintf( esc_html__( 'Buy %s to get access to this section', 'woo-order-export-lite' ),
+	sprintf( '<a href="https://algolplus.com/plugins/downloads/advanced-order-export-for-woocommerce-pro/" target=_blank>%s</a>', esc_html__( 'Pro version', 'woo-order-export-lite' ) )
 	);
 ?>
 </div>

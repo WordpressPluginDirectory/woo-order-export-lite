@@ -3,89 +3,84 @@
 namespace WOE\PhpOffice\PhpSpreadsheet\Worksheet;
 
 use WOE\PhpOffice\PhpSpreadsheet\Cell\AddressRange;
-use WOE\PhpOffice\PhpSpreadsheet\Cell\CellAddress;
 use WOE\PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use WOE\PhpOffice\PhpSpreadsheet\Cell\DataType;
 use WOE\PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
 use WOE\PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
 use WOE\PhpOffice\PhpSpreadsheet\Worksheet\Table\TableStyle;
-use Stringable;
-
-class Table implements Stringable
+class Table
 {
     /**
      * Table Name.
+     *
+     * @var string
      */
-    private string $name;
-
+    private $name;
     /**
      * Show Header Row.
+     *
+     * @var bool
      */
-    private bool $showHeaderRow = true;
-
+    private $showHeaderRow = true;
     /**
      * Show Totals Row.
+     *
+     * @var bool
      */
-    private bool $showTotalsRow = false;
-
+    private $showTotalsRow = false;
     /**
      * Table Range.
+     *
+     * @var string
      */
-    private string $range = '';
-
+    private $range = '';
     /**
      * Table Worksheet.
+     *
+     * @var null|Worksheet
      */
-    private ?Worksheet $workSheet = null;
-
+    private $workSheet;
     /**
      * Table allow filter.
+     *
+     * @var bool
      */
-    private bool $allowFilter = true;
-
+    private $allowFilter = true;
     /**
      * Table Column.
      *
      * @var Table\Column[]
      */
-    private array $columns = [];
-
+    private $columns = [];
     /**
      * Table Style.
+     *
+     * @var TableStyle
      */
-    private TableStyle $style;
-
+    private $style;
     /**
      * Table AutoFilter.
+     *
+     * @var AutoFilter
      */
-    private AutoFilter $autoFilter;
-
+    private $autoFilter;
     /**
      * Create a new Table.
      *
-     * @param AddressRange<CellAddress>|AddressRange<int>|AddressRange<string>|array{0: int, 1: int, 2: int, 3: int}|array{0: int, 1: int}|string $range
+     * @param AddressRange|array<int>|string $range
      *            A simple string containing a Cell range like 'A1:E10' is permitted
      *              or passing in an array of [$fromColumnIndex, $fromRow, $toColumnIndex, $toRow] (e.g. [3, 5, 6, 8]),
      *              or an AddressRange object.
      * @param string $name (e.g. Table1)
      */
-    public function __construct(AddressRange|string|array $range = '', string $name = '')
+    public function __construct($range = '', string $name = '')
     {
         $this->style = new TableStyle();
         $this->autoFilter = new AutoFilter($range);
         $this->setRange($range);
         $this->setName($name);
     }
-
-    /**
-     * Code to execute when this table is unset().
-     */
-    public function __destruct()
-    {
-        $this->workSheet = null;
-    }
-
     /**
      * Get Table name.
      */
@@ -93,7 +88,6 @@ class Table implements Stringable
     {
         return $this->name;
     }
-
     /**
      * Set Table name.
      *
@@ -102,7 +96,6 @@ class Table implements Stringable
     public function setName(string $name): self
     {
         $name = trim($name);
-
         if (!empty($name)) {
             if (strlen($name) === 1 && in_array($name, ['C', 'c', 'R', 'r'])) {
                 throw new PhpSpreadsheetException('The table name is invalid');
@@ -111,28 +104,21 @@ class Table implements Stringable
                 throw new PhpSpreadsheetException('The table name cannot be longer than 255 characters');
             }
             // Check for A1 or R1C1 cell reference notation
-            if (
-                preg_match(Coordinate::A1_COORDINATE_REGEX, $name)
-                || preg_match('/^R\[?\-?[0-9]*\]?C\[?\-?[0-9]*\]?$/i', $name)
-            ) {
+            if (preg_match(Coordinate::A1_COORDINATE_REGEX, $name) || preg_match('/^R\[?\-?[0-9]*\]?C\[?\-?[0-9]*\]?$/i', $name)) {
                 throw new PhpSpreadsheetException('The table name can\'t be the same as a cell reference');
             }
-            if (!preg_match('/^[\p{L}_\\\]/iu', $name)) {
+            if (!preg_match('/^[\p{L}_\\\\]/iu', $name)) {
                 throw new PhpSpreadsheetException('The table name must begin a name with a letter, an underscore character (_), or a backslash (\)');
             }
-            if (!preg_match('/^[\p{L}_\\\][\p{L}\p{M}0-9\._]+$/iu', $name)) {
+            if (!preg_match('/^[\p{L}_\\\\][\p{L}\p{M}0-9\._]+$/iu', $name)) {
                 throw new PhpSpreadsheetException('The table name contains invalid characters');
             }
-
             $this->checkForDuplicateTableNames($name, $this->workSheet);
             $this->updateStructuredReferences($name);
         }
-
         $this->name = $name;
-
         return $this;
     }
-
     /**
      * @throws PhpSpreadsheetException
      */
@@ -140,10 +126,8 @@ class Table implements Stringable
     {
         // Remember that table names are case-insensitive
         $tableName = StringHelper::strToLower($name);
-
         if ($worksheet !== null && StringHelper::strToLower($this->name) !== $name) {
             $spreadsheet = $worksheet->getParentOrThrow();
-
             foreach ($spreadsheet->getWorksheetIterator() as $sheet) {
                 foreach ($sheet->getTableCollection() as $table) {
                     if (StringHelper::strToLower($table->getName()) === $tableName && $table != $this) {
@@ -153,13 +137,11 @@ class Table implements Stringable
             }
         }
     }
-
     private function updateStructuredReferences(string $name): void
     {
-        if (!$this->workSheet || !$this->name) {
+        if ($this->workSheet === null || $this->name === null || $this->name === '') {
             return;
         }
-
         // Remember that table names are case-insensitive
         if (StringHelper::strToLower($this->name) !== StringHelper::strToLower($name)) {
             // We need to check all formula cells that might contain fully-qualified Structured References
@@ -171,15 +153,13 @@ class Table implements Stringable
             $this->updateStructuredReferencesInNamedFormulae($spreadsheet, $name);
         }
     }
-
     private function updateStructuredReferencesInCells(Worksheet $worksheet, string $newName): void
     {
         $pattern = '/' . preg_quote($this->name, '/') . '\[/mui';
-
         foreach ($worksheet->getCoordinates(false) as $coordinate) {
             $cell = $worksheet->getCell($coordinate);
             if ($cell->getDataType() === DataType::TYPE_FORMULA) {
-                $formula = $cell->getValueString();
+                $formula = $cell->getValue();
                 if (preg_match($pattern, $formula) === 1) {
                     $formula = preg_replace($pattern, "{$newName}[", $formula);
                     $cell->setValueExplicit($formula, DataType::TYPE_FORMULA);
@@ -187,20 +167,18 @@ class Table implements Stringable
             }
         }
     }
-
     private function updateStructuredReferencesInNamedFormulae(Spreadsheet $spreadsheet, string $newName): void
     {
         $pattern = '/' . preg_quote($this->name, '/') . '\[/mui';
-
         foreach ($spreadsheet->getNamedFormulae() as $namedFormula) {
             $formula = $namedFormula->getValue();
             if (preg_match($pattern, $formula) === 1) {
-                $formula = preg_replace($pattern, "{$newName}[", $formula) ?? '';
+                $formula = preg_replace($pattern, "{$newName}[", $formula);
                 $namedFormula->setValue($formula);
+                // @phpstan-ignore-line
             }
         }
     }
-
     /**
      * Get show Header Row.
      */
@@ -208,17 +186,14 @@ class Table implements Stringable
     {
         return $this->showHeaderRow;
     }
-
     /**
      * Set show Header Row.
      */
     public function setShowHeaderRow(bool $showHeaderRow): self
     {
         $this->showHeaderRow = $showHeaderRow;
-
         return $this;
     }
-
     /**
      * Get show Totals Row.
      */
@@ -226,17 +201,14 @@ class Table implements Stringable
     {
         return $this->showTotalsRow;
     }
-
     /**
      * Set show Totals Row.
      */
     public function setShowTotalsRow(bool $showTotalsRow): self
     {
         $this->showTotalsRow = $showTotalsRow;
-
         return $this;
     }
-
     /**
      * Get allow filter.
      * If false, autofiltering is disabled for the table, if true it is enabled.
@@ -245,7 +217,6 @@ class Table implements Stringable
     {
         return $this->allowFilter;
     }
-
     /**
      * Set show Autofiltering.
      * Disabling autofiltering has the same effect as hiding the filter button on all the columns in the table.
@@ -253,10 +224,8 @@ class Table implements Stringable
     public function setAllowFilter(bool $allowFilter): self
     {
         $this->allowFilter = $allowFilter;
-
         return $this;
     }
-
     /**
      * Get Table Range.
      */
@@ -264,16 +233,15 @@ class Table implements Stringable
     {
         return $this->range;
     }
-
     /**
      * Set Table Cell Range.
      *
-     * @param AddressRange<CellAddress>|AddressRange<int>|AddressRange<string>|array{0: int, 1: int, 2: int, 3: int}|array{0: int, 1: int}|string $range
+     * @param AddressRange|array<int>|string $range
      *            A simple string containing a Cell range like 'A1:E10' is permitted
      *              or passing in an array of [$fromColumnIndex, $fromRow, $toColumnIndex, $toRow] (e.g. [3, 5, 6, 8]),
      *              or an AddressRange object.
      */
-    public function setRange(AddressRange|string|array $range = ''): self
+    public function setRange($range = ''): self
     {
         // extract coordinate
         if ($range !== '') {
@@ -283,34 +251,27 @@ class Table implements Stringable
             //    Discard all column rules
             $this->columns = [];
             $this->range = '';
-
             return $this;
         }
-
-        if (!str_contains($range, ':')) {
+        if (strpos($range, ':') === false) {
             throw new PhpSpreadsheetException('Table must be set on a range of cells.');
         }
-
         [$width, $height] = Coordinate::rangeDimension($range);
         if ($width < 1 || $height < 1) {
             throw new PhpSpreadsheetException('The table range must be at least 1 column and row');
         }
-
         $this->range = $range;
         $this->autoFilter->setRange($range);
-
         //    Discard any column rules that are no longer valid within this range
         [$rangeStart, $rangeEnd] = Coordinate::rangeBoundaries($this->range);
         foreach ($this->columns as $key => $value) {
             $colIndex = Coordinate::columnIndexFromString($key);
-            if (($rangeStart[0] > $colIndex) || ($rangeEnd[0] < $colIndex)) {
+            if ($rangeStart[0] > $colIndex || $rangeEnd[0] < $colIndex) {
                 unset($this->columns[$key]);
             }
         }
-
         return $this;
     }
-
     /**
      * Set Table Cell Range to max row.
      */
@@ -323,10 +284,8 @@ class Table implements Stringable
                 $this->setRange($range);
             }
         }
-
         return $this;
     }
-
     /**
      * Get Table's Worksheet.
      */
@@ -334,7 +293,6 @@ class Table implements Stringable
     {
         return $this->workSheet;
     }
-
     /**
      * Set Table's Worksheet.
      */
@@ -343,7 +301,6 @@ class Table implements Stringable
         if ($this->name !== '' && $worksheet !== null) {
             $spreadsheet = $worksheet->getParentOrThrow();
             $tableName = StringHelper::strToUpper($this->name);
-
             foreach ($spreadsheet->getWorksheetIterator() as $sheet) {
                 foreach ($sheet->getTableCollection() as $table) {
                     if (StringHelper::strToUpper($table->getName()) === $tableName) {
@@ -352,13 +309,10 @@ class Table implements Stringable
                 }
             }
         }
-
         $this->workSheet = $worksheet;
         $this->autoFilter->setParent($worksheet);
-
         return $this;
     }
-
     /**
      * Get all Table Columns.
      *
@@ -368,7 +322,6 @@ class Table implements Stringable
     {
         return $this->columns;
     }
-
     /**
      * Validate that the specified column is in the Table range.
      *
@@ -381,16 +334,13 @@ class Table implements Stringable
         if (empty($this->range)) {
             throw new PhpSpreadsheetException('No table range is defined.');
         }
-
         $columnIndex = Coordinate::columnIndexFromString($column);
         [$rangeStart, $rangeEnd] = Coordinate::rangeBoundaries($this->range);
-        if (($rangeStart[0] > $columnIndex) || ($rangeEnd[0] < $columnIndex)) {
+        if ($rangeStart[0] > $columnIndex || $rangeEnd[0] < $columnIndex) {
             throw new PhpSpreadsheetException('Column is outside of current table range.');
         }
-
         return $columnIndex - $rangeStart[0];
     }
-
     /**
      * Get a specified Table Column Offset within the defined Table range.
      *
@@ -398,57 +348,50 @@ class Table implements Stringable
      *
      * @return int The offset of the specified column within the table range
      */
-    public function getColumnOffset(string $column): int
+    public function getColumnOffset($column): int
     {
         return $this->isColumnInRange($column);
     }
-
     /**
      * Get a specified Table Column.
      *
      * @param string $column Column name (e.g. A)
      */
-    public function getColumn(string $column): Table\Column
+    public function getColumn($column): \WOE\PhpOffice\PhpSpreadsheet\Worksheet\Table\Column
     {
         $this->isColumnInRange($column);
-
         if (!isset($this->columns[$column])) {
             $this->columns[$column] = new Table\Column($column, $this);
         }
-
         return $this->columns[$column];
     }
-
     /**
      * Get a specified Table Column by it's offset.
      *
      * @param int $columnOffset Column offset within range (starting from 0)
      */
-    public function getColumnByOffset(int $columnOffset): Table\Column
+    public function getColumnByOffset($columnOffset): \WOE\PhpOffice\PhpSpreadsheet\Worksheet\Table\Column
     {
         [$rangeStart, $rangeEnd] = Coordinate::rangeBoundaries($this->range);
         $pColumn = Coordinate::stringFromColumnIndex($rangeStart[0] + $columnOffset);
-
         return $this->getColumn($pColumn);
     }
-
     /**
      * Set Table.
      *
      * @param string|Table\Column $columnObjectOrString
      *            A simple string containing a Column ID like 'A' is permitted
      */
-    public function setColumn(string|Table\Column $columnObjectOrString): self
+    public function setColumn($columnObjectOrString): self
     {
-        if ((is_string($columnObjectOrString)) && (!empty($columnObjectOrString))) {
+        if (is_string($columnObjectOrString) && !empty($columnObjectOrString)) {
             $column = $columnObjectOrString;
-        } elseif ($columnObjectOrString instanceof Table\Column) {
+        } elseif (is_object($columnObjectOrString) && $columnObjectOrString instanceof \WOE\PhpOffice\PhpSpreadsheet\Worksheet\Table\Column) {
             $column = $columnObjectOrString->getColumnIndex();
         } else {
             throw new PhpSpreadsheetException('Column is not within the table range.');
         }
         $this->isColumnInRange($column);
-
         if (is_string($columnObjectOrString)) {
             $this->columns[$columnObjectOrString] = new Table\Column($columnObjectOrString, $this);
         } else {
@@ -456,26 +399,21 @@ class Table implements Stringable
             $this->columns[$column] = $columnObjectOrString;
         }
         ksort($this->columns);
-
         return $this;
     }
-
     /**
      * Clear a specified Table Column.
      *
      * @param string $column Column name (e.g. A)
      */
-    public function clearColumn(string $column): self
+    public function clearColumn($column): self
     {
         $this->isColumnInRange($column);
-
         if (isset($this->columns[$column])) {
             unset($this->columns[$column]);
         }
-
         return $this;
     }
-
     /**
      * Shift an Table Column Rule to a different column.
      *
@@ -486,42 +424,35 @@ class Table implements Stringable
      * @param string $fromColumn Column name (e.g. A)
      * @param string $toColumn Column name (e.g. B)
      */
-    public function shiftColumn(string $fromColumn, string $toColumn): self
+    public function shiftColumn($fromColumn, $toColumn): self
     {
         $fromColumn = strtoupper($fromColumn);
         $toColumn = strtoupper($toColumn);
-
-        if (isset($this->columns[$fromColumn])) {
+        if ($fromColumn !== null && isset($this->columns[$fromColumn]) && $toColumn !== null) {
             $this->columns[$fromColumn]->setTable();
             $this->columns[$fromColumn]->setColumnIndex($toColumn);
             $this->columns[$toColumn] = $this->columns[$fromColumn];
             $this->columns[$toColumn]->setTable($this);
             unset($this->columns[$fromColumn]);
-
             ksort($this->columns);
         }
-
         return $this;
     }
-
     /**
      * Get table Style.
      */
-    public function getStyle(): TableStyle
+    public function getStyle(): \WOE\PhpOffice\PhpSpreadsheet\Worksheet\Table\TableStyle
     {
         return $this->style;
     }
-
     /**
      * Set table Style.
      */
     public function setStyle(TableStyle $style): self
     {
         $this->style = $style;
-
         return $this;
     }
-
     /**
      * Get AutoFilter.
      */
@@ -529,17 +460,14 @@ class Table implements Stringable
     {
         return $this->autoFilter;
     }
-
     /**
      * Set AutoFilter.
      */
     public function setAutoFilter(AutoFilter $autoFilter): self
     {
         $this->autoFilter = $autoFilter;
-
         return $this;
     }
-
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
@@ -554,7 +482,7 @@ class Table implements Stringable
                 } else {
                     $this->{$key} = clone $value;
                 }
-            } elseif ((is_array($value)) && ($key === 'columns')) {
+            } elseif (is_array($value) && $key === 'columns') {
                 //    The columns array of \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet\Table objects
                 $this->{$key} = [];
                 foreach ($value as $k => $v) {
@@ -567,12 +495,11 @@ class Table implements Stringable
             }
         }
     }
-
     /**
      * toString method replicates previous behavior by returning the range if object is
      * referenced as a property of its worksheet.
      */
-    public function __toString(): string
+    public function __toString()
     {
         return (string) $this->range;
     }

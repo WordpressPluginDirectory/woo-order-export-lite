@@ -297,13 +297,13 @@ class WC_Order_Export_Engine {
 			if( $order_ids ) {
 				$main_settings = WC_Order_Export_Main_Settings::get_settings();
 				if( apply_filters("woe_filter_bulk_action_export", $main_settings['apply_filters_to_bulk_actions']) )
-					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 					$options['include_products'] = $wpdb->get_col( WC_Order_Export_Data_Extractor::sql_get_product_ids( $settings ) );
 				else
 					$options['include_products'] = false;//don't filter products by default
 			}
 			else
-				// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+				// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				$options['include_products'] = $wpdb->get_col( WC_Order_Export_Data_Extractor::sql_get_product_ids( $settings ) );
 		}
 
@@ -448,10 +448,17 @@ class WC_Order_Export_Engine {
 		if ( $settings['mark_exported_orders'] ) {
             $order = wc_get_order($order_id);
 			if( $order ) {
-				$order->add_meta_data('woe_order_exported' . apply_filters("woe_exported_postfix",''), current_time( 'timestamp' ), true);
+				$order->add_meta_data('woe_order_exported' . apply_filters("woe_exported_postfix", self::get_default_exported_postfix($settings) ), current_time( 'timestamp' ), true);
 				$order->save();
 			}
 		}
+	}
+
+	public static function get_default_exported_postfix($settings) {
+		$main_settings = WC_Order_Export_Main_Settings::get_settings();
+		if( !$main_settings['unique_woe_exported_postfix'] OR empty($settings['mode']) )
+			return '';
+		return '_'.$settings['mode'] . $settings['id'];
 	}
 
 	public static function build_file(
@@ -503,7 +510,7 @@ class WC_Order_Export_Engine {
 		$sort_field = $settings['sort'];
 		$settings = self::replace_sort_field( $settings );
 		if ( $make_mode == 'estimate' OR $make_mode =='estimate_preview' ) { //if estimate return total count
-			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			return $wpdb->get_var( str_replace( 'orders.ID AS order_id', 'COUNT(orders.ID) AS order_count', $sql ) );
 		} elseif ( $make_mode == 'preview' ) {
                         if (preg_match('/setup_field_/i', $sort_field)) {
@@ -524,7 +531,7 @@ class WC_Order_Export_Engine {
 			$sql     .= " LIMIT $startat,$limit";
 		}
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$order_ids = apply_filters( "woe_get_order_ids", $wpdb->get_col( $sql ) );
 		self::$orders_for_export = $order_ids;
 
@@ -542,7 +549,7 @@ class WC_Order_Export_Engine {
 			if ( $make_mode == 'start_estimate' ) { //Start return total count
 				$duplicate_settings = $formater->get_duplicate_settings();
 				return array(
-					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 					'total' => $wpdb->get_var( str_replace( 'orders.ID AS order_id', 'COUNT(orders.ID) AS order_count', $sql ) ),
 					'max_line_items' => isset( $duplicate_settings['products']['max_cols'] ) ? $duplicate_settings['products']['max_cols'] : 0,
 					'max_coupons' => isset( $duplicate_settings['coupons']['max_cols'] ) ? $duplicate_settings['coupons']['max_cols'] : 0,
@@ -635,7 +642,7 @@ class WC_Order_Export_Engine {
 		}
 
 		if ( !$order_ids OR apply_filters("woe_filter_bulk_action_export", $main_settings['apply_filters_to_bulk_actions'] ) ) {
-			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$order_ids = apply_filters( "woe_get_order_ids", $wpdb->get_col( $sql ) );
 		}
 		self::$orders_for_export = $order_ids;
@@ -712,6 +719,15 @@ class WC_Order_Export_Engine {
             $wcOrdersFields = self::get_wc_orders_fields();
             $settings['sort'] = $wcOrdersFields[$key];
         }
+        //fix when sort by HPOS address
+        if ($isHPOSEnabled && ($hpos_addr = WC_Order_Export_Data_Extractor::parse_HPOS_order_address_field($settings['sort'])) )
+        {
+			$field = esc_sql($hpos_addr['field']);
+			$settings['sort'] = 'ordermeta_cf_sort.' . $field;
+			$settings['sort'] = apply_filters("woe_adjust_sort_field", $settings['sort'], $settings);
+			return $settings;
+		}
+
 		$settings['sort'] = ! in_array( $settings['sort'],
             $isHPOSEnabled ? self::get_wc_orders_fields() : self::get_wp_posts_fields() ) ?
             'ordermeta_cf_sort.meta_value' : $settings['sort'];

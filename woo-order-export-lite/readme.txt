@@ -2,37 +2,38 @@
 Contributors: algolplus
 Donate link: 
 Tags: order export,export orders,woocommerce,order,export
-Requires PHP: 8.1.0
+Requires PHP: 7.4.0
 Requires at least: 4.7
-Tested up to: 6.8
-Stable tag: 4.0.4
+Tested up to: 6.9
+Stable tag: 4.0.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Export WooCommerce orders to Excel/CSV/XML/JSON/PDF/HTML/TSV
+Export WooCommerce orders to Excel, CSV, XML, JSON, PDF and HTML. Best free order export plugin for WooCommerce. 
 
 == Description ==
 This plugin helps you to **easily** export WooCommerce order data. 
 
-Export any custom field assigned to orders/products/coupons is easy and you can select from various formats to export the data in such as CSV, XLS, XML and JSON.
+Export any custom field assigned to orders/products/coupons is easy and you can select from various formats to export the data in such as Excel, CSV, XML, JSON, PDF and HTML.
 
 = Features =
 
-* **select** the fields to export
-* **rename** labels
+* **select** [the fields to export](https://docs.algolplus.com/algol_order_export/export-now/set-up-fields-to-export/)
+* **rename** labels 
 * **reorder** columns 
-* export WooCommerce **custom fields** or terms for products/orders
-* mark your WooCommerce orders and run "Export as..." a **bulk operation**.
+* export **custom fields** or terms for products/orders
+*  **group data** [by products or customers](https://docs.algolplus.com/algol_order_export/export-now/overview-12/#summary-reports)
+* export orders via  **bulk action** from orders list 
 * apply **powerful filters** and much more
 
-= Export Includes =
+= Export includes =
 
 * order data
 * summary order details (# of items, discounts, taxes etc…)
 * customer details (both shipping and billing)
 * product attributes
 * coupon details
-* XLS, CSV, TSV, PDF, HTML, XML and JSON formats
+* order item metadata, etc.
 
 = Use this plugin to export orders for =
 
@@ -40,26 +41,34 @@ Export any custom field assigned to orders/products/coupons is easy and you can 
 * updating your accounting system
 * analysing your order data
 
+= Pro version  =
 
-Have an idea or feature request?
-Please create a topic in the "Support" section with any ideas or suggestions for new features.
+Are you looking to have your WooCommerce products drop shipped from a third party? Our plugin can help you export your orders to CSV/XML/etc and send them to your drop shipper. You can even automate this process with [Pro version](https://algolplus.com/plugins/downloads/advanced-order-export-for-woocommerce-pro/) .
 
-> Pro Version
+= Pro version features  =
+* Export a single order immediately [after a status change](https://docs.algolplus.com/algol_order_export/pro-version-algol_order_export/status-change-jobs/) (e.g., after payment)
+* Export orders on [a flexible schedule](https://docs.algolplus.com/algol_order_export/pro-version-algol_order_export/scheduled-jobs/schedule/)
+* Exported orders can be sent to [multiple locations at once](https://docs.algolplus.com/algol_order_export/pro-version-algol_order_export/destination-block/overview-14/) - via email, FTP, and various APIs
+* Updating Google Sheets/Drive is also possible, but this requires [Zapier service](https://docs.algolplus.com/algol_order_export/pro-version-algol_order_export/destination-block/zapier/adding-a-zapier-account/)
 
-> Are you looking to have your WooCommerce products drop shipped from a third party? Our plugin can help you export your orders to CSV/XML/etc and send them to your drop shipper. You can even automate this process with [Pro version](https://algolplus.com/plugins/downloads/advanced-order-export-for-woocommerce-pro/?currency=USD) .
+For complete list of features -  please visit [Advanced Order Export For WooCommerce](https://algolplus.com/plugins/downloads/advanced-order-export-for-woocommerce-pro/)
 
+= Compatibility  =
+The plugin is fully compatible with HPOS.
+Our plugin correctly exports custom fields (added by 3rd-party plugins) in most cases. But for some complex plugins -  you should [use snippet](https://docs.algolplus.com/algol_order_export/developers-algol_order_export/codes-for-plugins-developers-algol_order_export/overview-17/).
 
 
 == Installation ==
 
 = Automatic Installation =
-Go to WordPress dashboard, click  Plugins / Add New  , type 'order export lite' and hit Enter.
+Go to WordPress dashboard, click  Plugins / Add New  , type 'Advanced Order Export For WooCommerce' and hit Enter.
 Install and activate plugin, visit WooCommerce > Export Orders.
 
 = Manual Installation =
-[Please, visit the link and follow the instructions](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation)
+[Please, visit the link and follow the instructions](https://wordpress.org/documentation/article/manage-plugins/#manual-plugin-installation-1)
 
 == Frequently Asked Questions ==
+The plugin is fully compatible with HPOS.
 
 Please, review [user guide](https://docs.algolplus.com/category/algol_order_export/) at first.
 
@@ -117,6 +126,24 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 
 == Changelog ==
 
+= 4.0.7 - 2026-04-07 =
+* New field "Item cost before discount(inc tax)" (>Setup Fields>Product Order Items)
+* Autoscale supported for image height, PDF format
+* Fixed bug - impossible to sort orders by shipping/billing fields, in HPOS mode only
+* Updated external libraries (to fix PHP 8.5 errors) 
+
+= 4.0.6 - 2025-12-03 =
+* Added a "Setup Fields" button at the top of the form
+* Correctly display error messages if the XML module (for PHP) is not installed
+* Fixed bug - "Exclude Free Items" option was exporting orders without products
+* Fixed bug - impossible to disable options for JSON format
+* Fixed bug - deprecation warnings displayed by WooCommerce 10.3
+* Fixed bug - some messages displayed incorrect HTML due to unnecessary output escaping
+
+= 4.0.5 - 2025-09-03 =
+* Requires PHP 7.4+
+* Updated library used to generate Excel files
+
 = 4.0.4 - 2025-09-01 =
 * Fixed bug - option "Skip fully refunded items" conflicted with mode "Export refunds"
 * Fixed bug - fatal error when exporting refunds (if main order is missing)
@@ -135,7 +162,6 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 * Fixed critical bug - conflict with other plugins used outdated versions of same libraries ("FileBird Pro" and etc)
 
 = 4.0.1 - 2025-03-26 =
-* Requires PHP 8.1+
 * Uses new library to generate Excel files. If you created custom code to format Excel files - please migrate from [PHPExcel to PhpSpreadsheet](https://phpspreadsheet.readthedocs.io/en/latest/topics/migration-from-PHPExcel/#manual-changes)
 * Fixed broken bulk actions
 
@@ -257,191 +283,4 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 * Fixed bug - role names were not translated in field "User role"
 * Fixed bug - field format was ignored for fields added via  >Setup Fields>Customer>Add Field
 * Fixed bug - capability "edit_themes " was not checked when importing JSON configuration via tab Tools
-* Fixed PHP8 deprecation warnings for JSON,XML formats 
-
-= 3.3.3 - 2022-10-24 =
-* Fixed CSRF vulnerability
-* Added option "Strip tags from all fields" to section "Misc settings"
-* The "Link to edit order" field works for XLS format
-* Fixed bug - "Remove line breaks" option incorrectly replaced commas with spaces
-* Fixed bug - "Sum Items Exported" field was empty for XLS/PDF formats, mode "Summary report by products"
-* Fixed bug - PHP warning if all fields have undefined format
-* Updated Select2.js library
-
-= 3.3.2 - 2022-08-08 =
-* Fixed XSS vulnerability
-* Fixed bug - filter "Orders Range" ignores space chars now
-* Fixed bug - export failed  if product used webp images
-
-= 3.3.1 - 2022-05-23 =
-* Fixed critical bug - mode "Add coupons as X columns" exported empty product data
-
-= 3.3.0 - 2022-05-18 =
-* Allow to sort by any field, for XLS/PDF formats only
-* Output summary row, for XLS/PDF formats only
-* Added fields "Phone (Shipping)", "Currency Symbol", "Subscription Relationship"
-* Added fields "Qty-Refund","Amount-Refund", "Total Amount (inc. tax)" for "Summary report by products"
-* Fixed bug - added workaround for last versions of PHP 8.0 and 8.1, they have bug for ob_clean() 
-* Fixed bug - option "Remove emojis" damaged last product in export
-* Fixed bug - field type "Link" ignored for XLS format
-* Fixed bug - long text (for some languages) breaks layout for section Setup Fields
-* Fixed bug - can't correctly export custom attribute if it was unused in variations
-* Fixed bug - wrong fee amount exported , in rare cases
-* Fixed bug - incorrect export for mode "Add products as XX columns", rare case too
-* Fixed bug - page was not loaded if website has 10,000+ coupons
-
-= 3.2.2 - 2021-12-14 =
-* Fixed bug - PHP8 compatibility issues (deprecation warnings for XLS format)
-* Fixed bug - blank row was added after every 1000 rows (XLS format)
-* Fixed bug - money cells were empty if value = 0 (XLS format)
-* Fixed bug - products were not sorted by Name in summary mode
-* Fixed bug - some files were not deleted in folder /tmp
-
-= 3.2.1 - 2021-11-11 =
-* Fixed critical bug - option "Format numbers" broke XLS format
-
-= 3.2.0 - 2021-11-09 =
-* Speeded up XLS export
-* Added option "Remove emojis" (XLS format)
-* Added option "Remove line breaks" (CSV format)
-* Added field "Total volume"
-* New button "Add calculated field" in section "Setup Fields"
-* Fixed bug - photo missed in product search
-* Fixed bug - can't filter items if item has "&" in name
-* Fixed bug - PHP warnings for deleted taxonomy
-* Fixed bug - long links broke PDF cells
-* Fixed bug - ignored capability "export_woocommerce_orders"
-
-= 3.1.9 - 2021-06-22 =
-* New field "Sum of Items (Exported)" for mode "Summary Report By Customers"
-* Added extra operators for filter by item meta
-* Correctly export description of variation
-* Correctly show alias for deleted role
-* Fixed bug - fatal error if variation was deleted
-* Fixed bug - unixtimestamp exported as number (not date) to Excel
-* Fixed bug - option "Export only matched product items" didn't work if order has variations of same product
-* Fixed bug - TAX fields (added via >Setup Fields>Other items) ignored shipping amount 
-
-= 3.1.8 - 2021-02-22 =
-* Fixed XSS vulnerability
-* Screen >WooCommerce>Orders can be sorted by column "Export Status"
-* New field "Order subtotal + Cart tax amount"
-* New field "Shipping Zone" 
-* Added operators "IS SET" and "NOT SET" for item meta filters
-* Added option "Don't encode unicode chars" to section "JSON "
-* Fixed bug - some compatibility issues with PHP 7.4
-* Fixed bug - correctly support Loco Translate
-* Fixed bug - weight was rounded for XLS format
-
-= 3.1.7 - 2020-12-09 =
-* New field "Summary Report Total Weight"
-* Added option to round "Item Tax Rate" (Misc Settings)
-* Added option "Force enclosure for all values" (CSV format)
-* Use billing email to calculate field "Customer Total Orders" for guests
-* The plugin supports capability "export_woocommerce_orders"
-* Fixed bug - PDF text didn't fit to cell by column width
-* Fixed bug - field "Non variation attributes" showed wrong values for existing taxonomies
-
-= 3.1.6 - 2020-09-21 =
-* New product fields "Item Cost (inc. tax)", "Stock Status", "Stock Quantity", "Non variation attributes"
-* New customer field "Customer Total Spent"
-* Added option "Add links to images" (HTML format)
-* Fixed bug - duplicates were shown in "Summary by products" mode
-* Fixed bug - field "Coupon Discount Amount" was empty
-* Fixed bug - fatal PHP error "Call to undefined method get_duplicate_settings()"
- 
-= 3.1.5 - 2020-08-24 =
-* Compatible with PHP 7.4
-* Added option "Format output" (XML format)
-* Added option "Don't break order lines by 2 pages" (PDF format)
-* Added option "Add links to images" (PDF format)
-* Added option "Try to convert serialized values" (Misc Settings)
-* Added fields "Summary Report Total Fee Amount", "Summary Report Total Tax Amount"
-* Fixed bug - 'wc doing it wrong' notice (direct access to product parent property)
-* Fixed bug - option "Change order status" worked only for button "Export w/o progress"
-* Fixed bug - option "Add products as " = "0 columns" incorrectly worked for button "Export"
-* Fixed bug - field "Embedded Product Image" showed parent image for variation
-* Fixed bug - mode "Summary Report By Products" incorrectly worked with variations
-* Fixed bug - custom and static fields were empty in "Summary by customers" mode
-* Fixed bug - draft products were visible in autocomplete
-* Fixed bug - button "Import" was shown as disabled at tab "Tools"
-* New hooks for PDF format
-
-= 3.1.4 - 2020-04-15 =
-* Prevent XSS attack (CVE-2020-11727). Thank Jack Misiura​ for reporting this vulnerability!
-
-= 3.1.3 - 2020-03-24 =
-* Fixed CRITICAL bug - export via "Bulk actions" (at screen >WooCommerce>Orders) works incorrectly
-
-= 3.1.2 - 2020-03-16 =
-* Added filter by order IDs (not order numbers!)
-* Added checkbox "Export only matched product items" to section "Filter by item and metadata"
-* Added checkbox "Shipping fields use billing details (if shipping address is empty)" to section "Misc Settings"
-* Added fields "Item Cost Before Discount", "Item Discount Tax" to section "Product order items"
-* Renamed field "Product Variation" to "Order Item Metadata"
-* Added some tooltips to sections inside "Set up fields"
-* Support tag {order_number} in filename
-* Fixed UI bugs for Firefox
-* Fixed bug - Preview was wrong if CSV format used non-UTF8 codepage
-* Fixed bug - some warnings in JS console
-* Fixed bug - Safari added .csv to any filename when we use TSV format
-* Fixed bug - wrong filters applied when user selected orders and exported them via bulk action
-* New hooks for product custom fields
-
-= 3.1.1 - 2019-11-18 =
-* Field "Embedded product image" is exported by "Summary by product" mode (XLS/PDF/HTML formats)
-* Added checkbox to export item rows with a new line (TAB format)
-* Fixed incompatibility with "Advanced Custom Fields" plugin
-* Fixed bug - product static fields were empty sometimes
-* Fixed bug - adding fields worked incorrectly at tab "Product items"
-* Fixed bug - fields "Categories" and "Full names for categories" were empty for variable products
-
-= 3.1.0 - 2019-11-11 =
-* Speeded up page loading and button "Preview"
-* Added filter "Products SKU" to section "Filter by product"
-* Added options for JSON format
-* Added vertical align for cells (PDF format)
-* New tabs "Product items", "Product totals" in section "Setup fields"
-* Order fields can be dragged to section "Products" (JSON/XML formats)
-* Added product field "SKU(parent)"
-* Added fields "Total Shipping","Total Discount","Total Items" for "Summary by customers" mode
-* Support "0" as max # of product columns (calculated based on exported orders)
-* Deleted products are exported by "Summary by products" mode 
-* Fixed UI bugs for summary mode
-* New hooks for PDF format
-* Fixed bug - sorting (by order fields) conflicted with filtering by order custom fields
-
-= 3.0.3 - 2019-08-29 =
-* Fixed CRITICAL bug - export wrong data if user added customer field "First Order Date" or "Last Order Date"
-* Fixed bug - customer fields "First Order Date" or "Last Order Date" were empty for guests
-* Fixed bug - wrong height for cells (PDF format only)
-
-= 3.0.2 - 2019-08-20 =
-* Added "Summary by customers" report 
-* Format PDF supports UTF8 chars
-* Added filter "Exclude products" to section "Filter by product"
-* New tab "Other items" (in section "Setup fields")  allows to export tax/fee/shipping
-* Fixed bug - XLS export stops at wrong dates
-* Fixed bug - button "ESC" doesn't abort export (Safari only)
-
-= 3.0.1 - 2019-07-22 =
-* Added product field "Product Name (main)" to export name of variable product (not name of variation!)
-* Added summary product fields to export discounts and refunds
-* Fixed bug - bulk exporting from orders page didn't work if you set date range filter at page "Export Now"
-* Fixed bug - it was impossible to add custom field at tab "User"
-* Fixed bug - filter "User roles" applied incorrectly
-* Fixed bug - filter "Item meta" showed wrong results if you tried to filter by different meta keys
-
-= 3.0.0 - 2019-07-03 =
-* New format - **HTML**
-* Added order field "Link to edit order" (useful for HTML format)
-* Added product field "Embedded Product Image" (works for XLS and PDF formats only!)
-* Added order fields (for customer) -  "First Order Date", "Last Order Date"
-* Added 'Hide unused' for order/product/coupon fields (dropdowns filtered by matching orders)
-* Allow to sort orders by any custom field
-* Fixed bug - fields with prefix "USER_" were shown for all tabs in section "Setup fields" 
-* Fixed bug - the plugin exported all orders by default (including cancelled and refunded) 
-* Fixed bug - bulk export didn't sort orders
-* Fixed bug - incompatibility with some coupon plugins
-* Fixed bug - tab "Tools" didn't show error if JSON is not valid
-* Removed a lot of outdated code
+* Fixed PHP8 deprecation warnings for JSON,XML formats

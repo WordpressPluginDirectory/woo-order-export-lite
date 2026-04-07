@@ -4,7 +4,6 @@ namespace WOE\Matrix\Operators;
 
 use WOE\Matrix\Matrix;
 use WOE\Matrix\Exception;
-
 class DirectSum extends Operator
 {
     /**
@@ -19,18 +18,15 @@ class DirectSum extends Operator
         if (is_array($value)) {
             $value = new Matrix($value);
         }
-
         if ($value instanceof Matrix) {
             return $this->directSumMatrix($value);
         }
-
         throw new Exception('Invalid argument for addition');
     }
-
     /**
      * Execute the direct sum for a matrix
      *
-     * @param Matrix $value The numeric value to concatenate/direct sum with the current base value
+     * @param \Matrix $value The numeric value to concatenate/direct sum with the current base value
      * @return $this The operation object, allowing multiple additions to be chained
      **/
     private function directSumMatrix($value): Operator
@@ -40,25 +36,13 @@ class DirectSum extends Operator
         $valColumnCount = $value->columns;
         $valRowCount = $value->rows;
         $value = $value->toArray();
-
         for ($row = 0; $row < $this->rows; ++$row) {
             $this->matrix[$row] = array_merge($this->matrix[$row], array_fill(0, $valColumnCount, 0));
         }
-
-        $this->matrix = array_merge(
-            $this->matrix,
-            array_fill(0, $valRowCount, array_fill(0, $originalColumnCount, 0))
-        );
-
+        $this->matrix = array_merge($this->matrix, array_fill(0, $valRowCount, array_fill(0, $originalColumnCount, 0)));
         for ($row = $originalRowCount; $row < $originalRowCount + $valRowCount; ++$row) {
-            array_splice(
-                $this->matrix[$row],
-                $originalColumnCount,
-                $valColumnCount,
-                $value[$row - $originalRowCount]
-            );
+            array_splice($this->matrix[$row], $originalColumnCount, $valColumnCount, $value[$row - $originalRowCount]);
         }
-
         return $this;
     }
 }

@@ -109,6 +109,10 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 				$this->storage = new WOE_Formatter_Storage_Csv($storage_filename);
 				$this->storage->load();
 			}
+			 if ( ! class_exists( "XMLWriter" ) AND !$this->settings['use_xls_format']  ){
+				 esc_html_e( 'Please, install/enable PHP XML extension!', 'woo-order-export-lite' ) ;
+				 die();
+			}
 		}
 		if ($this->summary_report_products || $this->summary_report_customers) {
 			$summaryKey = $this->summary_report_products ? WOE_Formatter_Storage_Summary_Session::SUMMARY_PRODUCTS_KEY :
@@ -508,7 +512,8 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 							if (!imagepng($objImage, $path)) {
 								throw new Exception('Error while saving to temporary png file');
 							}
-							imagedestroy($objImage);
+							if (PHP_MAJOR_VERSION < 8)
+								imagedestroy($objImage);
 						}
                         //support avif
                         if(preg_match('#\.avif$#i',$value) && function_exists('imagecreatefromavif')) {
@@ -517,8 +522,10 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
                             if (!imagepng($objImage, $path)) {
                                 throw new Exception('Error while saving to temporary png file');
                             }
-                            imagedestroy($objImage);
+                            if (PHP_MAJOR_VERSION < 8)
+								imagedestroy($objImage);
                         }
+                        $objImage = null;//force empty object for PHP 8.0+
 
 						$objDrawing->setPath( $path, false );
 						$objDrawing->setCoordinates( $cell->getCoordinate() );        //set image to cell

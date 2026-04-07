@@ -7,9 +7,15 @@ use WOE\PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 abstract class BaseLoader
 {
-    protected Spreadsheet $spreadsheet;
+    /**
+     * @var Spreadsheet
+     */
+    protected $spreadsheet;
 
-    protected string $tableNs;
+    /**
+     * @var string
+     */
+    protected $tableNs;
 
     public function __construct(Spreadsheet $spreadsheet, string $tableNs)
     {

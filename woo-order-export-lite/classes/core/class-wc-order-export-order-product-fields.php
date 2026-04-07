@@ -197,7 +197,7 @@ class WC_Order_Export_Order_Product_Fields {
 		} elseif ( $field == 'qty_refunded' AND !$this->is_refund ) {
 			$field_value = - $this->order->get_qty_refunded_for_item( $this->item_id ); // Yes we add negative! qty
 		} elseif ( $field == 'qty_minus_refund'  AND !$this->is_refund ) {
-			$field_value = $this->item_meta["_qty"][0] + $this->order->get_qty_refunded_for_item( $this->item_id ); // Yes we add negative! qty
+			$field_value = (int)$this->item_meta["_qty"][0] + $this->order->get_qty_refunded_for_item( $this->item_id ); // Yes we add negative! qty
 			//tax refund
 		} elseif ( $field == 'line_tax_refunded' AND !$this->is_refund ) {
 			$field_value = WC_Order_Export_Data_Extractor::get_order_item_taxes_refund( $this->order, $this->item_id );
@@ -215,6 +215,8 @@ class WC_Order_Export_Order_Product_Fields {
 			$field_value = $this->order->get_item_total( $this->item, true, true ); // YES we have to calc item price
 		} elseif ( $field == 'item_price_before_discount' ) {
 			$field_value = $this->order->get_item_subtotal( $this->item );
+		} elseif ( $field == 'item_price_before_discount_inc_tax' ) {
+			$field_value = $this->order->get_item_subtotal( $this->item, true );
 		} elseif ( $field == 'discount_amount' ) {
 			$field_value = $this->get_item_discount();
 		} elseif ( $field == 'tax_rate' ) {

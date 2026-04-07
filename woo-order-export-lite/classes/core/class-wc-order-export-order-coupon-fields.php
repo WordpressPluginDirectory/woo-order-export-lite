@@ -48,6 +48,11 @@ class WC_Order_Export_Order_Coupon_Fields {
 			return $this->item->get_discount();
 		} elseif ( $field == 'discount_amount_tax' ) {
 			return $this->item->get_discount_tax();
+		} elseif ( $field == 'discount_type' ) {
+			if(!$this->coupon_object) return '';
+			$types = wc_get_coupon_types();
+			$type = $this->coupon_object->get_discount_type();
+			return $types[$type]??$type;
 		} elseif ( $field == 'excerpt' ) {
 			return $this->coupon_object ? $this->coupon_object->get_description(): '';
 		} elseif ( isset( $this->coupon_meta[ $field ] ) ) {

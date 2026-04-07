@@ -11,8 +11,9 @@ trait WOE_Core_Extractor_UI {
 	public static function get_order_item_custom_meta_fields_for_orders( $sql_order_ids ) {
 		global $wpdb;
 
+		//phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$wc_fields = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE order_item_id IN
-									(SELECT DISTINCT order_item_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'line_item' AND order_id IN ($sql_order_ids))" );//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+									(SELECT DISTINCT order_item_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'line_item' AND order_id IN ($sql_order_ids))" );//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		// WC internal table add attributes
 		$wc_attr_fields = $wpdb->get_results( "SELECT DISTINCT attribute_name FROM {$wpdb->prefix}woocommerce_attribute_taxonomies" );
 		foreach ( $wc_attr_fields as $f ) {
@@ -32,13 +33,13 @@ trait WOE_Core_Extractor_UI {
 		$sql_products = "SELECT DISTINCT meta_value FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE meta_key ='_product_id' AND order_item_id IN
 									(SELECT DISTINCT order_item_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'line_item' AND order_id IN ($sql_order_ids))";
 
-		//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$product_ids = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT ID FROM {$wpdb->posts} WHERE post_type IN ('product','product_variation') AND ID IN ($sql_products) ORDER BY ID DESC LIMIT %d", self::HUGE_SHOP_PRODUCTS) );
 
 		$wp_fields  = array();
 		if($product_ids ) {
 			$list_placeholders = implode(',', array_fill(0, count($product_ids), '%d'));
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 			$wp_fields = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE post_id IN ($list_placeholders)  ORDER BY meta_key",$product_ids) );
 		}
 
@@ -81,7 +82,7 @@ trait WOE_Core_Extractor_UI {
 				$coupon_ids   = $wpdb->get_col( $wpdb->prepare("SELECT  ID FROM {$wpdb->posts} WHERE post_type = 'shop_coupon' ORDER BY post_date DESC LIMIT %d",self::HUGE_SHOP_COUPONS) );
 				$coupon_ids[] = 0; // add fake zero
 				$list_placeholders = implode(',', array_fill(0, count($coupon_ids), '%d'));
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 				$fields = $wpdb->get_col( $wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->postmeta} INNER JOIN {$wpdb->posts} ON {$wpdb->postmeta}.post_id = {$wpdb->posts}.ID WHERE post_type = 'shop_coupon' AND post_id IN ($list_placeholders)",$coupon_ids) );
 			}
 			sort( $fields );
@@ -188,7 +189,7 @@ trait WOE_Core_Extractor_UI {
 			return array();
 
 		$list_placeholders = implode(',', array_fill(0, count($product_ids), '%d'));
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 		$values = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_value FROM {$wpdb->postmeta} WHERE meta_key = %s AND post_id IN ($list_placeholders)",array_merge([$key],$product_ids) ) );
 
 		sort( $values );
@@ -1024,6 +1025,11 @@ trait WOE_Core_Extractor_UI {
 			),
 			'item_price_before_discount'                  => array(
 				'label'   => __( 'Item Cost Before Discount', 'woo-order-export-lite' ),
+				'checked' => 0,
+				'format'  => 'money',
+			),
+			'item_price_before_discount_inc_tax'          => array(
+				'label'   => __( 'Item Cost Before Discount (inc. tax)', 'woo-order-export-lite' ),
 				'checked' => 0,
 				'format'  => 'money',
 			),

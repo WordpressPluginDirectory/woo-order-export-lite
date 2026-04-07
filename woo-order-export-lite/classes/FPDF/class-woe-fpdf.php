@@ -2153,7 +2153,8 @@ class WOE_FPDF {
         if (!imagepng($objImage, $strTmp)) {
             throw new WOE_FPDF_Exception( esc_html('Error while saving to temporary file'), esc_html(WOE_FPDF_Exception::IMAGE_NOT_WRITABLE));
         }
-        imagedestroy($objImage);
+        if (PHP_MAJOR_VERSION < 8)
+			imagedestroy($objImage);
         $arrInfo = $this->_parsepng($strTmp);
         wp_delete_file($strTmp);
 
@@ -2174,7 +2175,8 @@ class WOE_FPDF {
             if (!imagepng($objImage, $strTmp)) {
                 throw new WOE_FPDF_Exception( esc_html('Error while saving to temporary file'), esc_html(WOE_FPDF_Exception::IMAGE_NOT_WRITABLE) );
             }
-            imagedestroy($objImage);
+            if (PHP_MAJOR_VERSION < 8)
+				imagedestroy($objImage);
             $arrInfo = $this->_parsepng($strTmp);
             wp_delete_file($strTmp);
         }
@@ -2400,7 +2402,8 @@ class WOE_FPDF {
 			ob_start();
 			imagepng( $obj_image );
 			$str_data = ob_get_clean();
-			imagedestroy( $obj_image );
+			if (PHP_MAJOR_VERSION < 8)
+				imagedestroy( $obj_image );
 			fwrite( $ptr_file, $str_data );
 			rewind( $ptr_file );
 			$arr_info = $this->_parsepngstream( $ptr_file, $str_file );
@@ -2414,7 +2417,8 @@ class WOE_FPDF {
 			if ( ! imagepng( $obj_image, $str_tmp ) ) {
 				throw new WOE_FPDF_Exception( 'Error while saving to temporary file', esc_html(WOE_FPDF_Exception::IMAGE_NOT_WRITABLE) );
 			}
-			imagedestroy( $obj_image );
+			if (PHP_MAJOR_VERSION < 8)
+				imagedestroy( $obj_image );
 			$arr_info = $this->_parsepng( $str_tmp );
 			wp_delete_file( $str_tmp );
 		}

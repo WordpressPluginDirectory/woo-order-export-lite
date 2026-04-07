@@ -52,7 +52,10 @@ class WC_Order_Export_Order_Fields {
 		}
 
 		//address details from this order
-		$this->main_order  = $this->parent_order ? $this->parent_order : $this->order;
+		if( $this->order_type == 'shop_subscription')
+			$this->main_order  = $this->order;
+		else
+			$this->main_order  = $this->parent_order ? $this->parent_order : $this->order;
 
 		// get order meta
 		$this->order_meta = array();

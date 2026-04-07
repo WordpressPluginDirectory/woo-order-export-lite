@@ -82,7 +82,7 @@ class WC_Order_Export_Data_Extractor {
 		$fields = get_transient( $transient_key );
 		if ( $fields === false ) {
             $where_posts = self::get_where_last_orders('orders.id', 'WHERE');
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$fields = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders AS orders INNER JOIN {$wpdb->prefix}wc_orders_meta ON orders.id = {$wpdb->prefix}wc_orders_meta.order_id $where_posts" );
 			//HPOS
 			$fields = array_merge( $fields, self::$table_orders_fields);
@@ -105,7 +105,7 @@ class WC_Order_Export_Data_Extractor {
 		$metas = get_transient( $transient_key );
 		if ( $metas === false ) {
             $where_posts = self::get_where_last_orders("item.order_id", 'WHERE');
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$metas = $wpdb->get_col( "SELECT DISTINCT meta.meta_key FROM {$wpdb->prefix}woocommerce_order_itemmeta meta inner join {$wpdb->prefix}woocommerce_order_items item on item.order_item_id=meta.order_item_id and item.order_item_type = 'line_item' $where_posts" );
 			sort( $metas );
 			set_transient( $transient_key, $metas, 60 ); //valid for a minute
@@ -121,7 +121,7 @@ class WC_Order_Export_Data_Extractor {
 		$metas = false; //get_transient( $transient_key );
 		if ( $metas === false ) {
             $where_posts = self::get_where_last_orders("order_id");
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'shipping' $where_posts AND order_item_name <> '' " );
 			sort( $metas );
 			set_transient( $transient_key, $metas, 60 ); //valid for a minute
@@ -137,7 +137,7 @@ class WC_Order_Export_Data_Extractor {
 		$metas = get_transient( $transient_key );
 		if ( $metas === false ) {
             $where_posts = self::get_where_last_orders("order_id");
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
             $metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'fee' $where_posts AND order_item_name <> '' " );
 			sort( $metas );
 			set_transient( $transient_key, $metas, 60 ); //valid for a minute
@@ -153,7 +153,7 @@ class WC_Order_Export_Data_Extractor {
 		$metas = get_transient( $transient_key );
 		if ( $metas === false ) {
             $where_posts = self::get_where_last_orders("order_id");
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
             $metas = $wpdb->get_col( "SELECT DISTINCT order_item_name FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_type = 'tax' $where_posts AND order_item_name <> '' " );
 			sort( $metas );
 			set_transient( $transient_key, $metas, 60 ); //valid for a minute
@@ -515,14 +515,21 @@ class WC_Order_Export_Data_Extractor {
 
 			if ( ! in_array( $settings['sort'], WC_Order_Export_Engine::get_wp_posts_fields() ) ) {// we get legacy fields from UI
 				$pos = "sort";
-				$left_join_order_meta[] = "LEFT JOIN {$wpdb->prefix}wc_orders_meta AS ordermeta_cf_{$pos} " .
-				                          "ON ordermeta_cf_{$pos}.order_id = orders.id AND ordermeta_cf_{$pos}.meta_key='{$sort_field}'";
+				$hpos_addr = self::parse_HPOS_order_address_field($sort_field);
+				if($hpos_addr) {
+					$address_type = esc_sql($hpos_addr['address_type']);
+					$left_join_order_meta[] = "LEFT JOIN {$wpdb->prefix}wc_order_addresses AS ordermeta_cf_{$pos} " .
+											"ON ordermeta_cf_{$pos}.order_id = orders.id AND ordermeta_cf_{$pos}.address_type ='{$address_type}'";
+				}
+				else
+					$left_join_order_meta[] = "LEFT JOIN {$wpdb->prefix}wc_orders_meta AS ordermeta_cf_{$pos} " .
+											"ON ordermeta_cf_{$pos}.order_id = orders.id AND ordermeta_cf_{$pos}.meta_key='{$sort_field}'";
 			}
 		}
 
 		if ( $settings['export_unmarked_orders'] ) {
 			$pos                    = "export_unmarked_orders";
-			$field                  = "woe_order_exported" . apply_filters("woe_exported_postfix",'');
+			$field                  = "woe_order_exported" . apply_filters("woe_exported_postfix",  WC_Order_Export_Engine::get_default_exported_postfix($settings) );
 			$left_join_order_meta[] = "LEFT JOIN {$wpdb->prefix}wc_orders_meta AS ordermeta_cf_{$pos} ON ordermeta_cf_{$pos}.order_id = orders.id AND ordermeta_cf_{$pos}.meta_key='$field'";
 			$order_meta_where []    = " ( ordermeta_cf_{$pos}.meta_value IS NULL ) ";
 		}
@@ -656,7 +663,7 @@ class WC_Order_Export_Data_Extractor {
 		if ( ! empty( $settings['user_names'] ) ) {
 			$user_ids          = array_filter( array_map( "intval", $settings['user_names'] ) );
 			$list_placeholders = implode(',', array_fill(0, count($user_ids), '%d'));
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Ignored for allowing interpolation in the IN statement.
 			$user_meta_where[] = $wpdb->prepare( "( {$wpdb->users}.ID IN ($list_placeholders) )",$user_ids );
 		}
 		//roles
@@ -677,7 +684,7 @@ class WC_Order_Export_Data_Extractor {
 			if ( self::$track_sql_queries ) {
 				self::$sql_queries[] = $sql;
 			}
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$user_ids                    = $wpdb->get_col( "SELECT DISTINCT ID FROM {$wpdb->users} $inner_join_user_meta WHERE $user_meta_where" );
 			$user_ids_ui_filters_applied = true;
 		}
@@ -806,6 +813,8 @@ class WC_Order_Export_Data_Extractor {
 		} elseif ($date_field === 'modified') {
 			$where[] = "orders.date_updated_gmt IS NOT NULL AND orders.date_updated_gmt" . $value;
 		}
+
+		$where = apply_filters("woe_add_date_filter", $where, $date_field, $value);
 	}
 
 	private static function apply_order_filters_to_sql( &$where, &$where_refund_subsql, $settings ) {
@@ -915,7 +924,7 @@ class WC_Order_Export_Data_Extractor {
 
 		$statuses = array_keys( wc_get_order_statuses() );
 		$list_placeholders = implode(',', array_fill(0, count($statuses), '%s'));
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
         $order = $wpdb->get_var( $wpdb->prepare(
         //phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         "SELECT orders.ID
@@ -1014,9 +1023,9 @@ class WC_Order_Export_Data_Extractor {
 		}
 
 		$list_placeholders = implode(',', array_fill(0, count($statuses), '%s'));
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		return $wpdb->get_var($wpdb->prepare(
-            // phpcs:disable WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+            // phpcs:disable WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, PluginCheck.Security.DirectDB.UnescapedDBParameter
             "SELECT COUNT(*)
 				FROM {$wpdb->prefix}wc_orders as orders
 				WHERE $where

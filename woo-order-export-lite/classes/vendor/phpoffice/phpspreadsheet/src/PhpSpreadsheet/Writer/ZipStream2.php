@@ -5,12 +5,6 @@ namespace WOE\PhpOffice\PhpSpreadsheet\Writer;
 use WOE\ZipStream\Option\Archive;
 use WOE\ZipStream\ZipStream;
 
-/**
- * Either ZipStream2 or ZipStream3, but not both, may be used.
- * For code coverage testing, it will always be ZipStream3.
- *
- * @codeCoverageIgnore
- */
 class ZipStream2
 {
     /**

@@ -1999,7 +1999,18 @@ jQuery( document ).ready( function ( $ ) {
 			jQuery('#order_fields').find('.mapping_col_3.mapping_row-sum_field_block').hide();
 			jQuery('#title_for_summary_row_block').hide();
 		}
-	})
+	});
+
+	$('#go-to-setup-fields-section').on('click', function () {
+
+		$('html, body').animate({
+			scrollTop: $('#setup-fields-block').offset().top - 50
+		}, 600);
+
+		if ($('#manage_fields').is(':hidden')) {
+			$('#adjust-fields-btn').trigger('click');
+		}
+	});
 } );
 
 

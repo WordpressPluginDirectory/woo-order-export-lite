@@ -4,25 +4,20 @@ namespace WOE\Matrix\Decomposition;
 
 use WOE\Matrix\Exception;
 use WOE\Matrix\Matrix;
-
 class QR
 {
     private $qrMatrix;
     private $rows;
     private $columns;
-
     private $rDiagonal = [];
-
     public function __construct(Matrix $matrix)
     {
         $this->qrMatrix = $matrix->toArray();
         $this->rows = $matrix->rows;
         $this->columns = $matrix->columns;
-
         $this->decompose();
     }
-
-    public function getHouseholdVectors(): Matrix
+    public function getHouseholdVectors(): WOE\Matrix
     {
         $householdVectors = [];
         for ($row = 0; $row < $this->rows; ++$row) {
@@ -34,14 +29,11 @@ class QR
                 }
             }
         }
-
         return new Matrix($householdVectors);
     }
-
-    public function getQ(): Matrix
+    public function getQ(): WOE\Matrix
     {
         $qGrid = [];
-
         $rowCount = $this->rows;
         for ($k = $this->columns - 1; $k >= 0; --$k) {
             for ($i = 0; $i < $this->rows; ++$i) {
@@ -51,7 +43,6 @@ class QR
             if ($this->columns > $this->rows) {
                 $qGrid = array_slice($qGrid, 0, $this->rows);
             }
-
             for ($j = $k; $j < $this->columns; ++$j) {
                 if (isset($this->qrMatrix[$k], $this->qrMatrix[$k][$k]) && $this->qrMatrix[$k][$k] != 0.0) {
                     $s = 0.0;
@@ -65,22 +56,15 @@ class QR
                 }
             }
         }
-
-        array_walk(
-            $qGrid,
-            function (&$row) use ($rowCount) {
-                $row = array_reverse($row);
-                $row = array_slice($row, 0, $rowCount);
-            }
-        );
-
+        array_walk($qGrid, function (&$row) use ($rowCount) {
+            $row = array_reverse($row);
+            $row = array_slice($row, 0, $rowCount);
+        });
         return new Matrix($qGrid);
     }
-
-    public function getR(): Matrix
+    public function getR(): WOE\Matrix
     {
         $rGrid = [];
-
         for ($row = 0; $row < $this->columns; ++$row) {
             for ($column = 0; $column < $this->columns; ++$column) {
                 if ($row < $column) {
@@ -92,14 +76,11 @@ class QR
                 }
             }
         }
-
         if ($this->columns > $this->rows) {
             $rGrid = array_slice($rGrid, 0, $this->rows);
         }
-
         return new Matrix($rGrid);
     }
-
     private function hypo($a, $b): float
     {
         if (abs($a) > abs($b)) {
@@ -111,10 +92,8 @@ class QR
         } else {
             $r = 0.0;
         }
-
         return $r;
     }
-
     /**
      * QR Decomposition computed by Householder reflections.
      */
@@ -150,7 +129,6 @@ class QR
             $this->rDiagonal[$k] = -$norm;
         }
     }
-
     public function isFullRank(): bool
     {
         for ($j = 0; $j < $this->columns; ++$j) {
@@ -158,34 +136,28 @@ class QR
                 return false;
             }
         }
-
         return true;
     }
-
     /**
      * Least squares solution of A*X = B.
      *
-     * @param Matrix $B a Matrix with as many rows as A and any number of columns
+     * @param \Matrix $B a Matrix with as many rows as A and any number of columns
      *
      * @throws Exception
      *
      * @return Matrix matrix that minimizes the two norm of Q*R*X-B
      */
-    public function solve(Matrix $B): Matrix
+    public function solve(Matrix $B): WOE\Matrix
     {
         if ($B->rows !== $this->rows) {
             throw new Exception('Matrix row dimensions are not equal');
         }
-
         if (!$this->isFullRank()) {
             throw new Exception('Can only perform this operation on a full-rank matrix');
         }
-
         // Compute Y = transpose(Q)*B
-        $Y = $this->getQ()->transpose()
-            ->multiply($B);
+        $Y = $this->getQ()->transpose()->multiply($B);
         // Solve R*X = Y;
-        return $this->getR()->inverse()
-            ->multiply($Y);
+        return $this->getR()->inverse()->multiply($Y);
     }
 }
