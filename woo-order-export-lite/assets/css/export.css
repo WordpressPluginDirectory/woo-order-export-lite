@@ -282,7 +282,6 @@ input.date {
 }
 
 .select_compare {
-    width: 60px;
     margin-top: 0px;
     margin-right: 6px;
 }
@@ -684,6 +683,11 @@ input.date {
     width: auto;
 }
 
+.exp-confirm-field {
+    text-align: right;
+    margin-top: 1rem;
+}
+
 .fields-control-block .display_as .input-delimiter {
     max-width: 40px;
 }
@@ -849,6 +853,7 @@ input.date {
     flex-wrap: wrap;
     justify-content: space-between;
     width: 85%;
+    max-width: 450px !important;
 }
 .custom-fields__condotion-wrapper_position {
     margin-bottom: .5rem;
@@ -964,7 +969,6 @@ input[type=number] {
 {
     float: left;
     width: 49%;
-    max-width: 500px;
 }
 
 .export-block-right-div
@@ -972,7 +976,6 @@ input[type=number] {
     float: left;
     width: 48%;
     margin: 0px 10px;
-    max-width: 500px;
 }
 
 @media (max-width: 800px) {

@@ -88,9 +88,9 @@
     ),
     'phpoffice/phpspreadsheet' => 
     array (
-      'pretty_version' => '1.30.2',
-      'version' => '1.30.2.0',
-      'reference' => '09cdde5e2f078b9a3358dd217e2c8cb4dac84be2',
+      'pretty_version' => '1.30.4',
+      'version' => '1.30.4.0',
+      'reference' => '02970383cc12e7bf0bc0707ea6e2e8ed23a7aec9',
       'type' => 'library',
       'install_path' => __DIR__ . '/../phpoffice/phpspreadsheet',
       'aliases' => 
@@ -124,9 +124,9 @@
     ),
     'symfony/polyfill-mbstring' => 
     array (
-      'pretty_version' => 'v1.33.0',
-      'version' => '1.33.0.0',
-      'reference' => '6d857f4d76bd4b343eac26d6b539585d2bc56493',
+      'pretty_version' => 'v1.38.0',
+      'version' => '1.38.0.0',
+      'reference' => '6b177d03d2eb04a6c9d01bab9818fb93a30ce7fd',
       'type' => 'library',
       'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
       'aliases' => 

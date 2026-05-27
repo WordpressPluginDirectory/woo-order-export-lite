@@ -1,0 +1,147 @@
+.button-secondary .dashicons-plus-alt {
+    line-height: 1 !important;
+}
+
+.button-secondary {
+    min-height: 20px !important;
+}
+
+.select_compare {
+    min-height: 20px !important;
+    line-height: 1 !important;
+}
+
+.button-secondary {
+    vertical-align: middle !important;
+    line-height: 2 !important;
+}
+
+.button-primary {
+    margin-right: .2rem !important;
+    margin-bottom: .2rem !important;
+    vertical-align: bottom !important;
+    min-height: 28px !important;
+    line-height: 1 !important;
+}
+
+.hasDatepicker, .width-15 {
+    min-height: 28px !important;
+}
+
+#my-quick-export-btn {
+    vertical-align: top !important;
+}
+
+#my-date-time-format select {
+    min-height: 28px !important;
+    background: #fff !important;
+    -webkit-appearance: auto !important;
+}
+
+#my-sort select {
+    min-height: 28px !important;
+    background: #fff !important;
+    -webkit-appearance: auto !important;
+}
+
+input[type="text"][name^="settings"] {
+    min-height: 28px !important;
+}
+input[type="number"][name^="settings"] {
+    min-height: 28px !important;
+}
+
+.tab-actions-forms select {
+    min-height: 28px !important;
+    background: #fff !important;
+    -webkit-appearance: auto !important;
+}
+
+.selection .select2-selection{
+    min-height: 28px !important;
+}
+
+.tab-actions-forms input {
+    min-height: 28px !important;
+}
+
+.tab-actions-forms select {
+    min-height: 28px !important;
+    background: #fff !important;
+    -webkit-appearance: auto !important;
+}
+
+.tab-actions-forms input[type="checkbox"] {
+    min-height: auto !important;
+}
+
+.fields-control-block select {
+    min-height: 28px !important;
+    background: #fff !important;
+    -webkit-appearance: auto !important;
+}
+
+.fields-control-block input {
+    min-height: 28px !important;
+}
+
+.fields-control-block input[type="radio"] {
+    min-height: auto !important;
+}
+
+#go-to-setup-fields-section {
+    margin-left: 6.7rem !important;
+}
+
+@media( max-width: 1200px ) {
+    #my-date-filter input[type="text"] {
+        width: 20% !important;
+    }
+
+    #go-to-setup-fields-section {
+        margin-left: 0.7rem !important;
+    }
+}
+
+@media( max-width: 1030px ) {
+    #my-date-filter input[type="text"] {
+        width: 15% !important;
+    }
+}
+
+@media( max-width: 800px ) {
+    #my-quick-export-btn {
+        margin-top: 8px !important;
+    }
+}
+
+.tabs-content td, th {
+    vertical-align: baseline !important;
+}
+
+.tabs-content .dashicons {
+    line-height: 1 !important;
+}
+
+.tabs-content .btn-clone, .btn-to-actions, .btn-to-scheduled, .btn-trash, .btn-export {
+    padding: 0 4px !important;
+}
+
+#export-block-right .like-input {
+    min-height: 28px !important;
+}
+
+
+#setup-fields-block select {
+    padding-left: 0px ;
+    padding-right: 0px ;
+}
+
+#my-format select {
+    line-height: 1 !important;
+    min-height: 28px !important;
+}
+
+#my-format .wp-picker-container {
+    line-height: 2.3em !important;
+}

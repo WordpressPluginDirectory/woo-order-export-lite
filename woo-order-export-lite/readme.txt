@@ -4,8 +4,8 @@ Donate link:
 Tags: order export,export orders,woocommerce,order,export
 Requires PHP: 7.4.0
 Requires at least: 4.7
-Tested up to: 6.9
-Stable tag: 4.0.7
+Tested up to: 7.0
+Stable tag: 4.0.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,11 +18,11 @@ Export any custom field assigned to orders/products/coupons is easy and you can 
 
 = Features =
 
-* **select** [the fields to export](https://docs.algolplus.com/algol_order_export/export-now/set-up-fields-to-export/)
+* **select** [the fields to export](https://docs.algolplus.com/advanced-order-export/export-now/set-up-fields-to-export/)
 * **rename** labels 
 * **reorder** columns 
 * export **custom fields** or terms for products/orders
-*  **group data** [by products or customers](https://docs.algolplus.com/algol_order_export/export-now/overview-12/#summary-reports)
+*  **group data** [by products or customers](https://docs.algolplus.com/advanced-order-export/export-now/overview-12/#summary-reports)
 * export orders via  **bulk action** from orders list 
 * apply **powerful filters** and much more
 
@@ -43,19 +43,19 @@ Export any custom field assigned to orders/products/coupons is easy and you can 
 
 = Pro version  =
 
-Are you looking to have your WooCommerce products drop shipped from a third party? Our plugin can help you export your orders to CSV/XML/etc and send them to your drop shipper. You can even automate this process with [Pro version](https://algolplus.com/plugins/downloads/advanced-order-export-for-woocommerce-pro/) .
+Are you looking to have your WooCommerce products drop shipped from a third party? Our plugin can help you export your orders to CSV/XML/etc and send them to your drop shipper. You can even automate this process with [Pro version](https://algolplus.com/plugins/downloads/advanced-order-export-for-woocommerce-pro/?utm_source=wordpress&utm_medium=banner&utm_campaign=2026) .
 
 = Pro version features  =
-* Export a single order immediately [after a status change](https://docs.algolplus.com/algol_order_export/pro-version-algol_order_export/status-change-jobs/) (e.g., after payment)
-* Export orders on [a flexible schedule](https://docs.algolplus.com/algol_order_export/pro-version-algol_order_export/scheduled-jobs/schedule/)
-* Exported orders can be sent to [multiple locations at once](https://docs.algolplus.com/algol_order_export/pro-version-algol_order_export/destination-block/overview-14/) - via email, FTP, and various APIs
-* Updating Google Sheets/Drive is also possible, but this requires [Zapier service](https://docs.algolplus.com/algol_order_export/pro-version-algol_order_export/destination-block/zapier/adding-a-zapier-account/)
+* Export a single order immediately [after a status change](https://docs.algolplus.com/advanced-order-export/pro-version-algol-order-export/status-change-jobs/) (e.g., after payment)
+* Export orders on [a flexible schedule](https://docs.algolplus.com/advanced-order-export/pro-version-algol-order-export/scheduled-jobs/schedule/)
+* Exported orders can be sent to [multiple locations at once](https://docs.algolplus.com/advanced-order-export/pro-version-algol-order-export/destination-block/overview-14/) - via email, FTP, and various APIs
+* Updating Google Sheets/Drive is also possible, but this requires [Zapier service](https://docs.algolplus.com/advanced-order-export/pro-version-algol-order-export/destination-block/zapier/adding-a-zapier-account/)
 
-For complete list of features -  please visit [Advanced Order Export For WooCommerce](https://algolplus.com/plugins/downloads/advanced-order-export-for-woocommerce-pro/)
+For complete list of features -  please visit [Advanced Order Export For WooCommerce](https://algolplus.com/plugins/downloads/advanced-order-export-for-woocommerce-pro/?utm_source=wordpress&utm_medium=banner&utm_campaign=2026)
 
 = Compatibility  =
 The plugin is fully compatible with HPOS.
-Our plugin correctly exports custom fields (added by 3rd-party plugins) in most cases. But for some complex plugins -  you should [use snippet](https://docs.algolplus.com/algol_order_export/developers-algol_order_export/codes-for-plugins-developers-algol_order_export/overview-17/).
+Our plugin correctly exports custom fields (added by 3rd-party plugins) in most cases. But for some complex plugins -  you should [use snippet](https://docs.algolplus.com/advanced-order-export/developers-algol-order-export/codes-for-plugins-developers-algol-order-export/overview-17/).
 
 
 == Installation ==
@@ -70,9 +70,9 @@ Install and activate plugin, visit WooCommerce > Export Orders.
 == Frequently Asked Questions ==
 The plugin is fully compatible with HPOS.
 
-Please, review [user guide](https://docs.algolplus.com/category/algol_order_export/) at first.
+Please, review [user guide](https://docs.algolplus.com/category/advanced-order-export/) at first.
 
-Check [some snippets](https://docs.algolplus.com/category/algol_order_export/developers-algol_order_export/codes-for-plugins-developers-algol_order_export/) for popular plugins or review  [this page](https://docs.algolplus.com/category/algol_order_export/developers-algol_order_export/code-samples-developers-algol_order_export/) to study how to extend the plugin.
+Check [some snippets](https://docs.algolplus.com/category/algol_order_export/developers-algol_order_export/codes-for-plugins-developers-algol-order-export/) for popular plugins or review  [this page](https://docs.algolplus.com/category/algol_order_export/developers-algol_order_export/code-samples-developers-algol-order-export/) to study how to extend the plugin.
 
 Still need help? Create ticket in [helpdesk system](https://algolplus.freshdesk.com). Don't forget to attach your settings or some screenshots. It will significantly reduce reply time :)
 
@@ -125,6 +125,13 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 4.0.9 - 2026-05-27 =
+* Fixed UI bugs for WordPress 7.0
+* Updated library used to generate Excel files
+
+= 4.0.8 - 2026-04-15 =
+* Internal, not released
 
 = 4.0.7 - 2026-04-07 =
 * New field "Item cost before discount(inc tax)" (>Setup Fields>Product Order Items)

@@ -191,7 +191,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                     <input class='width-15' type=text name="settings[from_order_id]" id="from_order_id" value='<?php echo esc_attr( $settings['from_order_id'] ) ?>'>
 					<?php esc_html_e( 'to', 'woo-order-export-lite' ) ?>
                     <input class='width-15' type=text name="settings[to_order_id]" id="to_order_id" value='<?php echo  esc_attr( $settings['to_order_id'] ) ?>'>
-                    <div id="go-to-setup-fields-section" class="button-secondary" style="vertical-align:middle; margin-left: 6.7rem;"><?php esc_html_e( 'Setup Fields', 'woo-order-export-lite' ) ?></div>
+                    <div id="go-to-setup-fields-section" class="button-secondary"><?php esc_html_e( 'Setup Fields', 'woo-order-export-lite' ) ?></div>
 
 					<?php do_action( "woe_settings_below_orders_range", $settings ); ?>
                 </div>
@@ -216,7 +216,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
         <div id="my-export-file" class="my-block">
             <div class="wc-oe-header">
 				<?php esc_html_e( 'Export filename', 'woo-order-export-lite' ) ?> :
-				<a style="float:right;font-weight:normal" target="_blank" href="https://docs.algolplus.com/algol_order_export/export-now/export-filename/">
+				<a style="float:right;font-weight:normal" target="_blank" href="https://docs.algolplus.com/advanced-order-export/export-now/export-filename/">
                 <?php esc_html_e('supported tags', 'woo-order-export-lite' ) ?></a>
             </div>
             <label id="export_filename" class="width-100">
@@ -510,12 +510,12 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                 </div>
 
 
-                <div class="pdf_two_col_block">
+                <div class="pdf_two_col_block" style="margin-top:10px">
 					<?php esc_html_e( 'Page header text', 'woo-order-export-lite' ) ?><br>
                     <input type=text name="settings[format_pdf_header_text]"
                            value='<?php echo esc_attr($settings['format_pdf_header_text']) ?>'>
                 </div>
-                <div class="pdf_two_col_block">
+                <div class="pdf_two_col_block" style="margin-top:10px">
 		            <?php esc_html_e( 'Columns width', 'woo-order-export-lite' ) ?>
                     <input title="<?php esc_html_e( 'comma separated list', 'woo-order-export-lite' ) ?>" type=text name="settings[format_pdf_cols_width]" value='<?php echo esc_attr($settings['format_pdf_cols_width']) ?>'>
                 </div>
@@ -555,7 +555,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                 </div>
 
                 <div class="pdf_two_col_block">
-					<?php esc_html_e( 'Table row text color', 'woo-order-export-lite' ) ?><br>
+					<?php esc_html_e( 'Table row text color', 'woo-order-export-lite' ) ?>
                     <input type=text class="color_pick" name="settings[format_pdf_table_row_text_color]"
                            value='<?php echo esc_attr($settings['format_pdf_table_row_text_color']) ?>'>
                 </div>
@@ -636,7 +636,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
 		                   value='<?php echo esc_attr($settings['format_pdf_row_images_height']) ?>' min="0">
 	            </div>
 
-                <div class="pdf_two_col_block">
+                <div class="pdf_two_col_block" style="margin-top:10px">
                     <input type=hidden name="settings[format_pdf_row_dont_page_break_order_lines]" value="0">
                     <input type=checkbox name="settings[format_pdf_row_dont_page_break_order_lines]"
                            value="1" <?php if ( @$settings['format_pdf_row_dont_page_break_order_lines'] ) {
@@ -737,7 +737,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
 		                   value='<?php echo esc_attr($settings['format_html_row_images_height']) ?>' min="0">
 	            </div>
 
-                <div class="pdf_two_col_block">
+                <div class="pdf_two_col_block" style="margin-top:10px">
                     <input type=hidden name="settings[format_html_images_add_link]" value="0">
                     <input type=checkbox name="settings[format_html_images_add_link]"
                            value="1" <?php if ( @$settings['format_html_images_add_link'] ) {
@@ -1735,7 +1735,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div style="margin-top: 20px;">
 									<?php print_formats_field( 'meta' ); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_meta' class='button-secondary'><?php esc_html_e( 'Confirm',
 											'woo-order-export-lite' ) ?></button>
                                     <button class='button-secondary button-cancel'><?php esc_html_e( 'Cancel',
@@ -1756,7 +1756,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div>
 									<?php print_formats_field( 'field' ); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_field' class='button-secondary'><?php esc_html_e( 'Confirm',
 											'woo-order-export-lite' ) ?></button>
                                     <button class='button-secondary button-cancel'><?php esc_html_e( 'Cancel',
@@ -1794,7 +1794,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div style="margin-top: 20px;">
 			                        <?php print_formats_field( 'meta', 'user' ); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_meta_users' class='button-secondary'><?php esc_html_e( 'Confirm',
 					                        'woo-order-export-lite' ) ?></button>
                                     <button class='button-secondary button-cancel'><?php esc_html_e( 'Cancel',
@@ -1838,7 +1838,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                         type='text' id='colname_custom_meta_products'/>
                                 <div style="margin-top: 15px;"></div>
 								<?php print_formats_field( 'meta', 'products' ); ?>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_meta_products'
                                             class='button-secondary'><?php esc_html_e( 'Confirm',
 											'woo-order-export-lite' ) ?></button>
@@ -1860,7 +1860,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div>
 									<?php print_formats_field( 'field', 'products' ); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_field_products'
                                             class='button-secondary'><?php esc_html_e( 'Confirm',
 											'woo-order-export-lite' ) ?></button>
@@ -1895,7 +1895,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                         type='text' id='colname_custom_meta_product_items'/>
                                 <div style="margin-top: 15px;"></div>
 								<?php print_formats_field( 'meta', 'product_items' ); ?>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_meta_product_items'
                                             class='button-secondary'><?php esc_html_e( 'Confirm',
 											'woo-order-export-lite' ) ?></button>
@@ -1917,7 +1917,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div>
 									<?php print_formats_field( 'field', 'product_items' ); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_field_product_items'
                                             class='button-secondary'><?php esc_html_e( 'Confirm',
 											'woo-order-export-lite' ) ?></button>
@@ -1943,7 +1943,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div style="margin-top: 20px;">
 									<?php print_formats_field( 'meta', 'coupons' ); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_meta_coupons'
                                             class='button-secondary'><?php esc_html_e( 'Confirm',
 											'woo-order-export-lite' ) ?></button>
@@ -1965,7 +1965,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div>
 									<?php print_formats_field( 'field', 'coupons' ); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_field_coupons' class='button-secondary'>
 										<?php esc_html_e( 'Confirm', 'woo-order-export-lite' ) ?>
                                     </button>
@@ -1987,7 +1987,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div style="margin-top: 20px;">
 				                    <?php print_formats_field( 'field', 'other_items', 'money',  'format_fee_item_other_items'); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_other_items_add_fee_field' class='button-secondary'>
 					                    <?php esc_html_e( 'Confirm', 'woo-order-export-lite' ) ?>
                                     </button>
@@ -2009,7 +2009,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div style="margin-top: 20px;">
 				                    <?php print_formats_field( 'field', 'other_items', 'money',  'format_shipping_item_other_items'); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_other_items_add_shipping_field' class='button-secondary'>
 					                    <?php esc_html_e( 'Confirm', 'woo-order-export-lite' ) ?>
                                     </button>
@@ -2031,7 +2031,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div style="margin-top: 20px;">
 				                    <?php print_formats_field( 'field', 'other_items', 'money',  'format_tax_item_other_items'); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_other_items_add_tax_field' class='button-secondary'>
 					                    <?php esc_html_e( 'Confirm', 'woo-order-export-lite' ) ?>
                                     </button>
@@ -2042,7 +2042,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                             </div>
                             <div class="div_calculated segment-form all-segments">
                                 <div style="padding-bottom: 0.4rem">
-                                    <a class='add_form_tip' href="https://docs.algolplus.com/algol_order_export/developers-algol_order_export/common/add-calculated-field-for-order/" target="_blank">
+                                    <a class='add_form_tip' href="https://docs.algolplus.com/advanced-order-export/developers-algol-order-export/common/add-calculated-field-for-order/" target="_blank">
                                         <?php esc_html_e( "You should add code to section \"Misc Settings\". Read the guide", 'woo-order-export-lite' )?>
                                     </a>
                                 </div>
@@ -2061,7 +2061,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div>
                                     <?php print_formats_field('calculated'); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_calculated' class='button-secondary'>
 					                    <?php esc_html_e( 'Confirm', 'woo-order-export-lite' ) ?>
                                     </button>
@@ -2072,7 +2072,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                             </div>
                             <div class="div_calculated segment-form products-segment">
                                 <div style="padding-bottom: 0.4rem">
-                                    <a class='add_form_tip' href="https://docs.algolplus.com/algol_order_export/developers-algol_order_export/common/add-calculated-field-for-product/" target="_blank">
+                                    <a class='add_form_tip' href="https://docs.algolplus.com/advanced-order-export/developers-algol-order-export/common/add-calculated-field-for-product/" target="_blank">
                                         <?php esc_html_e( "You should add code to section \"Misc Settings\". Read the guide", 'woo-order-export-lite' )?>
                                     </a>
                                 </div>
@@ -2091,7 +2091,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div>
                                     <?php print_formats_field('calculated', 'products'); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_calculated_products' class='button-secondary'>
 					                    <?php esc_html_e( 'Confirm', 'woo-order-export-lite' ) ?>
                                     </button>
@@ -2102,7 +2102,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                             </div>
                             <div class="div_calculated segment-form product_items-segment">
                                 <div style="padding-bottom: 0.4rem">
-                                    <a class='add_form_tip' href="https://docs.algolplus.com/algol_order_export/developers-algol_order_export/common/add-calculated-field-for-product/" target="_blank">
+                                    <a class='add_form_tip' href="https://docs.algolplus.com/advanced-order-export/developers-algol-order-export/common/add-calculated-field-for-product/" target="_blank">
                                         <?php esc_html_e( "You should add code to section \"Misc Settings\". Read the guide", 'woo-order-export-lite' )?>
                                     </a>
                                 </div>
@@ -2121,7 +2121,7 @@ $woe_order_post_type = isset($settings['post_type']) ? $settings['post_type'] : 
                                 <div>
                                     <?php print_formats_field('calculated', 'product_items'); ?>
                                 </div>
-                                <div style="text-align: right;">
+                                <div class="exp-confirm-field">
                                     <button id='button_custom_calculated_product_items' class='button-secondary'>
 					                    <?php esc_html_e( 'Confirm', 'woo-order-export-lite' ) ?>
                                     </button>

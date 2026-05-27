@@ -220,7 +220,7 @@ class WC_Order_Export_Admin {
 	public function add_action_links( $links ) {
 		$mylinks = array(
 			'<a href="admin.php?page=wc-order-export">' . esc_html__( 'Settings', 'woo-order-export-lite' ) . '</a>',
-			'<a href="https://docs.algolplus.com/category/algol_order_export/" target="_blank">' . esc_html__( 'Docs',
+			'<a href="https://docs.algolplus.com/category/advanced-order-export/" target="_blank">' . esc_html__( 'Docs',
 				'woo-order-export-lite' ) . '</a>',
 			'<a href="https://docs.algolplus.com/support/" target="_blank">' . esc_html__( 'Support',
 				'woo-order-export-lite' ) . '</a>',
@@ -278,6 +278,8 @@ class WC_Order_Export_Admin {
 
 	public function thematic_enqueue_scripts() {
 
+        global $wp_version;
+
 		wp_enqueue_media();
 
 		wp_enqueue_script( 'jquery-ui-datepicker' );
@@ -301,6 +303,15 @@ class WC_Order_Export_Admin {
 		},PHP_INT_MAX );
 
 		wp_enqueue_style( 'export', $this->url_plugin . 'assets/css/export.css', array(), WOE_VERSION );
+
+        if ( version_compare( $wp_version, '6.9.9', '>' ) ) {
+            wp_enqueue_style(
+                'export_wp7',
+                $this->url_plugin . 'assets/css/export-wp7.css',
+                array(),
+                time()
+            );
+        }
 
 		wp_enqueue_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WOE_VERSION );
 

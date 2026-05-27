@@ -778,7 +778,7 @@ trait WOE_Core_Extractor {
 							else if($operator == 'LIKE') {
 								$matched_like = false;
 								foreach ($values as $value) {
-									if(strpos($meta, $value) !== false) {
+									if(stripos($meta, $value) !== false) {
 										$matched_like = true;
 										continue;
 									}

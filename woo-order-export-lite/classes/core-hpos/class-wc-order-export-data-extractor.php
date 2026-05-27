@@ -799,6 +799,7 @@ class WC_Order_Export_Data_Extractor {
 			$where[] = "ordermeta_cf_export_unmarked_orders.meta_value IS NULL";
 		if( $refund_parent_sql )
 			$where[] = "orders.parent_order_id in ($refund_parent_sql)";
+		$where = apply_filters( 'woe_sql_get_refunds_ids_where', $where, $settings , true);// true - hpos
 		return join(" AND ", $where);
 	}
 

@@ -13,6 +13,7 @@ class WC_Order_Export_Engine {
 
 	public static $order_id = '';
 	public static $orders_for_export = array();
+	public static $orders_to_mark = array();
 	public static $orders_exported = 0;
 	public static $make_separate_orders = false;
 
@@ -446,11 +447,20 @@ class WC_Order_Export_Engine {
 
 	protected static function try_mark_order( $order_id, $settings ) {
 		if ( $settings['mark_exported_orders'] ) {
-            $order = wc_get_order($order_id);
-			if( $order ) {
-				$order->add_meta_data('woe_order_exported' . apply_filters("woe_exported_postfix", self::get_default_exported_postfix($settings) ), current_time( 'timestamp' ), true);
-				$order->save();
+			$main_settings = WC_Order_Export_Main_Settings::get_settings();
+			if( $main_settings['mark_orders_after_export'] AND self::$current_job_settings['mode']!='now' ) {
+				self::$orders_to_mark[] = $order_id;
 			}
+			else
+				self::mark_order_now($order_id, $settings);
+		}
+	}
+
+	protected static function mark_order_now( $order_id, $settings ) {
+		$order = wc_get_order($order_id);
+		if( $order ) {
+			$order->add_meta_data('woe_order_exported' . apply_filters("woe_exported_postfix", self::get_default_exported_postfix($settings) ), current_time( 'timestamp' ), true);
+			$order->save();
 		}
 	}
 

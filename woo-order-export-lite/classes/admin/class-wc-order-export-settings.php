@@ -11,6 +11,7 @@ class WC_Order_Export_Main_Settings {
 			'default_tab'                          => 'export',
 			'status_change_use_queue'              => false,
 			'cron_tasks_active'                    => true,
+			'mark_orders_after_export'             => false,
 			'dont_log_empty_cron_task'             => false,
 			'show_export_status_column'            => '1',
 			'show_export_actions_in_bulk'          => '1',

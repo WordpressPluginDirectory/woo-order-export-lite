@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Order Export For WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-06 18:36+0000\n"
+"POT-Creation-Date: 2026-05-26 12:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.8.3; wp-6.9-RC3; php-8.4.6\n"
+"X-Loco-Version: 2.8.4; wp-7.0; php-8.4.6\n"
 "X-Domain: woo-order-export-lite"
 
 #: view/settings-form.php:847
@@ -25,7 +25,7 @@ msgid " order"
 msgstr ""
 
 #. number of orders when bulk action completed (at orders list)
-#: classes/class-wc-order-export-admin.php:637
+#: classes/class-wc-order-export-admin.php:648
 #, php-format
 msgid "%s order marked."
 msgid_plural "%s orders marked."
@@ -33,7 +33,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. number of orders when bulk action completed (at orders list)
-#: classes/class-wc-order-export-admin.php:649
+#: classes/class-wc-order-export-admin.php:660
 #, php-format
 msgid "%s order unmarked."
 msgid_plural "%s orders unmarked."
@@ -53,7 +53,7 @@ msgstr ""
 msgid "0 - auto scale"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:329
+#: classes/class-wc-order-export-admin.php:340
 msgid "1st row only"
 msgstr ""
 
@@ -66,7 +66,7 @@ msgid "Actions"
 msgstr ""
 
 #. modes for "Fill order details"
-#: classes/class-wc-order-export-admin.php:324
+#: classes/class-wc-order-export-admin.php:335
 msgid "Add"
 msgstr ""
 
@@ -140,7 +140,7 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:328
+#: classes/class-wc-order-export-admin.php:339
 msgid "all rows"
 msgstr ""
 
@@ -156,7 +156,7 @@ msgstr ""
 msgid "Are you sure to continue?"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:325
+#: classes/class-wc-order-export-admin.php:336
 msgid "as"
 msgstr ""
 
@@ -309,7 +309,7 @@ msgstr ""
 msgid "Column name"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:319
+#: classes/class-wc-order-export-admin.php:330
 msgid "columns"
 msgstr ""
 
@@ -423,7 +423,7 @@ msgstr ""
 msgid "Coupons"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:337
+#: classes/class-wc-order-export-admin.php:348
 msgid "coupons"
 msgstr ""
 
@@ -512,7 +512,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:398
+#: classes/class-wc-order-export-admin.php:409
 msgid "Date From is greater than Date To"
 msgstr ""
 
@@ -580,7 +580,7 @@ msgid ""
 "reduce reply time :)"
 msgstr ""
 
-#: classes/core/class-wc-order-export-engine.php:426
+#: classes/core/class-wc-order-export-engine.php:427
 msgid "Don't Panic"
 msgstr ""
 
@@ -612,25 +612,25 @@ msgstr ""
 msgid "Embedded Product Image"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:402
+#: classes/class-wc-order-export-admin.php:413
 #: classes/core/trait-woe-core-extractor.php:175
 msgid "empty"
 msgstr ""
 
 #. warnings for form inputs
-#: classes/class-wc-order-export-admin.php:391
+#: classes/class-wc-order-export-admin.php:402
 msgid "empty column name"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:392
+#: classes/class-wc-order-export-admin.php:403
 msgid "empty meta key"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:508
+#: classes/class-wc-order-export-admin.php:519
 msgid "Empty method"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:396
+#: classes/class-wc-order-export-admin.php:407
 msgid "empty value"
 msgstr ""
 
@@ -675,7 +675,7 @@ msgid "Export all products from the order"
 msgstr ""
 
 #. label for export in Bulk Actions (at orders list)
-#: classes/class-wc-order-export-admin.php:566
+#: classes/class-wc-order-export-admin.php:577
 #, php-format
 msgid "Export as %s"
 msgstr ""
@@ -768,7 +768,7 @@ msgstr ""
 msgid "Field format"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:327
+#: classes/class-wc-order-export-admin.php:338
 msgid "Fill order columns for"
 msgstr ""
 
@@ -876,11 +876,11 @@ msgstr ""
 msgid "Generating file..."
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:332
+#: classes/class-wc-order-export-admin.php:343
 msgid "Grouping by coupon"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:331
+#: classes/class-wc-order-export-admin.php:342
 msgid "Grouping by product"
 msgstr ""
 
@@ -1101,12 +1101,12 @@ msgid ""
 "plugin."
 msgstr ""
 
-#: classes/core/class-wc-order-export-engine.php:594
+#: classes/core/class-wc-order-export-engine.php:604
 msgid "Main SQL queries are listed below"
 msgstr ""
 
 #. labels in Bulk Actions (at orders list)
-#: classes/class-wc-order-export-admin.php:573
+#: classes/class-wc-order-export-admin.php:584
 msgid "Mark exported"
 msgstr ""
 
@@ -1187,7 +1187,7 @@ msgstr ""
 msgid "Nonce verification failed!"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:400
+#: classes/class-wc-order-export-admin.php:411
 #: classes/admin/tabs/ajax/trait-wc-order-export-admin-tab-abstract-ajax-export.php:136
 msgid "Nothing to export. Please, adjust your filters"
 msgstr ""
@@ -1200,7 +1200,7 @@ msgstr ""
 msgid "Number of coupons used"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:320
+#: classes/class-wc-order-export-admin.php:331
 msgid "one row"
 msgstr ""
 
@@ -1538,7 +1538,7 @@ msgstr ""
 msgid "Please, review %s at first."
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:399
+#: classes/class-wc-order-export-admin.php:410
 msgid "Please, set up fields to export"
 msgstr ""
 
@@ -1655,7 +1655,7 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:336
+#: classes/class-wc-order-export-admin.php:347
 msgid "products"
 msgstr ""
 
@@ -1694,7 +1694,7 @@ msgid "Remove all fields"
 msgstr ""
 
 #. confirmations for critical actions
-#: classes/class-wc-order-export-admin.php:340
+#: classes/class-wc-order-export-admin.php:351
 msgid "Remove all fields?"
 msgstr ""
 
@@ -1756,7 +1756,7 @@ msgid "Root tag"
 msgstr ""
 
 #. modes for "Add products"
-#: classes/class-wc-order-export-admin.php:318
+#: classes/class-wc-order-export-admin.php:329
 msgid "rows"
 msgstr ""
 
@@ -1776,7 +1776,7 @@ msgstr ""
 msgid "Scheduled jobs"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:395
+#: classes/class-wc-order-export-admin.php:406
 msgid "select item field"
 msgstr ""
 
@@ -1784,7 +1784,7 @@ msgstr ""
 msgid "Select logo"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:393
+#: classes/class-wc-order-export-admin.php:404
 msgid "select product field or taxonomy"
 msgstr ""
 
@@ -1862,7 +1862,7 @@ msgstr ""
 msgid "Short Description"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:342
+#: classes/class-wc-order-export-admin.php:353
 msgid "Show total amount for this column"
 msgstr ""
 
@@ -1892,7 +1892,7 @@ msgstr ""
 msgid "Source: %s"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:326
+#: classes/class-wc-order-export-admin.php:337
 msgid "Split values by"
 msgstr ""
 
@@ -1956,7 +1956,7 @@ msgstr ""
 msgid "Subscription Relationship"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:343
+#: classes/class-wc-order-export-admin.php:354
 msgid "Sum"
 msgstr ""
 
@@ -2093,7 +2093,7 @@ msgid "Taxonomy"
 msgstr ""
 
 #. position of error in custom PHP code added to "Misc Settings"
-#: classes/core/class-wc-order-export-engine.php:428
+#: classes/core/class-wc-order-export-engine.php:429
 msgid "The code you are trying to save produced a fatal error on line %d:"
 msgstr ""
 
@@ -2109,7 +2109,7 @@ msgid ""
 "fake order if you've added new field just now."
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:341
+#: classes/class-wc-order-export-admin.php:352
 msgid ""
 "This action will reset filters, settings and fields to default state. Are "
 "you sure?"
@@ -2145,7 +2145,7 @@ msgstr ""
 msgid "Title for summary row"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:397
+#: classes/class-wc-order-export-admin.php:408
 msgid "Title is empty"
 msgstr ""
 
@@ -2219,18 +2219,18 @@ msgid "Unknown"
 msgstr ""
 
 #. error message for bad ajax method
-#: classes/class-wc-order-export-admin.php:523
+#: classes/class-wc-order-export-admin.php:534
 #, php-format
 msgid "Unknown AJAX method %s"
 msgstr ""
 
 #. error message if current tab doesn't support ajax method
-#: classes/class-wc-order-export-admin.php:532
+#: classes/class-wc-order-export-admin.php:543
 #, php-format
 msgid "Unknown tab method %s"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:574
+#: classes/class-wc-order-export-admin.php:585
 msgid "Unmark exported"
 msgstr ""
 
@@ -2307,7 +2307,7 @@ msgstr ""
 msgid "WooCommerce"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:536
+#: classes/class-wc-order-export-admin.php:547
 msgid "Wrong nonce"
 msgstr ""
 
@@ -2323,7 +2323,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: classes/class-wc-order-export-admin.php:504
+#: classes/class-wc-order-export-admin.php:515
 msgid "You can not do it"
 msgstr ""
 
