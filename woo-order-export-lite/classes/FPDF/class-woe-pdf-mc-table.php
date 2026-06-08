@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 if ( ! class_exists( 'WOE_FPDF' ) ) {
 	require( 'class-woe-fpdf.php' );
 }

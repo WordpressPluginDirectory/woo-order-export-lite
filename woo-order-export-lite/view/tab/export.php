@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <br>
-<div class="tabs-content">
+<div>
 	<?php
 	//settings for form
 	$show = array(

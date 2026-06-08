@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fread

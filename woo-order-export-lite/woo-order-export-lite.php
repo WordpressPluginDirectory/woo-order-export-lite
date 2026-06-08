@@ -5,11 +5,11 @@
  * Description: Export WooCommerce orders to Excel/CSV/XML/JSON/PDF/TSV
  * Author: AlgolPlus
  * Author URI: https://algolplus.com/
- * Version: 4.0.9
+ * Version: 4.1.0
  * Text Domain: woo-order-export-lite
  * Domain Path: /i18n/languages/
  * WC requires at least: 4.0.0
- * WC tested up to: 10.7
+ * WC tested up to: 10.8
  *
  * Copyright: (c) 2015 AlgolPlus LLC. (algol.plus@gmail.com)
  *
@@ -55,7 +55,7 @@ if ( class_exists( 'WC_Order_Export_Admin' ) ) {
 }
 
 if ( ! defined( 'WOE_VERSION' ) ) {
-	define( 'WOE_VERSION', '4.0.9' );
+	define( 'WOE_VERSION', '4.1.0' );
 	define( 'WOE_MIN_PHP_VERSION', '7.4' );
 	define( 'WOE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'WOE_PLUGIN_BASEPATH', dirname( __FILE__ ) );

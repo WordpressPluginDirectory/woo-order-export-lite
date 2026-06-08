@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced Order Export For WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 12:52+0000\n"
+"POT-Creation-Date: 2026-06-05 06:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -580,7 +580,7 @@ msgid ""
 "reduce reply time :)"
 msgstr ""
 
-#: classes/core/class-wc-order-export-engine.php:427
+#: classes/core/class-wc-order-export-engine.php:434
 msgid "Don't Panic"
 msgstr ""
 
@@ -1101,7 +1101,7 @@ msgid ""
 "plugin."
 msgstr ""
 
-#: classes/core/class-wc-order-export-engine.php:604
+#: classes/core/class-wc-order-export-engine.php:611
 msgid "Main SQL queries are listed below"
 msgstr ""
 
@@ -1431,7 +1431,7 @@ msgid "Output UTF-8 BOM"
 msgstr ""
 
 #. page numeration in PDF
-#: classes/FPDF/class-woe-pdf-mc-table.php:198
+#: classes/FPDF/class-woe-pdf-mc-table.php:200
 #, php-format
 msgid "Page %1$s / %2$s"
 msgstr ""
@@ -2093,7 +2093,7 @@ msgid "Taxonomy"
 msgstr ""
 
 #. position of error in custom PHP code added to "Misc Settings"
-#: classes/core/class-wc-order-export-engine.php:429
+#: classes/core/class-wc-order-export-engine.php:436
 msgid "The code you are trying to save produced a fatal error on line %d:"
 msgstr ""
 

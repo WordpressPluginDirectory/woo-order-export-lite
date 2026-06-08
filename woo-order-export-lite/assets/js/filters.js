@@ -1,3 +1,20 @@
+function woe_safe_fill_select_1st_empty(selector, items) {
+	const fragment = jQuery(document.createDocumentFragment());
+	fragment.append(new Option(export_messages.empty, ""));
+	jQuery.each( items, function ( index, value ) {
+		fragment.append(new Option(value , value ));
+	} );
+	jQuery(selector).append(fragment);
+}
+function woe_safe_fill_select(selector, items) {
+	const fragment = jQuery(document.createDocumentFragment());
+	jQuery.each( items, function ( index, value ) {
+		fragment.append(new Option(value , value ));
+	} );
+	jQuery(selector).append(fragment);
+}
+
+
 jQuery( document ).ready( function ( $ ) {
 	function woe_open_filter( object_id, verify_checkboxes ) {
 
@@ -48,18 +65,15 @@ jQuery( document ).ready( function ( $ ) {
 			    jQuery( '#select_attributes, #select_attributes--select2' ).remove();
 
 			    if ( response ) {
-				    var options = '';
-				    jQuery.each( response, function ( index, value ) {
-					    options += '<option>' + value + '</option>';
-				    } );
 				    var $select = jQuery( '<div id="select_attributes--select2" style="margin-top: 0px;margin-right: 6px; vertical-align: top;'
 							  + 'display: ' + (
 								  (
 									  'LIKE' === val_op
 								  ) ? 'none' : 'inline-block'
 							  ) + ';">'
-							  + '<select id="select_attributes">' + options + '</select></div>' );
+							  + '<select id="select_attributes"></select></div>' );
 				    $select.insertBefore( jQuery( '#add_attributes' ) )
+					woe_safe_fill_select("#select_attributes",response);
 				    $select.find( 'select' ).select2_i18n( {tags: true} );
 			    }
 			    else {
@@ -87,7 +101,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			if ( f ) {
 
-				jQuery( '#attributes_check' ).append( '<option selected="selected" value="' + val + '">' + val + '</option>' );
+				jQuery( '#attributes_check' ).append( new Option(val, val, true, true) );
 				jQuery( '#attributes_check' ).select2_i18n( {}, '', true );
 
 				jQuery( '#attributes_check option' ).each( function () {
@@ -139,18 +153,15 @@ jQuery( document ).ready( function ( $ ) {
 			jQuery( '#select_itemmeta--select2 select' ).select2( 'destroy' );
 			jQuery( '#select_itemmeta, #select_itemmeta--select2' ).remove();
 			if ( response ) {
-				var options = '';
-				jQuery.each( response, function ( index, value ) {
-					options += '<option>' + value + '</option>';
-				} );
 				var $select = jQuery( '<div id="select_itemmeta--select2" style="margin-top: 0px;margin-right: 6px; vertical-align: top;'
 				                      + 'display: ' + (
 					                      (
 						                      'LIKE' === val_op
 					                      ) ? 'none' : 'inline-block'
 				                      ) + ';">'
-				                      + '<select id="select_itemmeta">' + options + '</select></div>' );
+				                      + '<select id="select_itemmeta"></select></div>' );
 				$select.insertBefore( jQuery( '#add_itemmeta' ) )
+				woe_safe_fill_select("#select_itemmeta",response);
 				$select.find( 'select' ).select2_i18n( {tags: true} );
 			}
 			else {
@@ -183,7 +194,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			if ( f ) {
 
-				jQuery( '#itemmeta_check' ).append( '<option selected="selected" value="' + val + '">' + val + '</option>' );
+				jQuery( '#itemmeta_check' ).append( new Option(val, val, true, true) );
 				jQuery( '#itemmeta_check' ).select2_i18n( {}, '', true );
 
 				jQuery( '#itemmeta_check option' ).each( function () {
@@ -231,7 +242,7 @@ jQuery( document ).ready( function ( $ ) {
             jQuery( "#text_item_metadata" ).css( 'display', 'none' ).attr( 'disabled', 'disabled' );
             jQuery( "#text_item_metadata--select2" ).hide();
             jQuery( "#text_order_itemmetadata" ).css( 'display', 'inline' ).attr( 'disabled', false );
-        } 
+        }
 		else if ( 'NOT SET' === val_op || 'IS SET' === val_op ) {
 			jQuery( "#text_item_metadata" ).css( 'display', 'none' ).attr( 'disabled', 'disabled' ).val( ' ' );
             jQuery( "#text_item_metadata--select2" ).hide();
@@ -264,19 +275,16 @@ jQuery( document ).ready( function ( $ ) {
 			    jQuery( '#select_taxonomies--select2 select' ).select2( 'destroy' );
 			    jQuery( '#select_taxonomies, #select_taxonomies--select2' ).remove();
 			    if ( response ) {
-				    var options = '';
-				    jQuery.each( response, function ( index, value ) {
-					    options += '<option>' + value + '</option>';
-				    } );
 				    var $select = jQuery( '<div id="select_taxonomies--select2" style="margin-top: 0px;margin-right: 6px; vertical-align: top;'
 				     + 'display: ' + (
 								  (
 									  'NOT SET' === val_op || 'IS SET' === val_op
 								  ) ? 'none' : 'inline-block'
 							  ) + ';">'
-							  + '<select id="select_taxonomies">' + options + '</select></div>' );
+							  + '<select id="select_taxonomies"></select></div>' );
 
 				    $select.insertBefore( jQuery( '#add_taxonomies' ) )
+					woe_safe_fill_select("#select_taxonomies",response);
 				    $select.find( 'select' ).select2_i18n( {tags: true} );
 			    }
 			    else {
@@ -306,7 +314,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			if ( f ) {
 
-				jQuery( '#taxonomies_check' ).append( '<option selected="selected" value="' + val + '">' + val + '</option>' );
+				jQuery( '#taxonomies_check' ).append( new Option(val, val, true, true) );
 				jQuery( '#taxonomies_check' ).select2_i18n( {}, '', true );
 
 				jQuery( '#taxonomies_check option' ).each( function () {
@@ -360,18 +368,15 @@ jQuery( document ).ready( function ( $ ) {
 			    jQuery( '#select_product_custom_fields--select2 select' ).select2( 'destroy' );
 			    jQuery( '#select_product_custom_fields, #select_product_custom_fields--select2' ).remove();
 			    if ( response ) {
-				    var options = '';
-				    jQuery.each( response, function ( index, value ) {
-					    options += '<option>' + value + '</option>';
-				    } );
 				    var $select = jQuery( '<div id="select_product_custom_fields--select2" style="margin-top: 0px;margin-right: 6px; vertical-align: top;'
 							  + 'display: ' + (
 								  (
 									  'LIKE' === val_op || 'NOT SET' === val_op || 'IS SET' === val_op
 								  ) ? 'none' : 'inline-block'
 							  ) + ';">'
-							  + '<select id="select_product_custom_fields">' + options + '</select></div>' );
+							  + '<select id="select_product_custom_fields"></select></div>' );
 				    $select.insertBefore( jQuery( '#add_product_custom_fields' ) )
+					woe_safe_fill_select("#select_product_custom_fields",response);
 				    $select.find( 'select' ).select2_i18n( {tags: true} );
 			    }
 			    else {
@@ -399,7 +404,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			if ( f ) {
 
-				jQuery( '#product_custom_fields_check' ).append( '<option selected="selected" value="' + val + '">' + val + '</option>' );
+				jQuery( '#product_custom_fields_check' ).append( new Option(val, val, true, true) );
 				jQuery( '#product_custom_fields_check' ).select2_i18n( {}, '', true );
 
 				jQuery( '#product_custom_fields_check option' ).each( function () {
@@ -451,13 +456,9 @@ jQuery( document ).ready( function ( $ ) {
 			    jQuery( '#text_shipping_locations--select2 select' ).select2( 'destroy' );
 			    jQuery( '#text_shipping_locations, #text_shipping_locations--select2' ).remove();
 			    if ( response ) {
-				    var options = '';
-				    jQuery.each( response, function ( index, value ) {
-					    options += '<option>' + value + '</option>';
-				    } );
-
-				    var $select = jQuery( '<div id="text_shipping_locations--select2" style="margin-top: 0px;margin-right: 6px; vertical-align: top; display: inline-block;"><select id="text_shipping_locations">' + options + '</select></div>' );
+				    var $select = jQuery( '<div id="text_shipping_locations--select2" style="margin-top: 0px;margin-right: 6px; vertical-align: top; display: inline-block;"><select id="text_shipping_locations"></select></div>' );
 				    $select.insertBefore( jQuery( '#add_shipping_locations' ) )
+					woe_safe_fill_select("#text_shipping_locations",response);
 				    $select.find( 'select' ).select2_i18n( {tags: true} );
 			    }
 			    else {
@@ -484,7 +485,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			if ( f ) {
 
-				jQuery( '#shipping_locations_check' ).append( '<option selected="selected" value="' + val + '">' + val + '</option>' );
+				jQuery( '#shipping_locations_check' ).append( new Option(val, val, true, true) );
 				jQuery( '#shipping_locations_check' ).select2_i18n( {}, '', true );
 
 				jQuery( '#shipping_locations_check option' ).each( function () {
@@ -515,13 +516,10 @@ jQuery( document ).ready( function ( $ ) {
 			    jQuery( '#text_billing_locations--select2 select' ).select2( 'destroy' );
 			    jQuery( '#text_billing_locations, #text_billing_locations--select2' ).remove();
 			    if ( response ) {
-				    var options = '';
-				    jQuery.each( response, function ( index, value ) {
-					    options += '<option>' + value + '</option>';
-				    } );
 				    var $select = jQuery( '<div id="text_billing_locations--select2" style="margin-top: 0px;margin-right: 6px; vertical-align: top; display: inline-block;">'
-							  + '<select id="text_billing_locations">' + options + '</select></div>' );
+							  + '<select id="text_billing_locations"></select></div>' );
 				    $select.insertBefore( jQuery( '#add_billing_locations' ) )
+					woe_safe_fill_select("#text_billing_locations",response);
 				    $select.find( 'select' ).select2_i18n( {tags: true} );
 			    }
 			    else {
@@ -548,7 +546,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			if ( f ) {
 
-				jQuery( '#billing_locations_check' ).append( '<option selected="selected" value="' + val + '">' + val + '</option>' );
+				jQuery( '#billing_locations_check' ).append( new Option(val, val, true, true) );
 				jQuery( '#billing_locations_check' ).select2_i18n( {}, '', true );
 
 				jQuery( '#billing_locations_check option' ).each( function () {
@@ -580,18 +578,14 @@ jQuery( document ).ready( function ( $ ) {
 			    jQuery( '#text_item_names--select2 select' ).select2( 'destroy' );
 			    jQuery( '#text_item_names, #text_item_names--select2' ).remove();
 			    if ( response ) {
-				    var options = '';
-				    jQuery.each( response, function ( index, value ) {
-					    options += '<option>' + value + '</option>';
-				    } );
-
 				    var $select = jQuery( '<div id="text_item_names--select2" style="margin-top: 0px;margin-right: 6px; vertical-align: top; '
 			+ 'display: '+ (
 			    (
 				'LIKE' === val_op || 'NOT SET' === val_op || 'IS SET' === val_op
 			    ) ? 'none' : 'inline-block'
-			) + ';"><select id="text_item_names">' + options + '</select></div>' );
+			) + ';"><select id="text_item_names"></select></div>' );
 				    $select.insertBefore( jQuery( '#add_item_names' ) );
+					woe_safe_fill_select("#text_item_names",response);
 				    $select.find( 'select' ).select2_i18n( {tags: true} );
 
 				    if ( 'LIKE' === val_op || 'NOT SET' === val_op || 'IS SET' === val_op ) {
@@ -621,7 +615,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			if ( f ) {
 
-				jQuery( '#item_names_check' ).append( '<option selected="selected" value="' + val + '">' + val + '</option>' );
+				jQuery( '#item_names_check' ).append( new Option(val, val, true, true) );
 				jQuery( '#item_names_check' ).select2_i18n( {}, '', true );
 
 				jQuery( '#item_names_check option' ).each( function () {
@@ -653,17 +647,14 @@ jQuery( document ).ready( function ( $ ) {
 			    jQuery( '#text_item_metadata--select2 select' ).select2( 'destroy' );
 			    jQuery( '#text_item_metadata, #text_item_metadata--select2' ).remove();
 			    if ( response ) {
-				    var options = '';
-				    jQuery.each( response, function ( index, value ) {
-					    options += '<option>' + value + '</option>';
-				    } );
 				    var $select = jQuery( '<div id="text_item_metadata--select2" style="margin-top: 0px;margin-right: 6px; vertical-align: top; '
 			+ 'display: '+ (
 			    (
 				'LIKE' === val_op || 'NOT SET' === val_op || 'IS SET' === val_op
 			    ) ? 'none' : 'inline-block'
-			) + ';"><select id="text_item_metadata">' + options + '</select></div>' );
+			) + ';"><select id="text_item_metadata"></select></div>' );
 				    $select.insertBefore( jQuery( '#add_item_metadata' ) );
+					woe_safe_fill_select("#text_item_metadata",response);
 				    $select.find( 'select' ).select2_i18n( {tags: true} );
 
 		    if ( 'LIKE' === val_op || 'NOT SET' === val_op || 'IS SET' === val_op ) {
@@ -694,7 +685,8 @@ jQuery( document ).ready( function ( $ ) {
 
 			if ( f ) {
 
-				jQuery( '#item_metadata_check' ).append( '<option selected="selected" value="' + val + '">' + val + '</option>' );
+				jQuery( '#item_metadata_check' ).append( new Option(val, val, true, true) );
+
 				jQuery( '#item_metadata_check' ).select2_i18n( {}, '', true );
 
 				jQuery( '#item_metadata_check option' ).each( function () {
@@ -708,7 +700,7 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 
 	setTimeout( function () {
-	    // for filter by ORDER custom fields
+	    // for filter by USER custom fields
 	    jQuery( '#user_custom_fields' ).change( function () {
 
 		    jQuery( '#select_user_custom_fields' ).attr( 'disabled', 'disabled' );
@@ -727,18 +719,15 @@ jQuery( document ).ready( function ( $ ) {
 			    jQuery( '#select_user_custom_fields--select2 select' ).select2( 'destroy' );
 			    jQuery( '#select_user_custom_fields, #select_user_custom_fields--select2' ).remove();
 			    if ( response ) {
-				    var options = '<option>' + export_messages.empty + '</option>';
-				    jQuery.each( response, function ( index, value ) {
-					    options += '<option>' + value + '</option>';
-				    } );
 				    var $select = jQuery( '<div id="select_user_custom_fields--select2" style="margin-top: 0px;margin-right: 6px; vertical-align: top;'
 							  + 'display: ' + (
 								  (
 									  'LIKE' === val_op || 'NOT SET' === val_op || 'IS SET' === val_op
 								  ) ? 'none' : 'inline-block'
 							  ) + ';">'
-							  + '<select id="select_user_custom_fields">' + options + '</select></div>' );
+							  + '<select id="select_user_custom_fields"></select></div>' );
 				    $select.insertBefore( jQuery( '#add_user_custom_fields' ) )
+					woe_safe_fill_select_1st_empty("#select_user_custom_fields",response);
 				    $select.find( 'select' ).select2_i18n( {tags: true} );
 			    }
 			    else {
@@ -768,12 +757,8 @@ jQuery( document ).ready( function ( $ ) {
 			if ( f ) {
 				if ( export_messages.empty === val ) {
 					result = val2 + ' ' + val_op + ' empty';
-					jQuery(
-						'#user_custom_fields_check' ).append( '<option selected="selected" value="' + result + '">' + result + '</option>' );
-				} else {
-					jQuery(
-						'#user_custom_fields_check' ).append( '<option selected="selected" value="' + result + '">' + result + '</option>' );
 				}
+				jQuery( '#user_custom_fields_check' ).append( new Option(result, result, true, true) );
 
 				jQuery( '#user_custom_fields_check' ).select2_i18n();
 
@@ -828,19 +813,16 @@ jQuery( document ).ready( function ( $ ) {
 			    jQuery( '#select_custom_fields--select2 select' ).select2( 'destroy' );
 			    jQuery( '#select_custom_fields, #select_custom_fields--select2' ).remove();
 			    if ( response ) {
-				    var options = '<option>' + export_messages.empty + '</option>';
-				    jQuery.each( response, function ( index, value ) {
-					    options += '<option>' + value + '</option>';
-				    } );
 				    var $select = jQuery( '<div id="select_custom_fields--select2" style="margin-top: 0px;margin-right: 6px; vertical-align: top;'
 							  + 'display: ' + (
 								  (
 									  'LIKE' === val_op || 'NOT SET' === val_op || 'IS SET' === val_op
 								  ) ? 'none' : 'inline-block'
 							  ) + ';">'
-							  + '<select id="select_custom_fields">' + options + '</select></div>' );
-				    $select.insertBefore( jQuery( '#add_custom_fields' ) )
-				    $select.find( 'select' ).select2_i18n( {tags: true} );
+							  + '<select id="select_custom_fields"></select></div>' );
+					$select.insertBefore( jQuery( '#add_custom_fields' ) )
+					woe_safe_fill_select_1st_empty("#select_custom_fields",response);
+					$select.find( 'select' ).select2_i18n( {tags: true} );
 			    }
 			    else {
 				    jQuery( '<input type="text" id="select_custom_fields" style="margin-right: 8px;">' ).insertBefore( jQuery( '#add_custom_fields' ) );
@@ -868,10 +850,8 @@ jQuery( document ).ready( function ( $ ) {
 			if ( f ) {
 				if ( export_messages.empty === val ) {
 					result = val2 + ' ' + val_op + ' empty';
-					jQuery( '#custom_fields_check' ).append( '<option selected="selected" value="' + result + '">' + result + '</option>' );
-				} else {
-					jQuery( '#custom_fields_check' ).append( '<option selected="selected" value="' + result + '">' + result + '</option>' );
 				}
+				jQuery( '#custom_fields_check' ).append( new Option(result, result, true, true) );
 
 				jQuery( '#custom_fields_check' ).select2_i18n();
 

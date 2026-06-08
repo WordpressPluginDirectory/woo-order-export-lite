@@ -375,9 +375,16 @@ class WC_Order_Export_Engine {
 		if ( empty( $settings['sort'] ) ) {
 			$settings['sort'] = 'order_id';
 		}
-		if ( empty( $settings['sort_direction'] ) ) {
-			$settings['sort_direction'] = 'DESC';
+
+		$default_direction = 'DESC';
+		$allowed_directions = ['ASC', 'DESC'];
+		if (empty($settings['sort_direction'])) {
+			$settings['sort_direction'] = $default_direction;
+		} else {
+			$direction = strtoupper(trim($settings['sort_direction']));
+			$settings['sort_direction'] = in_array($direction, $allowed_directions) ? $direction : $default_direction;
 		}
+
 		if ( ! isset( $settings['skip_empty_file'] ) ) {
 			$settings['skip_empty_file'] = true;
 		}

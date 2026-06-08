@@ -644,7 +644,7 @@ function woe_make_repeat_options( index ) {
 	var repeat_options_html = {};
 
 	jQuery.each( localize_settings_form.repeats, function ( key, currentValue ) {
-		repeat_select.append( '<option value="' + key + '">' + currentValue + '</option>' );
+		repeat_select.append( new Option(currentValue, key) );
 		repeat_options_html[key] = [];
 	} );
 
@@ -1469,11 +1469,11 @@ jQuery( document ).ready( function ( $ ) {
 		},
 		function ( response ) {
 		    if ( response ) {
-			var options = '';
-			jQuery.each( response, function ( index, value ) {
-				options += '<option value="' + woe_escape_str( value ) + '">' + value.replace('FEE_', '') + '</option>';
-			} );
-			jQuery( '#select_fee_items' ).html( options );
+				const fragment = jQuery(document.createDocumentFragment());
+				jQuery.each( response, function ( index, value ) {
+					fragment.append(new Option(value.replace('FEE_', '') , value ));
+				} );
+				jQuery( '#select_fee_items').append(fragment);
 		    }
 		},
 		'json'
@@ -1530,11 +1530,11 @@ jQuery( document ).ready( function ( $ ) {
 		},
 		function ( response ) {
 		    if ( response ) {
-			var options = '';
-			jQuery.each( response, function ( index, value ) {
-				options += '<option value="' + woe_escape_str( value ) + '">' + value.replace('SHIPPING_', '') + '</option>';
-			} );
-			jQuery( '#select_shipping_items' ).html( options );
+				const fragment = jQuery(document.createDocumentFragment());
+				jQuery.each( response, function ( index, value ) {
+					fragment.append(new Option(value.replace('SHIPPING_', '') , value ));
+				} );
+				jQuery( '#select_shipping_items').append(fragment);
 		    }
 		},
 		'json'
@@ -1591,11 +1591,11 @@ jQuery( document ).ready( function ( $ ) {
 		},
 		function ( response ) {
 		    if ( response ) {
-			var options = '';
-			jQuery.each( response, function ( index, value ) {
-				options += '<option value="' + woe_escape_str( value ) + '">' + value.replace('TAX_', '') + '</option>';
-			} );
-			jQuery( '#select_tax_items' ).html( options );
+				const fragment = jQuery(document.createDocumentFragment());
+				jQuery.each( response, function ( index, value ) {
+					fragment.append(new Option(value.replace('TAX_', '') , value ));
+				} );
+				jQuery( '#select_tax_items').append(fragment);
 		    }
 		},
 		'json'
@@ -1612,11 +1612,12 @@ jQuery( document ).ready( function ( $ ) {
 
         var fill_custom_meta_fields = function (source) {
 			jQuery.each(source, function (index, value) {
-				var options = '<option></option>';
-				jQuery.each(value, function (meta_id, meta_label) {
-					options += '<option value="' + woe_escape_str(meta_label) + '">' + meta_label + '</option>';
-				});
-				jQuery('#select_custom_meta_' + index).html(options);
+				const fragment = jQuery(document.createDocumentFragment());
+				fragment.append(new Option("", ""));
+				jQuery.each( value, function ( meta_id, meta_label ) {
+					fragment.append(new Option(meta_label, meta_label));
+				} );
+				jQuery('#select_custom_meta_' + index).empty().append(fragment);
 			});
 		};
 
@@ -1637,11 +1638,13 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( 'input[name=custom_meta_products_mode]' ).change( function () {
 		jQuery( '#select_custom_meta_products' ).prop( "disabled", true );
 		if ( ! jQuery( this ).is( ':checked' ) ) {
-			var options = '<option></option>';
+			const fragment = jQuery(document.createDocumentFragment());
+			fragment.append(new Option("", ""));
 			jQuery.each( window.order_products_custom_meta_fields, function ( index, value ) {
-				options += '<option value="' + woe_escape_str( value ) + '">' + value + '</option>';
+				fragment.append(new Option(value, value));
 			} );
-			jQuery( '#select_custom_meta_products' ).html( options );
+			jQuery('#select_custom_meta_products').empty().append(fragment);
+
 			jQuery( '#select_custom_meta_products' ).prop( "disabled", false );
 		}
 		else {
@@ -1652,11 +1655,12 @@ jQuery( document ).ready( function ( $ ) {
 
 			jQuery.post( ajaxurl, data_products, function ( response ) {
 				if ( response ) {
-					var options = '<option></option>';
-					jQuery.each( response, function ( index, value ) {
-						options += '<option value="' + woe_escape_str( value ) + '">' + value + '</option>';
+					const fragment = jQuery(document.createDocumentFragment());
+					fragment.append(new Option("", ""));
+					jQuery.each(response, function ( index, value ) {
+						fragment.append(new Option(value, value));
 					} );
-					jQuery( '#select_custom_meta_products' ).html( options );
+					jQuery('#select_custom_meta_products').empty().append(fragment);
 					jQuery( '#select_custom_meta_products' ).prop( "disabled", false );
 				}
 			}, 'json' );
@@ -1667,11 +1671,12 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( 'input[name=custom_meta_product_items_mode]' ).change( function () {
 		jQuery( '#select_custom_meta_order_items' ).prop( "disabled", true );
 		if ( ! jQuery( this ).is( ':checked' ) ) {
-			options = '<option></option>';
+			const fragment = jQuery(document.createDocumentFragment());
+			fragment.append(new Option("", ""));
 			jQuery.each( window.order_order_item_custom_meta_fields, function ( index, value ) {
-				options += '<option value="' + woe_escape_str( value ) + '">' + value + '</option>';
+				fragment.append(new Option(value, value));
 			} );
-			jQuery( '#select_custom_meta_order_items' ).html( options );
+			jQuery('#select_custom_meta_order_items').empty().append(fragment);
 			jQuery( '#select_custom_meta_order_items' ).prop( "disabled", false );
 		}
 		else {
@@ -1682,11 +1687,13 @@ jQuery( document ).ready( function ( $ ) {
 
 			jQuery.post( ajaxurl, data_order_items, function ( response ) {
 				if ( response ) {
-					var options = '<option></option>';
+					const fragment = jQuery(document.createDocumentFragment());
+					fragment.append(new Option("", ""));
 					jQuery.each( response, function ( index, value ) {
-						options += '<option value="' + woe_escape_str( value ) + '">' + value + '</option>';
+						fragment.append(new Option(value, value));
 					} );
-					jQuery( '#select_custom_meta_order_items' ).html( options );
+					jQuery('#select_custom_meta_order_items').empty().append(fragment);
+
 					jQuery( '#select_custom_meta_order_items' ).prop( "disabled", false );
 				}
 			}, 'json' );
@@ -1702,13 +1709,14 @@ jQuery( document ).ready( function ( $ ) {
 	}, 0);
 
 	jQuery( 'input[name=custom_meta_coupons_mode]' ).change( function () {
-
 		if ( jQuery( this ).val() == 'all' ) {
-			var options = '<option></option>';
+			const fragment = jQuery(document.createDocumentFragment());
+			fragment.append(new Option("", ""));
 			jQuery.each( window.order_coupons_custom_meta_fields, function ( index, value ) {
-				options += '<option value="' + woe_escape_str( value ) + '">' + value + '</option>';
+				fragment.append(new Option(value, value));
 			} );
-			jQuery( '#select_custom_meta_coupons' ).html( options );
+			jQuery('#select_custom_meta_coupons').empty().append(fragment);
+
 		}
 		else {
 			var data = jQuery( '#export_job_settings' ).serialize()
@@ -1716,11 +1724,13 @@ jQuery( document ).ready( function ( $ ) {
 
 			jQuery.post( ajaxurl, data, function ( response ) {
 				if ( response ) {
-					var options = '<option></option>';
+					const fragment = jQuery(document.createDocumentFragment());
+					fragment.append(new Option("", ""));
 					jQuery.each( response, function ( index, value ) {
-						options += '<option value="' + woe_escape_str( value ) + '">' + value + '</option>';
+						fragment.append(new Option(value, value));
 					} );
-					jQuery( '#select_custom_meta_coupons' ).html( options );
+					jQuery('#select_custom_meta_coupons').empty().append(fragment);
+
 				}
 			}, 'json' );
 		}

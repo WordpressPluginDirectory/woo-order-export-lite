@@ -5,7 +5,7 @@ Tags: order export,export orders,woocommerce,order,export
 Requires PHP: 7.4.0
 Requires at least: 4.7
 Tested up to: 7.0
-Stable tag: 4.0.9
+Stable tag: 4.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -125,6 +125,13 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 4.1.0 - 2026-06-08 =
+* Fixed SQL Injection. Thank [Fraudless](https://fraudless.tech) for reporting this vulnerability!
+* Correctly fill options for all dropdowns/selects
+
+= 4.0.10 - 2026-06-01 =
+* Fixed XSS vulnerability
 
 = 4.0.9 - 2026-05-27 =
 * Fixed UI bugs for WordPress 7.0
